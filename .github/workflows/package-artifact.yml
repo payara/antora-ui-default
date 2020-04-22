@@ -1,0 +1,29 @@
+name: build-and-package-artifact-for-antora
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  setup-and-build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Get nvm
+      run: wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - name: Get npm
+      run: nvm install 10 && nvm use 10
+    - name: Get gulp
+      run: npm install -g gulp-cli
+    - name: Make gulp bundle
+      run: gulp bundle
+    - name: Upload gulp bundle
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: antora-ui
+        path:  ./ 
