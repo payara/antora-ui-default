@@ -1,0 +1,26 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> 
+(function () {
+    function getCurrentVersion() {
+        var containerElement = document.getElementsByClassName("nav-container")[0];
+        if (containerElement) {
+            var versionAttribute = containerElement.attributes["data-version"];
+            if (versionAttribute) {
+                return versionAttribute.value;
+            }
+        }
+        return null;
+    }
+
+    var currentVersion = getCurrentVersion();
+    var facetFilters = currentVersion ? ["version:"+currentVersion] : []
+
+    docsearch({
+    apiKey: '0e166e657e381ec2661d7bd2d4426011',
+    indexName: 'payara',
+    inputSelector: '#search-input',
+    algoliaOptions: { 'facetFilters': facetFilters },
+    debug: false // Set debug to true if you want to inspect the dropdown
+    });
+})();
+</script>
