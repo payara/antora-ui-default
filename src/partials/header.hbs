@@ -1,2 +1,7 @@
 {{> header-scripts}}
-{{> header-content}}
+{{#if env.enterprise}}
+  {{> header-content-enterprise}}
+{{/if}}
+{{#unless env.enterprise}}
+  {{> header-content-community}}
+{{/unless}}
