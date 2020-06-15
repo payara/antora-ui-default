@@ -11,10 +11,14 @@
     <div id="topbar-nav" class="navbar-menu">
       {{> docsearch-input}}
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
         <div class="navbar-item">
           <span class="control">
             <a class="button is-primary" href="https://www.payara.fish/products/downloads/">Download</a>
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary enterprise" href="{{or site.url (or siteRootUrl siteRootPath)}}/../enterprise">Documentation for Payara Enterprise</a>
           </span>
         </div>
       </div>
