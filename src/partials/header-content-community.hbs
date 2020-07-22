@@ -9,7 +9,13 @@
       </button>
     </div>
     <div id="topbar-nav" class="navbar-menu">
-      {{> docsearch-input}}
+      <div class="navbar-item hide-for-print">
+        {{> docsearch-input}}
+      </div>
+      <div class="navbar-item hide-for-print">
+        Version: {{> page-versions}}
+      </div>
+
       <div class="navbar-end">
         <div class="navbar-item">
           <span class="control">
