@@ -56,3 +56,11 @@
   font-style: italic;
   text-decoration: none;
 }
+
+.page-versions a {
+  color: inherit;
+}
+
+.page-versions a:hover {
+  text-decoration: underline;
+}
