@@ -9,8 +9,29 @@
   padding: 0 0.25em;
 }
 
+#search-input-container {
+  overflow: visible;
+}
+
+#search-input-container .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+  overflow: scroll;
+  max-height: 90vh;
+}
+
+@media screen and (max-width: 1023px) {
+  #search-input-container .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
+    max-height: 70vh;
+  }
+}
+
 @media screen and (min-width: 769px) {
   #search-input {
     width: 200px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .navbar-menu.is-active {
+    overflow-y: visible;
   }
 }

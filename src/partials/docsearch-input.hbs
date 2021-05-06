@@ -1,3 +1,5 @@
 {{#unless (inList @root.page.componentVersion.displayVersion env.disabledSearchVersions)}}
-    <input type="text" id="search-input" name="search-input" placeholder="Search...">
+    <div id="search-input-container">
+      <input type="text" id="search-input" name="search-input" placeholder="Search...">
+    </div>
 {{/unless}}
