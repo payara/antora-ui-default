@@ -2,14 +2,21 @@
 <script type="text/javascript"> 
 (function () {
     function getCurrentVersion() {
-        var containerElement = document.getElementsByClassName("nav-container")[0];
-        if (containerElement) {
-            var versionAttribute = containerElement.attributes["data-version"];
-            if (versionAttribute) {
-                return versionAttribute.value;
+        let docsVersion = null;
+        const versionMetaTag = document.querySelector('meta[name="docsearch:version"]');
+        if (versionMetaTag) {
+            docsVersion = versionMetaTag.content;
+        }
+        if (!docsVersion) {
+            const containerElement = document.getElementsByClassName("nav-container")[0];
+            if (containerElement) {
+                const versionAttribute = containerElement.attributes["data-version"];
+                if (versionAttribute) {
+                    docsVersion = versionAttribute.value;
+                }
             }
         }
-        return null;
+        return docsVersion;
     }
 
     var currentVersion = getCurrentVersion();
