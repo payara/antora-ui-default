@@ -338,3 +338,6 @@ h1:first-child, h2:first-child {
 .button-container {
 	margin-top: 2.4rem;
 }
+.button__extra_padded {
+	padding:2.6rem 4.8rem;
+}
