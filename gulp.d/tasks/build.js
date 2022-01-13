@@ -2,6 +2,7 @@
 
 const autoprefixer = require('autoprefixer')
 const browserify = require('browserify')
+const babelify = require('babelify')
 const buffer = require('vinyl-buffer')
 const concat = require('gulp-concat')
 const cssnano = require('cssnano')
@@ -68,6 +69,9 @@ module.exports = (src, dest, preview) => () => {
             const bundlePath = file.path
             browserify(file.relative, { basedir: src, detectGlobals: false })
               .plugin('browser-pack-flat/plugin')
+              .transform(babelify.configure({
+                presets: ['@babel/preset-env'],
+              }))
               .on('file', (bundledPath) => {
                 if (bundledPath !== bundlePath) mtimePromises.push(fs.stat(bundledPath).then(({ mtime }) => mtime))
               })
