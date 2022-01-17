@@ -2,6 +2,7 @@
 
 const autoprefixer = require('autoprefixer')
 const browserify = require('browserify')
+const babelify = require('babelify')
 const buffer = require('vinyl-buffer')
 const concat = require('gulp-concat')
 const cssnano = require('cssnano')
@@ -68,18 +69,27 @@ module.exports = (src, dest, preview) => () => {
             const bundlePath = file.path
             browserify(file.relative, { basedir: src, detectGlobals: false })
               .plugin('browser-pack-flat/plugin')
+              .transform(babelify.configure({
+                presets: ['@babel/preset-env'],
+              }))
               .on('file', (bundledPath) => {
                 if (bundledPath !== bundlePath) mtimePromises.push(fs.stat(bundledPath).then(({ mtime }) => mtime))
               })
-              .bundle((bundleError, bundleBuffer) =>
-                Promise.all(mtimePromises).then((mtimes) => {
-                  const newestMtime = mtimes.reduce((max, curr) => (!max || curr > max ? curr : max))
-                  if (newestMtime > file.stat.mtime) file.stat.mtimeMs = +(file.stat.mtime = newestMtime)
-                  file.contents = bundleBuffer
-                  file.path = file.path.slice(0, file.path.length - 10) + '.js'
+              .bundle((bundleError, bundleBuffer) => {
+                if (bundleError) {
                   next(bundleError, file)
-                })
-              )
+                } else {
+                  Promise.all(mtimePromises).then((mtimes) => {
+                    if (mtimes.length > 0) {
+                      const newestMtime = mtimes.reduce((max, curr) => (!max || curr > max ? curr : max))
+                      if (newestMtime > file.stat.mtime) file.stat.mtimeMs = +(file.stat.mtime = newestMtime)
+                    }
+                    file.contents = bundleBuffer
+                    file.path = file.path.slice(0, file.path.length - 10) + '.js'
+                    next(bundleError, file)
+                  })
+                }
+              })
           } else {
             fs.readFile(file.path, 'UTF-8').then((contents) => {
               file.contents = Buffer.from(contents)
