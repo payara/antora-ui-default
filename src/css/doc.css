@@ -107,7 +107,7 @@
 .doc p,
 .doc :not(td) > .content,
 .doc .tableblock thead {
-  hyphens: auto;
+  hyphens: none;
 }
 
 .doc a {

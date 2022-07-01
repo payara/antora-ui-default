@@ -51,14 +51,12 @@
   display: none;
 }
 
-.page-versions .version.is-missing {
-  color: var(--page-version-missing-font-color);
-  font-style: italic;
-  text-decoration: none;
-}
-
 .page-versions a {
   color: inherit;
+}
+
+.page-versions .version.is-missing a:hover {
+  text-decoration: underline;
 }
 
 .page-versions a:hover {
