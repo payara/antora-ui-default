@@ -120,6 +120,7 @@
 
 .doc a.bare {
   hyphens: none;
+  word-wrap: break-word;
 }
 
 .doc a.unresolved {
