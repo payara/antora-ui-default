@@ -20,7 +20,7 @@
 :url-nvm-install: {url-nvm}#installation
 :url-source-maps: https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Use_a_source_map
 
-This project is the source code and also a repository for the UI bundle that is used by {url-antora}[Antora] for both Payara Documentation editions to generate the {url-payara-docs}[Payara documentation site].
+This project is the source code and also a repository for the UI bundle that is used by {url-antora}[Antora] for both Payara Documentation editions to generate the {url-payara-docs}[Payara Platform and Cloud Documentation site].
 
 The UI is based on the {url-project}[default Antora UI].
 
