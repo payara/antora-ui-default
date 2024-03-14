@@ -1,10 +1,2 @@
 {{> header-scripts}}
-{{#if env.enterprise}}
-  {{> header-content-enterprise}}
-{{/if}}
-{{#if env.cloud}}
-  {{> header-content-cloud}}
-{{/if}}
-{{#unless env.enterprise}}
-  {{> header-content-community}}
-{{/unless}}
+{{> header-content}}

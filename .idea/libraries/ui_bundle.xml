@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ui-bundle">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/ui-bundle.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

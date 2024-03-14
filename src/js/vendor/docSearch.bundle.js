@@ -1,5 +1,4 @@
-
-import docsearch from '@docsearch/js'
+var docsearch = require('@docsearch/js')
 
 function getCurrentVersion () {
   var docsVersion = null

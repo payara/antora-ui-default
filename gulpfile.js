@@ -18,7 +18,7 @@ const task = require('./gulp.d/tasks')
 const glob = {
   all: [srcDir, previewSrcDir],
   css: `${srcDir}/css/**/*.css`,
-  js: ['gulpfile.js', 'gulp.d/**/*.js', `${srcDir}/{helpers,js}/**/*.js`],
+  js: ['gulpfile.js', 'gulp.d/**/*.js', `${srcDir}/helpers/*.js`, `${srcDir}/js/**/+([^.])?(.bundle).js`],
 }
 
 const cleanTask = createTask({
@@ -73,7 +73,7 @@ const bundlePackTask = createTask({
     destDir,
     buildDir,
     bundleName,
-    (bundlePath) => !process.env.CI && log(`Antora option: --ui-bundle-url ${bundlePath}`)
+    (bundlePath) => !process.env.CI && log(`Antora option: --ui-bundle-url=${bundlePath}`)
   ),
 })
 

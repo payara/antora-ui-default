@@ -2,6 +2,10 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}">{{site.title}}</a>
+      {{> version-selector}}
+      <div class="navbar-item search hide-for-print">
+        {{> docsearch-input}}
+      </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -9,13 +13,6 @@
       </button>
     </div>
     <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-item hide-for-print">
-        Version: {{> page-versions}}
-      </div>
-      <div class="navbar-item hide-for-print">
-        {{> docsearch-input}}
-      </div>
-
       <div class="navbar-end">
         <div class="navbar-item">
           <span class="control">

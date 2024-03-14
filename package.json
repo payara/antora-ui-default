@@ -1,5 +1,5 @@
 {
-  "name": "antora-ui-default",
+  "name": "@antora/ui-default",
   "description": "An archetype project that produces a UI for creating documentation sites with Antora",
   "homepage": "https://gitlab.com/antora/antora-ui-default",
   "license": "MPL-2.0",
@@ -14,11 +14,11 @@
     "last 2 versions"
   ],
   "devDependencies": {
-    "@babel/preset-env": "^7.18.6",
-    "@docsearch/js": "^3.0.0-alpha.42",
-    "asciidoctor.js": "1.5.9",
+    "@asciidoctor/core": "~2.2",
+    "@fontsource/roboto": "~4.5",
+    "@fontsource/roboto-mono": "~4.5",
+    "@vscode/gulp-vinyl-zip": "~2.5",
     "autoprefixer": "~9.7",
-    "babelify": "^10.0.0",
     "browser-pack-flat": "~3.4",
     "browserify": "~16.5",
     "cssnano": "~4.1",
@@ -36,11 +36,10 @@
     "gulp-eslint": "~6.0",
     "gulp-imagemin": "~6.2",
     "gulp-postcss": "~8.0",
-    "gulp-stylelint": "~11.0",
+    "gulp-stylelint": "~13.0",
     "gulp-uglify": "~3.0",
-    "gulp-vinyl-zip": "~2.2",
     "handlebars": "~4.7",
-    "highlight.js": "~9.18",
+    "highlight.js": "9.18.3",
     "js-yaml": "~3.13",
     "merge-stream": "~2.0",
     "postcss-calc": "~7.0",
@@ -52,10 +51,9 @@
     "require-from-string": "~2.0",
     "stylelint": "~13.3",
     "stylelint-config-standard": "~20.0",
-    "through2": "~3.0",
-    "typeface-roboto": "0.0.75",
-    "typeface-roboto-mono": "0.0.75",
-    "vinyl-buffer": "~1.0",
     "vinyl-fs": "~3.0"
+  },
+  "dependencies": {
+    "@docsearch/js": "^3.6.0"
   }
 }
