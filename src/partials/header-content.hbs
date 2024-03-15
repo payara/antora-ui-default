@@ -14,8 +14,43 @@
         <div class="navbar-item hide-for-print">
           {{> docsearch-input}}
         </div>
-        <!--Edition Specific Buttons-->
-        <!--Choose without environment variables-->
+        {{~#if (eq page.attributes.site-edition "enterprise")}}
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <span class="control">
+              <a class="button is-primary enterprise" href="https://support.payara.fish" target="blank">Support</a>
+            </span>
+          </div>
+          <div class="navbar-item">
+            <span class="control">
+              <a class="button is-primary" href="https://www.payara.fish/page/payara-enterprise-downloads/">Request Evaluation</a>
+            </span>
+          </div>
+        </div>
+        {{/if}}
+        {{~#if (eq page.attributes.site-edition "community")}}
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <span class="control">
+              <a class="button is-primary" href="https://www.payara.fish/products/downloads/">Download</a>
+            </span>
+          </div>
+          <div class="navbar-item">
+            <span class="control">
+              <a class="button is-primary enterprise" href="https://docs.payara.fish/enterprise">Enterprise Documentation</a>
+            </span>
+          </div>
+        </div>
+        {{/if}}
+        {{~#if (eq page.attributes.site-edition "cloud")}}
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <span class="control">
+              <a class="button is-primary" href="https://support.payara.fish" target="blank">Premium Support</a>
+            </span>
+          </div>
+        </div>
+        {{/if}}
       </div>
     </div>
   </nav>

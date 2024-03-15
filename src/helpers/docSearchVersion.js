@@ -1,8 +1,8 @@
 'use strict'
 
-module.exports = (pageVersion, enterprise) => {
+module.exports = (pageVersion, edition) => {
   if (pageVersion === 'master') {
-    return (enterprise) ? 'enterprise-latest' : 'community-latest'
+    return (edition) + '-latest'
   } else {
     return pageVersion
   }

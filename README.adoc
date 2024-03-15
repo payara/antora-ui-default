@@ -24,6 +24,17 @@ This project is the source code and also a repository for the UI bundle that is 
 
 The UI is based on the {url-project}[default Antora UI].
 
+== Configuration Attributes
+
+The UI has been customized to render and configure some elements based on the edition of the site being generated (whether for Payara Enterprise/Community or Payara Cloud). To this effect the following https://docs.antora.org/antora/latest/page/page-attributes/#custom-attribute[page attributes] are used:
+
+`page-site-edition`::
+The edition that corresponds to the documentation site.
+One of:
+* `enterprise`
+* `community`
+* `cloud`
+
 == Copyright and License
 
 This code is based on the {url-project}[default Antora UI].
