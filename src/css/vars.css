@@ -132,6 +132,8 @@
   --nav-panel-menu-height: calc(100% - var(--drawer-height));
   --nav-panel-explore-height: calc(50% + var(--drawer-height));
   --nav-width: calc(270 / var(--rem-base) * 1rem);
+  --navbar-dropdown-height: calc((var(--nav-height) * 3) + var(--nav-line-height));
+  --navbar-dropdown-max-height: calc((var(--navbar-height) * 3));
   --toc-top: calc(var(--body-top) + var(--toolbar-height));
   --toc-height: calc(100vh - var(--toc-top) - 2.5rem);
   --toc-width: calc(162 / var(--rem-base) * 1rem);

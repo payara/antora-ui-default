@@ -300,6 +300,14 @@ body {
     left: 0;
     min-width: 100%;
     position: absolute;
+    height: var(--navbar-dropdown-height);
+  }
+
+  .scrollable-dropdown {
+    height: auto;
+    max-height: var(--navbar-dropdown-max-height);
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .navbar-dropdown .navbar-item {

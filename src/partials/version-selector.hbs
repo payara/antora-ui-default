@@ -5,12 +5,14 @@
   <div class="navbar-item has-dropdown is-hoverable hide-for-print">
     <a class="navbar-link" href="#">{{@root.page.componentVersion.displayVersion}}</a>
     <div class="navbar-dropdown">
-      {{#each this}}
-        {{~#if (ne ./version @root.page.version)}}
-          <a class="navbar-item
+      <div class="scrollable-dropdown">
+        {{#each this}}
+          {{~#if (ne ./version @root.page.version)}}
+            <a class="navbar-item
             {{~#if ./missing}} is-missing{{/if}}" href="{{{relativize ./url}}}">{{./displayVersion}}</a>
-        {{/if~}}
-      {{/each}}
+          {{/if~}}
+        {{/each}}
+      </div>
     </div>
   </div>
 {{/with}}
