@@ -4,7 +4,6 @@
   hyphens: auto;
   line-height: var(--doc-line-height);
   margin: var(--doc-margin);
-  max-width: var(--doc-max-width);
   padding: 0 1rem 4rem;
 }
 
@@ -13,9 +12,36 @@
     flex: auto;
     font-size: var(--doc-font-size--desktop);
     margin: var(--doc-margin--desktop);
-    max-width: var(--doc-max-width--desktop);
     min-width: 0;
   }
+}
+
+.doc h1,
+.doc h2,
+.doc h3,
+.doc h4,
+.doc h5,
+.doc h6,
+.doc p,
+.doc ul,
+.doc ol,
+.doc .quoteblock,
+.doc .admonitionblock,
+.doc .sidebarblock,
+.doc .dlist {
+  max-width: var(--doc-max-width--desktop);
+}
+
+.doc table p,
+.doc table .admonitionblock,
+.doc .dlist p,
+.doc .quoteblock p,
+.doc .sidebarblock p,
+.doc ul p,
+.doc ol p,
+.doc .text-center p,
+.doc p:has(.image:only-child):has(img) {
+  max-width: none;
 }
 
 .doc h1,
@@ -147,6 +173,10 @@
 .doc code,
 .doc pre {
   hyphens: none;
+}
+
+.doc code {
+  overflow-wrap: anywhere;
 }
 
 .doc pre {
