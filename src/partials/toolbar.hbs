@@ -1,8 +1,15 @@
-<div class="toolbar" role="navigation">
-{{> nav-toggle}}
-  {{#with site.homeUrl}}
-  <a href="{{{relativize this}}}" class="home-link{{#if @root.page.home}} is-current{{/if}}"></a>
-  {{/with}}
-{{> breadcrumbs}}
-{{> edit-this-page}}
-</div>
+<docs-sticky-breadcrumb class="docs__sticky-breadcrumb">
+	<div class="cards card--no-pad">
+		<div class="card--content-width">
+			{{> breadcrumbs}}
+		</div>
+		<div class="card--content-width">
+			{{> edit-this-page}}
+		</div>
+	</div>
+</docs-sticky-breadcrumb>
+<script>
+	// This is to force the initial scroll position into something like the correct place, the 20 is purely arbitary.
+	let new_top = document.querySelector('.docs__sticky-breadcrumb').getBoundingClientRect().bottom + 16 + 20;
+	document.querySelector('.page').setAttribute('style', '--offset-scroll: '+new_top+'px;');
+</script>

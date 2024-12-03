@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-{{> head defaultPageTitle='Untitled'}}
-  </head>
-  <body class="article{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}">
+<html lang="en" class="no-js" data-ui-path="{{{uiRootPath}}}">
+	<head>
+		{{> head defaultPageTitle='Untitled'}}
+	</head>
+	<body class="page page--sticky-header theme--light article
+		{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}
+		{{#if (eq page.attributes.site-edition "enterprise")}}
+			docs__enterprise
+		{{else if (eq page.attributes.site-edition "community")}}
+			docs__community
+		{{else}}
+			docs__cloud
+		{{/if}}
+	">
 {{> header}}
 {{> body}}
 {{> footer}}
-  </body>
+</body>
 </html>

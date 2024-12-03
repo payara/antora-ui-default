@@ -1,57 +1,41 @@
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="{{or site.url (or siteRootUrl siteRootPath)}}">{{site.title}}</a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        {{> version-selector}}
-        <div class="navbar-item hide-for-print">
-          {{> docsearch-input}}
-        </div>
-        {{~#if (eq page.attributes.site-edition "enterprise")}}
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <span class="control">
-              <a class="button is-primary enterprise" href="https://support.payara.fish" target="blank">Support</a>
-            </span>
-          </div>
-          <div class="navbar-item">
-            <span class="control">
-              <a class="button is-primary" href="https://www.payara.fish/page/payara-enterprise-downloads/">Request Evaluation</a>
-            </span>
-          </div>
-        </div>
-        {{/if}}
-        {{~#if (eq page.attributes.site-edition "community")}}
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <span class="control">
-              <a class="button is-primary" href="https://www.payara.fish/products/downloads/">Download</a>
-            </span>
-          </div>
-          <div class="navbar-item">
-            <span class="control">
-              <a class="button is-primary enterprise" href="https://docs.payara.fish/enterprise">Enterprise Documentation</a>
-            </span>
-          </div>
-        </div>
-        {{/if}}
-        {{~#if (eq page.attributes.site-edition "cloud")}}
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <span class="control">
-              <a class="button is-primary" href="https://support.payara.fish" target="blank">Premium Support</a>
-            </span>
-          </div>
-        </div>
-        {{/if}}
-      </div>
-    </div>
-  </nav>
+<header class="page__header">
+	<div class="page__header__cards cards card--no-pad">
+		<div class="card--content-width docs__logo">
+			<a href="{{or site.url (or siteRootUrl siteRootPath)}}" class="logo">
+				{{~#if (eq page.attributes.site-edition "enterprise")}}
+					<img src="{{{uiRootPath}}}/ui/images/logo-enterprise.svg" alt="{{site.title}}" class="logo__full" />
+				{{else if (eq page.attributes.site-edition "community")}}
+					<img src="{{{uiRootPath}}}/ui/images/logo-community.svg" alt="{{site.title}}" class="logo__full" />
+				{{else}}
+					<img src="{{{uiRootPath}}}/ui/images/logo-cloud.svg" alt="{{site.title}}" class="logo__full" />
+				{{/if}}
+			</a>
+		</div><!-- .docs__logo -->
+		<div class="docs__title">
+			<h3>{{site.title}}</h3>
+		</div>
+		<div class="card--content-width text-align--right docs__header-nav">
+			{{> version-selector}}
+			{{> docsearch-input}}
+			{{#if (eq page.attributes.site-edition "enterprise")}}
+				<span class="buttons--light docs__wide">
+					<a href="https://www.payara.fish/page/payara-enterprise-downloads/" class="button button--ghost">Request Evaluation</a>
+				</span>
+				<a href="https://support.payara.fish" class="button docs__wide">Support</a>
+			{{else if (eq page.attributes.site-edition "community")}}
+				<span class="buttons--light docs__wide">
+					<a href="https://www.payara.fish/products/downloads/" class="button button--ghost">Download</a>
+				</span>
+				<a href="https://docs.payara.fish/enterprise" class="button docs__wide">Enterprise Documentation</a>
+			{{else}}
+				<a href="https://support.payara.fish" class="button docs__wide">Premium Support</a>
+			{{/if}}
+			<button id="external-toggle-sidebar" type="button" class="docs__narrow button sidebar__toggle" aria-expanded="true">
+				<svg class="icon" width="1em" height="1em" viewbox="0 0 16 16" aria-hidden="true" focusable="false">
+					<use href="{{{uiRootPath}}}/ui/images/icons.svg#icon-sidebar"></use>
+				</svg>
+				<span class="visually-hidden">Toggle Sidebar</span>
+			</button>
+		</div><!-- .docs__header-nav -->
+	</div><!-- .page__header__cards -->
 </header>

@@ -1,11 +1,14 @@
 {{#with page.navigation}}
-<div class="nav-panel-menu is-active" data-panel="menu">
-  <nav class="nav-menu">
-    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
-    {{#with @root.page.componentVersion}}
-    <h3 class="title"><a href="{{{relativize ./url}}}">{{./title}}</a></h3>
-    {{/with}}
-{{> nav-tree navigation=this}}
-  </nav>
-</div>
+	<!-- <div class="nav-panel-menu is-active" data-panel="menu"> -->
+	<blinky-scroll-hints class="sidebar__content">
+		<!-- <nav class="nav-menu"> -->
+		<button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+		{{#with @root.page.componentVersion}}
+			<h4><a href="{{{relativize ./url}}}">{{./title}}</a></h4>
+		{{/with}}
+		<nav class="menu menu--vertical">
+			{{> nav-tree navigation=this}}
+		</nav>
+	</blinky-scroll-hints>
+	<!-- </div> -->
 {{/with}}

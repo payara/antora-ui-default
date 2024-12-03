@@ -1,11 +1,19 @@
-<main class="article">
-{{> toolbar}}
-  <div class="content">
-{{#if (eq page.layout '404')}}
-{{> article-404}}
-{{else}}
-{{> toc}}
-{{> article}}
-{{/if}}
-  </div>
-</main>
+<main class="page__content">
+	<div class="page__content-inner">
+		{{> toolbar}}
+
+		<div class="cards">
+			<div class="docs__content">
+				<div class="docs__layout" id="top">
+					{{#if (eq page.layout '404')}}
+						{{> article-404}}
+					{{else}}
+						{{> article-title}}
+						{{> toc}}
+						{{> article}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div><!-- .page__content-inner -->
+</main><!-- .page__content -->

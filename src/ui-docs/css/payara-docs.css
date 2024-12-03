@@ -1,0 +1,376 @@
+/* Adustments to basic page structure. */
+
+.page {
+	background: rgb(var(--coal));
+}
+	/* Needed to keep the mobile menu fully on the screen. */
+	.page__main {
+		position: relative;
+	}
+	/* Only limit the content width when the sizebar isn't minimized. */
+	.page__main:has(.page__sidebar[minimized="0"]) {
+		align-self: center;
+		max-width: 165rem;
+		width: 100%;
+	}
+		.page__content {
+			background: var(--page-background);
+		}
+		@media only screen and (max-width: 60rem) {
+			.js__sidebar[minimized="0"] ~ .page__content {
+				overflow: hidden;
+			}
+		}
+
+		
+/* Header. */
+
+.page__header__cards {
+	align-items: center;
+}
+
+	.docs__title {
+		line-height: 1.25;
+	}
+	/* Site adjustments for Enterprise, Community and Cloud. */
+	.docs__enterprise .docs__title {
+		color: rgb(var(--tango));
+	}
+	.docs__community .docs__title {
+		/* Smurf with 25% white overlay */
+		color: #409dd1;
+	}
+	.docs__cloud .docs__title {
+		color: rgb(var(--concrete));
+	}
+	/* Set version filter to a width specific to the content. */
+	.filter-menu__list {
+		width: 11em;
+		min-width: 0;
+	}
+	/* Because this HTML is coming on from an external source do what we can to make it look nice. */
+	.docs__search-button .DocSearch-Button {
+		align-items: center;
+		display: inline-flex;
+		justify-content: space-between;
+		user-select: none;
+
+		background: var(--button-bk);
+		border: none;
+		border-radius: var(--button-radius);
+		box-shadow: 0 1px 0 0 rgba(var(--button-shadow), 0.3);
+		color: rgb(255,255,255);
+		direction: ltr;
+		font-family: inherit;
+		font-size: 100%;
+		font-weight: 400;
+		height: auto;
+		line-height: inherit;
+		margin: 0 0 0 calc((var(--gutter) /2) - 2px);
+		outline: 0;
+		padding: 0.8rem 2rem;
+		text-align: center;
+		text-decoration: none;
+	}
+		.docs__search-button .DocSearch-Button-Container {
+			display: initial;
+		}
+			.docs__search-button .DocSearch-Button-Placeholder {
+				font-size: inherit;
+				padding: 0;
+			}
+
+/* This is to hide/show different iterations of things like the sidebar toggle on narrower screens. */
+.docs__narrow {
+	display: none;
+}
+
+/* RWD for header. */
+@media only screen and (max-width: 75rem) {
+	/* Header content fits the longest docs header title. */
+
+	/* Squish the version filter up a little. */
+	.filter-menu__text {
+		font-size: 1.3rem;
+		line-height: 1.25;
+		padding-top: 0.3rem;
+	}
+		.filter-menu__text span {
+			display: block;
+		}
+	/* Hide the search button label a11y. */
+	.page__header .docs__search-button .button__text {
+		clip: rect(0 0 0 0);
+		clip-path: inset(100%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+	/* Reduce title size. */
+	.page__header h3 {
+		font-size: 1em;
+	}
+}
+
+@media only screen and (max-width: 60rem) {
+	/* Hide the sidebar toggle in the sidebar because we're using the one in the header. */
+	.js__sidebar[minimized="1"] .sidebar__header,
+	.sidebar__header .sidebar__toggle {
+		display: none;
+	}
+
+	/* All the hidden elements on wider screens are swapped. */
+	.docs__wide {
+		display: none;
+	}
+	.docs__narrow {
+		display: inline-block;
+	}
+}
+
+@media only screen and (max-width: 46rem) {
+	/* 750px-ish. Really narrow screen, stack the header items. */
+	.page__header__cards {
+		display: grid;
+		grid-template-columns: fit-content(50%) 1fr;
+		grid-template-areas:
+			"b b"
+			"a c";
+		row-gap: calc(var(--gutter) / 2);
+	}
+		.page__header__cards .docs__logo {
+			grid-area: a;
+		}
+		.page__header__cards .docs__title {
+			grid-area: b;
+			text-align: center;
+		}
+		.page__header__cards .docs__header-nav {
+			grid-area: c;
+		}
+}
+
+
+
+
+
+
+
+
+
+
+/* Sticky breadcrumb. */
+.js__docs__sticky-breadcrumb {
+	--breadcrumb-offset: 0;
+	background: var(--page-background);
+	display: block;
+	position: sticky;
+	top: -1px;
+	overflow: hidden;
+	padding-top: var(--breadcrumb-offset);
+	margin-bottom: calc(var(--gutter) * -1);
+	margin-top: calc(var(--breadcrumb-offset) * -1);
+	transition: background 0.3s ease-out;
+	z-index: 190;
+}
+.js__docs__sticky-breadcrumb.stuck {
+	background: rgb(var(--coal));
+	color: rgb(255,255,255);
+}
+		.js__docs__sticky-breadcrumb.stuck a {
+			color: rgb(255,255,255);
+		}
+		.js__docs__sticky-breadcrumb.stuck li:before {
+			border-left-color: rgb(255,255,255);
+		}
+
+
+/* Sidebar animation. */
+.page__sidebar {
+	transition: flex 0.3s ease-out;
+}
+	@keyframes view {
+		0% { opacity: 0; }
+		99% { opacity: 0; }
+		100% { opacity: 1; }
+	}
+	.js__sidebar .sidebar__content,
+	.js__sidebar .sidebar__footer,
+	.js__sidebar .docs__expand-all {
+		animation: 0.3s 0s forwards 1 view;
+		opacity: 1;
+	}
+	.js__sidebar[minimized="1"] .sidebar__content,
+	.js__sidebar[minimized="1"] .sidebar__footer,
+	.js__sidebar[minimized="1"] .docs__expand-all {
+		opacity: 0;
+	}
+
+
+/* Expand all toggle button. */
+.docs__expand-all {
+	float: right;
+	margin-right: calc(var(--gutter) - 4px) !important;
+}
+blinky-sidebar[minimized="1"] .docs__expand-all {
+	display: none;
+}
+@media only screen and (max-width: 60rem) {
+	.docs__expand-all {
+		margin-right: 0 !important;
+	}
+}
+
+
+/* Content layout. */
+.docs__content {
+	container-type: inline-size;
+	container-name: max-content;
+}
+	.docs__layout {
+		display: grid;
+		gap: var(--gutter);
+		grid-template-columns: 1fr fit-content(20em);
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			'title toc'
+			'text toc';
+	}
+		.docs__layout__title {
+			grid-area: title;
+		}
+		.docs__layout__toc {
+			grid-area: toc;
+			min-width: 20em;
+		}
+		.docs__layout__text {
+			grid-area: text;
+		}
+			/* On wider layouts we stick the TOC and make if follow the user down the page. */
+			.js__docs__toc-sticky {
+				display: block;
+				position: sticky;
+			}
+
+@container max-content (max-width: 100rem) {
+	.docs__content > .cards {
+		flex-direction: column-reverse;
+	}
+	.docs__layout {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas:
+			'title'
+			'toc'
+			'text';
+	}
+		/* Unstick the TOC on narrower screens, there's no point sticking if we're stacking the content. */
+		.js__docs__toc-sticky {
+			position: static;
+		}
+}
+
+
+/* Content anchors need to offset from the sticky header so anything with an ID will have this offset value, set from the DocsSticky component. */
+.docs__content [id] {
+	scroll-margin-top: var(--offset-scroll);
+}
+
+
+/* Table of contents. */
+.docs__toc {
+	background: rgba(var(--concrete), 0.5);
+	border-radius: var(--block-radius);
+	color: rgb(var(--page-text));
+	font-size: 1.4rem;
+	padding-bottom: var(--padding);
+	scroll-margin-top: var(--offset-scroll);
+}
+.docs__toc .scroll {
+	/* We don't need to waste resources getting the heights here, it just needs to be roughly a height that makes sense when sat next to the longer main page text block. */
+	max-height: calc(100vh - var(--offset-scroll) - 120px);
+}
+	.docs__toc h3 {
+		padding: var(--padding);
+		padding-bottom: 0;
+		font-size: 1.6rem;
+		margin-bottom: .8rem;
+	}
+	.docs__toc ul {
+		margin: 0;
+		list-style-type: none;
+	}
+		.docs__toc a {
+			color: rgb(var(--link-color));
+			display: block;
+			padding: calc(var(--padding) / 8) var(--padding);
+			padding-left: 3rem;
+			position: relative;
+		}
+		.docs__toc a:before {
+			content: "\2022";
+			left: 1.6rem;
+			position: absolute;
+		}
+		.docs__toc a.is-active {
+			background: rgb(var(--tango));
+			color: rgb(var(--onyx));
+		}
+		/* Quick fix for weird bug where everything is being marked as os-active on pages where there's no scrolling needed. */
+		.docs__toc li:has(a.is-active) + li:has(a.is-active) a  {
+			background: none;
+			color: rgb(var(--link-color));
+		}
+		/* .docs__toc li:has(a.is-active):not(:has(+ li:has(a.is-active))) a  {
+			background: green !important;
+		} */
+
+/* "Nested". */
+.docs__toc li[data-level="2"] a { padding-left: 4.6rem; }
+.docs__toc li[data-level="2"] a:before { left: 3rem; }
+
+.docs__toc li[data-level="3"] a { padding-left: 6.2rem; }
+.docs__toc li[data-level="3"] a:before { left: 4.6rem; }
+
+.docs__toc li[data-level="4"] a { padding-left: 7.8rem; }
+.docs__toc li[data-level="4"] a:before { left: 6.2rem; }
+
+.docs__toc li[data-level="5"] a { padding-left: 9.4rem; }
+.docs__toc li[data-level="5"] a:before { left: 7.8rem; }
+
+/* Show a back to top button on smaller screens where the TOC isn't sticky. */
+.back-to-top {
+	display: none;
+	position: fixed;
+	bottom: calc(var(--gutter) * 2);
+	right: calc(var(--gutter) * 2);
+}
+
+/* Compress TOC a little on smaller screens. */
+@container max-content (max-width: 100rem) {
+	.docs__toc {
+		padding-bottom: var(--padding);
+	}
+		.docs__toc .scroll {
+			max-height: none;
+		}
+
+	.js__back-to-top--show {
+		display: block;
+	}
+}
+
+
+/* .page__header,
+.docs__sticky-breadcrumb {
+	opacity: 0.25;
+} */
+.listingblock {
+	overflow: hidden;
+	width: 503px;
+}
+.listingblock > * {
+	max-width: calc(100% - 25rem);
+}

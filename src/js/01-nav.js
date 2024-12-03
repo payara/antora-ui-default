@@ -8,7 +8,7 @@
   if (!navContainer) return
   // var navToggle = document.querySelector('.nav-toggle')
   // var nav = navContainer.querySelector('.nav')
-  var nav = navContainer.querySelector('.sidebar')
+  // var nav = navContainer.querySelector('.sidebar')
   // var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
 
   // navToggle.addEventListener('click', showNav)
@@ -131,8 +131,8 @@
       // if (ancestor.tagName === 'LI' && ancestorClasses.contains('nav-item')) {
       if (ancestor.tagName === 'LI' && ancestorClasses.contains('menu__item')) {
         ancestorClasses.add('is-active', 'is-current-path')
-        ancestor.querySelector('a').setAttribute('aria-expanded', 'true')
-        ancestor.querySelector('a').classList.add('menu__current-parent')
+        ancestor.querySelector('.menu__content').setAttribute('aria-expanded', 'true')
+        ancestor.querySelector('.menu__content').classList.add('menu__current-parent')
       }
       ancestor = ancestor.parentNode
     }
@@ -177,11 +177,12 @@
   // }
 
   function scrollItemToMidpoint (panel, el) {
-    var rect = panel.getBoundingClientRect()
-    var effectiveHeight = rect.height
-    var navStyle = window.getComputedStyle(nav)
-    if (navStyle.position === 'sticky') effectiveHeight -= rect.top - parseFloat(navStyle.top)
-    panel.scrollTop = Math.max(0, (el.getBoundingClientRect().height - effectiveHeight) * 0.5 + el.offsetTop)
+    // var rect = panel.getBoundingClientRect()
+    // var effectiveHeight = rect.height
+    // var navStyle = window.getComputedStyle(nav)
+    // if (navStyle.position === 'sticky') effectiveHeight -= rect.top - parseFloat(navStyle.top)
+    el.scrollIntoView({ block: 'center' })
+    // panel.scrollTop = Math.max(0, (el.getBoundingClientRect().height - effectiveHeight) * 0.5 + el.offsetTop)
   }
 
   function find (from, selector) {
