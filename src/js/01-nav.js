@@ -9,7 +9,7 @@
   // var navToggle = document.querySelector('.nav-toggle')
   // var nav = navContainer.querySelector('.nav')
   var nav = navContainer.querySelector('.sidebar')
-  var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
+  // var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
 
   // navToggle.addEventListener('click', showNav)
   // navContainer.addEventListener('click', trapEvent)
@@ -24,7 +24,7 @@
   if (currentPageItem) {
     activateCurrentPath(currentPageItem)
     // scrollItemToMidpoint(menuPanel, currentPageItem.querySelector('.nav-link'))
-    scrollItemToMidpoint(menuPanel, currentPageItem.querySelector('a.menu__content'))
+    scrollItemToMidpoint(menuPanel, currentPageItem.querySelector('.menu__content'))
   } else {
     menuPanel.scrollTop = 0
   }
@@ -77,7 +77,7 @@
     if (hash) {
       if (hash.indexOf('%')) hash = decodeURIComponent(hash)
       // navLink = menuPanel.querySelector('.nav-link[href="' + hash + '"]')
-      navLink = menuPanel.querySelector('a.menu__content[href="' + hash + '"]')
+      navLink = menuPanel.querySelector('.menu__content[href="' + hash + '"]')
       if (!navLink) {
         var targetNode = document.getElementById(hash.slice(1))
         if (targetNode) {
@@ -88,7 +88,7 @@
             // NOTE: look for section heading
             if (!id && (id = SECT_CLASS_RX.test(current.className))) id = (current.firstElementChild || {}).id
             // if (id && (navLink = menuPanel.querySelector('.nav-link[href="#' + id + '"]'))) break
-            if (id && (navLink = menuPanel.querySelector('a.menu__content[href="#' + id + '"]'))) break
+            if (id && (navLink = menuPanel.querySelector('.menu__content[href="#' + id + '"]'))) break
           }
         }
       }
@@ -98,23 +98,27 @@
       navItem = navLink.parentNode
     } else if (originalPageItem) {
       // navLink = (navItem = originalPageItem).querySelector('.nav-link')
-      navLink = (navItem = originalPageItem).querySelector('a.menu__content')
+      navLink = (navItem = originalPageItem).querySelector('.menu__content')
     } else {
       return
     }
     if (navItem === currentPageItem) return
     // find(menuPanel, '.nav-item.is-active').forEach(function (el) {
-    find(menuPanel, '.menu-item.is-active').forEach(function (el) {
+    find(menuPanel, '.menu__item.is-active').forEach(function (el) {
       el.classList.remove('is-active', 'is-current-path', 'is-current-page')
+      el.querySelector('.menu__content').setAttribute('aria-expanded', 'false')
+      el.querySelector('.menu__content').removeAttribute('aria-current')
+      el.querySelector('.menu__content').classList.remove('menu__current-parent')
     })
     navItem.classList.add('is-current-page')
+    navItem.querySelector('a').setAttribute('aria-current', 'page')
     currentPageItem = navItem
     activateCurrentPath(navItem)
     scrollItemToMidpoint(menuPanel, navLink)
   }
 
   // if (menuPanel.querySelector('.nav-link[href^="#"]')) {
-  if (menuPanel.querySelector('a.menu__content[href^="#"]')) {
+  if (menuPanel.querySelector('.menu__content[href^="#"]')) {
     if (window.location.hash) onHashChange()
     window.addEventListener('hashchange', onHashChange)
   }
@@ -127,6 +131,8 @@
       // if (ancestor.tagName === 'LI' && ancestorClasses.contains('nav-item')) {
       if (ancestor.tagName === 'LI' && ancestorClasses.contains('menu__item')) {
         ancestorClasses.add('is-active', 'is-current-path')
+        ancestor.querySelector('a').setAttribute('aria-expanded', 'true')
+        ancestor.querySelector('a').classList.add('menu__current-parent')
       }
       ancestor = ancestor.parentNode
     }
@@ -139,7 +145,8 @@
   //     var rect = this.getBoundingClientRect()
   //     var menuPanelRect = menuPanel.getBoundingClientRect()
   //     var overflowY = (rect.bottom - menuPanelRect.top - menuPanelRect.height + padding).toFixed()
-  //     if (overflowY > 0) menuPanel.scrollTop += Math.min((rect.top - menuPanelRect.top - padding).toFixed(), overflowY)
+  //     if (overflowY > 0)
+  //       menuPanel.scrollTop += Math.min((rect.top - menuPanelRect.top - padding).toFixed(), overflowY)
   //   }
   // }
 
