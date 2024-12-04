@@ -1608,7 +1608,7 @@ var menu = (function() {
 		
 		// Don't follow the href link, this will only kick in if the user followed a link rather than a button.
 		if (e.target.closest('.menu__content[aria-haspopup]')) {
-			e.preventDefault();
+			if (e.target.closest('.menu[data-clone-label]')) e.preventDefault();
 		}
 		
 		// Close any open menu items, this list depends on what was clicked.

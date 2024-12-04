@@ -8,7 +8,7 @@
   if (!navContainer) return
   // var navToggle = document.querySelector('.nav-toggle')
   // var nav = navContainer.querySelector('.nav')
-  var nav = navContainer.querySelector('.sidebar')
+  // var nav = navContainer.querySelector('.sidebar')
   // var navMenuToggle = navContainer.querySelector('.nav-menu-toggle')
 
   // navToggle.addEventListener('click', showNav)
@@ -187,15 +187,16 @@
     // panel.scrollTop = Math.max(0, (el.getBoundingClientRect().height - effectiveHeight) * 0.5 + el.offsetTop)
 
     // Get the offsetTop to the current menu item from the top of the window.
-    var menu_li = document.querySelector('.sidebar__content .is-current-page').getBoundingClientRect()
+    var menuLi = document.querySelector('.sidebar__content .is-current-page').getBoundingClientRect()
     // Get the offsetTop to the scrollable sidebar element from the top of the window.
     var sidebar = document.querySelector('.sidebar__content').getBoundingClientRect()
     // Get the current scrolled position of the sidebar scrollable element.
-    var sidebar_scrolled = document.querySelector('.sidebar__content').scrollTop
+    var sidebarScrolled = document.querySelector('.sidebar__content').scrollTop
     // Approximate the menu scrolling to the middle.
-    var half_height = (sidebar.height / 2) - menu_li.height
+    var halfHeight = (sidebar.height / 2) - menuLi.height
 
-    document.querySelector('.sidebar__content').scrollTo(0, Math.max(0, menu_li.top - sidebar.top - half_height + sidebar_scrolled))
+    document.querySelector('.sidebar__content')
+      .scrollTo(0, Math.max(0, menuLi.top - sidebar.top - halfHeight + sidebarScrolled))
   }
 
   function find (from, selector) {
