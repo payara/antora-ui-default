@@ -98,7 +98,8 @@
       var activeLink = links[activeFragment]
       activeLink.classList.add('is-active')
       if (blinkyScrollHints.scrollHeight > blinkyScrollHints.offsetHeight) {
-        blinkyScrollHints.scrollTop = Math.max(0, activeLink.offsetTop + activeLink.offsetHeight - blinkyScrollHints.offsetHeight)
+        blinkyScrollHints.scrollTop =
+          Math.max(0, activeLink.offsetTop + activeLink.offsetHeight - blinkyScrollHints.offsetHeight)
       }
       lastActiveFragment = activeFragment
     } else if (lastActiveFragment) {

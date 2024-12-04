@@ -1,24 +1,26 @@
 {{#if navigation.length}}
-	<ul class="menu__group">
-		{{#each navigation}}
+	{{#if ul}}
+		<ul class="menu__group">
+	{{/if}}
+	{{#each navigation}}
+		{{#if ./content}}
 			<li class="menu__item{{#if (eq ./url @root.page.url)}} is-current-page{{/if}}" data-depth="{{or ../level 0}}">
-				{{#if ./content}}
-					<!-- {{#if ./items.length}}
-						<button class="nav-item-toggle"></button>
-					{{/if}} -->
-					{{#if ./url}}
-						<a class="menu__content" href="
-							{{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
-							{{~else}}{{{./url}}}{{~/if}}" {{#if (eq ./url @root.page.url)}} aria-current="page"{{/if}}><span class="menu__text">{{{./content}}}</span></a>
-					{{else}}
-						<!-- <span class="nav-text">{{{./content}}}</span> -->
-						<button href="#" tabindex=0 class="menu__content menu--button">
-							<span class="menu__text">{{{./content}}}</span>
-						</button>
-					{{/if}}
+				{{#if ./url}}
+					<a class="menu__content" href="
+						{{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+						{{~else}}{{{./url}}}{{~/if}}" {{#if (eq ./url @root.page.url)}} aria-current="page"{{/if}}><span class="menu__text">{{{./content}}}</span></a>
+				{{else}}
+					<button href="#" tabindex=0 class="menu__content menu--button">
+						<span class="menu__text">{{{./content}}}</span>
+					</button>
 				{{/if}}
-				{{> nav-tree navigation=./items level=(increment ../level)}}
+				{{> nav-tree navigation=./items level=(increment ../level) ul="ul"}}
 			</li>
-		{{/each}}
-	</ul>
+		{{else}}
+			{{> nav-tree navigation=./items level=../level}}
+		{{/if}}
+	{{/each}}
+	{{#if ul}}
+		</ul>
+	{{/if}}
 {{/if}}
