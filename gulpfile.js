@@ -18,7 +18,8 @@ const task = require('./gulp.d/tasks')
 const glob = {
   all: [srcDir, previewSrcDir],
   blinky: `${srcDir}/ui/**/*`,
-  nonblinky: `${srcDir}/ui-docs/**/*`,
+  nonblinky_css: `${srcDir}/ui-docs/!(js)/**/*`,
+  nonblinky_js: `${srcDir}/ui-docs/js/**/*`,
   css: `${srcDir}/css/**/*.css`,
   js: ['gulpfile.js', 'gulp.d/**/*.js', `${srcDir}/helpers/*.js`, `${srcDir}/js/**/+([^.])?(.bundle).js`],
 }
@@ -31,7 +32,12 @@ const blinkyTask = createTask({
 const nonBlinkyTask = createTask({
   name: 'non-blinky',
   dest: 'stuff',
-  call: task.blinky(glob.nonblinky, destDir + '/ui-docs/'),
+  call: task.blinky(glob.nonblinky_css, destDir + '/ui-docs/'),
+})
+const nonBlinkyJSTask = createTask({
+  name: 'blinky-js',
+  desc: 'Format the JavaScript source files using prettify (JavaScript Standard Style)',
+  call: task.blinkyJS(glob.nonblinky_js, destDir + '/ui-docs/js/'),
 })
 
 const cleanTask = createTask({
@@ -76,7 +82,7 @@ const buildTask = createTask({
 
 const bundleBuildTask = createTask({
   name: 'bundle:build',
-  call: series(cleanTask, lintTask, buildTask, blinkyTask, nonBlinkyTask),
+  call: series(cleanTask, lintTask, buildTask, blinkyTask, nonBlinkyTask, nonBlinkyJSTask),
 })
 
 const bundlePackTask = createTask({
@@ -110,7 +116,7 @@ const buildPreviewPagesTask = createTask({
 const previewBuildTask = createTask({
   name: 'preview:build',
   desc: 'Process and stage the UI assets and generate pages for the preview',
-  call: parallel(buildTask, buildPreviewPagesTask, blinkyTask, nonBlinkyTask),
+  call: parallel(buildTask, buildPreviewPagesTask, blinkyTask, nonBlinkyTask, nonBlinkyJSTask),
 })
 
 const previewServeTask = createTask({
@@ -135,5 +141,7 @@ module.exports = exportTasks(
   previewTask,
   previewBuildTask,
   packTask,
-  blinkyTask
+  blinkyTask,
+  nonBlinkyTask,
+  nonBlinkyJSTask
 )
