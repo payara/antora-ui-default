@@ -1,6 +1,5 @@
 ;(function () {
   'use strict'
-
   var CMD_RX = /^\$ (\S[^\\\n]*(\\\n(?!\$ )[^\\\n]*)*)(?=\n|$)/gm
   var LINE_CONTINUATION_RX = /( ) *\\\n *|\\\n( ?) */g
   var TRAILING_SPACE_RX = / +$/gm
@@ -11,7 +10,7 @@
   var uiRootPath = (config.uiRootPath == null ? window.uiRootPath : config.uiRootPath) || '.'
 
   ;[].slice.call(document.querySelectorAll('.doc pre.highlight, .doc .literalblock pre')).forEach(function (pre) {
-    var code, language, lang, copy, toast, toolbox
+    var code, language, lang, copy, toolbox
     if (pre.classList.contains('highlight')) {
       code = pre.querySelector('code')
       if ((language = code.dataset.lang) && language !== 'console') {
@@ -33,25 +32,32 @@
     ;(toolbox = document.createElement('div')).className = 'source-toolbox'
     if (lang) toolbox.appendChild(lang)
     if (supportsCopy) {
-      ;(copy = document.createElement('button')).className = 'copy-button'
+      ;(copy = document.createElement('button')).className = 'copy-button button button--clear'
       copy.setAttribute('title', 'Copy to clipboard')
+      copy.setAttribute('tabindex', '0')
       if (svgAs === 'svg') {
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-        svg.setAttribute('class', 'copy-icon')
+        svg.setAttribute('class', 'copy-icon icon')
         var use = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-        use.setAttribute('href', uiRootPath + '/img/octicons-16.svg#icon-clippy')
+        use.setAttribute('href', uiRootPath + '/ui/images/icons.svg#icon-copy')
+        use.classList.add('icon1')
+        var use2 = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+        use2.setAttribute('href', uiRootPath + '/ui/images/icons.svg#icon-tick')
+        use2.classList.add('icon2')
         svg.appendChild(use)
+        svg.appendChild(use2)
         copy.appendChild(svg)
       } else {
         var img = document.createElement('img')
-        img.src = uiRootPath + '/img/octicons-16.svg#view-clippy'
+        img.src = uiRootPath + '/ui/images/icons.svg#icon-copy'
         img.alt = 'copy icon'
         img.className = 'copy-icon'
         copy.appendChild(img)
       }
-      ;(toast = document.createElement('span')).className = 'copy-toast'
-      toast.appendChild(document.createTextNode('Copied!'))
-      copy.appendChild(toast)
+      var a11y = document.createElement('span')
+      a11y.className = 'visually-hidden'
+      a11y.textContent = 'Copy to Clipboard'
+      copy.appendChild(a11y)
       toolbox.appendChild(copy)
     }
     pre.parentNode.appendChild(toolbox)
@@ -72,7 +78,9 @@
       function () {
         this.classList.add('clicked')
         this.offsetHeight // eslint-disable-line no-unused-expressions
-        this.classList.remove('clicked')
+        setTimeout(() => {
+          this.classList.remove('clicked')
+        }, 1000)
       }.bind(this),
       function () {}
     )

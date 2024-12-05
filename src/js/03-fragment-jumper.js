@@ -3,7 +3,6 @@
 
   var article = document.querySelector('article.doc')
   if (!article) return
-  //   var toolbar = document.querySelector('.toolbar')
   var toolbar = document.querySelector('.docs__sticky-breadcrumb')
   var supportsScrollToOptions = 'scrollTo' in document.documentElement
 
@@ -23,7 +22,6 @@
     }
     var y = computePosition(this, 0) - toolbar.getBoundingClientRect().bottom
     var instant = e === false && supportsScrollToOptions
-    // instant ? window.scrollTo({ left: 0, top: y, behavior: 'instant' }) : window.scrollTo(0, y)
     instant ? this.scrollTo({ left: 0, top: y, behavior: 'instant' }) : this.scrollTo(0, y)
   }
 

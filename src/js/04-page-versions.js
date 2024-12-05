@@ -1,17 +1,17 @@
-;(function () {
-  'use strict'
+// ;(function () {
+//   'use strict'
 
-  var toggle = document.querySelector('.page-versions .version-menu-toggle')
-  if (!toggle) return
+//   var toggle = document.querySelector('.page-versions .version-menu-toggle')
+//   if (!toggle) return
 
-  var selector = document.querySelector('.page-versions')
+//   var selector = document.querySelector('.page-versions')
 
-  toggle.addEventListener('click', function (e) {
-    selector.classList.toggle('is-active')
-    e.stopPropagation() // trap event
-  })
+//   toggle.addEventListener('click', function (e) {
+//     selector.classList.toggle('is-active')
+//     e.stopPropagation() // trap event
+//   })
 
-  document.documentElement.addEventListener('click', function () {
-    selector.classList.remove('is-active')
-  })
-})()
+//   document.documentElement.addEventListener('click', function () {
+//     selector.classList.remove('is-active')
+//   })
+// })()

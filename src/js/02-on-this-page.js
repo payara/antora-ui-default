@@ -2,8 +2,9 @@
   'use strict'
 
   var sidebar = document.querySelector('aside.toc.sidebar')
+  var sidebarContainer = document.querySelector('.docs__layout__toc')
   if (!sidebar) return
-  if (document.querySelector('body.-toc')) return sidebar.parentNode.removeChild(sidebar)
+  if (document.querySelector('body.-toc')) return sidebarContainer.remove()
   var levels = parseInt(sidebar.dataset.levels || 2, 10)
   if (levels < 0) return
 
@@ -22,7 +23,7 @@
     headingsSelector.push(headingSelector.join('>'))
   }
   var headings = find(headingsSelector.join(','), article.parentNode)
-  if (!headings.length) return sidebar.parentNode.removeChild(sidebar)
+  if (!headings.length) return sidebarContainer.remove()
 
   var lastActiveFragment
   var links = {}
@@ -41,7 +42,7 @@
   if (!menu) (menu = document.createElement('div')).className = 'toc-menu'
 
   var title = document.createElement('h3')
-  title.textContent = sidebar.dataset.title || 'Contents'
+  title.textContent = sidebar.dataset.title || 'Page Contents'
   menu.prepend(title)
   const blinkyScrollHints = document.querySelector('.toc-menu .scroll')
   blinkyScrollHints.append(list)
