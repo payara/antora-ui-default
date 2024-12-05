@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.72.1 */
+/*! Payara Pattern Library version: 0.73.0 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 // Always set a top level class to indicate if we have JS available.
