@@ -939,9 +939,11 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 			display: block;
 		}
 		.docs__layout__text .admonitionblock .icon {
+			height: auto;
 			left: -1px;
 			position: absolute;
 			top: -1px;
+			width: auto;
 		}
 			.docs__layout__text .admonitionblock .icon i {
 				background: rgb(var(--admonitionblock-bk, 102,102,102));
