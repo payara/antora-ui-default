@@ -80,11 +80,9 @@ class DocsTocSticky extends HTMLElement {
 				if (entry.contentBoxSize[0].inlineSize !== old_top) {
 					this.setAttribute('style','');
 					let new_top = document.querySelector('.docs__sticky-breadcrumb').getBoundingClientRect().bottom + 16;
-					// if (new_top < 144) new_top = 144;
 					this.setAttribute('style','top: '+new_top+'px;');
 					// Whilst we're here shove a CSS custom value in the main page, we can use this later to scroll offset and stop stuff disappearing behind the header.
 					document.querySelector('.page').setAttribute('style', '--offset-scroll: '+new_top+'px;');
-					// console.log('--offset-scroll: '+new_top+'px;');
 				}
 				old_top = entry.contentBoxSize[0].inlineSize;
 			}, 301) );
@@ -125,11 +123,11 @@ document.querySelector('body').addEventListener('click', (e) => {
 		if (document.getElementById('sidebar1').getAttribute('minimized') == '0') {
 			force_sidebar_scroll();
 		}
-	} else {
+	} else if (e.target.classList.contains('sidebar__toggle') && !e.target.id ) {
 		if (document.getElementById('sidebar1').getAttribute('minimized') == '0') {
 			document.querySelector('#sidebar1').addEventListener("transitionend", () => {
 				force_sidebar_scroll();
-			});
+			}, { once: true });
 		}
 	}
 })
@@ -144,8 +142,11 @@ addEventListener('scroll', () => {
 	}
 });
 // Handle the back to top button, we do this with JS rather than relying on the native as it seems less prone to missing the scroll end point.
-document.getElementById('back-to-top').addEventListener('click', (e) => {
-	e.preventDefault();
-	window.location.hash = e.target.hash;
-	document.querySelector(e.target.hash).scrollIntoView();
-});
+const btt = document.getElementById('back-to-top');
+if (btt) {
+	btt.addEventListener('click', (e) => {
+		e.preventDefault();
+		window.location.hash = e.target.hash;
+		document.querySelector(e.target.hash).scrollIntoView();
+	});
+}

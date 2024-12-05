@@ -55,34 +55,98 @@
 	/* Because this HTML is coming on from an external source do what we can to make it look nice. */
 	.docs__search-button .DocSearch-Button {
 		align-items: center;
-		display: inline-flex;
-		justify-content: space-between;
-		user-select: none;
-
 		background: var(--button-bk);
 		border: none;
 		border-radius: var(--button-radius);
 		box-shadow: 0 1px 0 0 rgba(var(--button-shadow), 0.3);
 		color: rgb(255,255,255);
-		direction: ltr;
+		display: inline-flex;
 		font-family: inherit;
 		font-size: 100%;
 		font-weight: 400;
 		height: auto;
+		/* justify-content: space-between; */
 		line-height: inherit;
 		margin: 0 0 0 calc((var(--gutter) /2) - 2px);
 		outline: 0;
 		padding: 0.8rem 2rem;
 		text-align: center;
 		text-decoration: none;
+		user-select: none;
+	}
+	.docs__search-button .DocSearch-Button:hover {
+		background: var(--button-bk-hover);
+		box-shadow: none;
+		color: rgb(255,255,255);
+	}
+	.docs__search-button .DocSearch-Button:focus {
+		background: var(--button-bk);
+		box-shadow: none;
+		color: rgb(255,255,255);
+	}
+	.docs__search-button .DocSearch-Button:focus-visible {
+		box-shadow: 0 0 0 4px rgb(var(--smurf)) !important;
 	}
 		.docs__search-button .DocSearch-Button-Container {
 			display: initial;
 		}
+		.docs__search-button .DocSearch-Button-Container:before {
+			--icon: url('data:image/svg+xml,<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 1c3.3137 0 6 2.6863 6 6 0 .9263-.21 1.8036-.5848 2.587l2.7772 2.777c.3905.3905.3905 1.0237 0 1.4142l-1.4142 1.4142c-.3905.3905-1.0237.3905-1.4142 0l-2.777-2.7772C8.8035 12.7901 7.9262 13 7 13c-3.3137 0-6-2.6863-6-6s2.6863-6 6-6Zm0 2.5C5.067 3.5 3.5 5.067 3.5 7s1.567 3.5 3.5 3.5 3.5-1.567 3.5-3.5S8.933 3.5 7 3.5Z"/></svg>');
+			background-color: rgb(255,255,255);
+			content: '';
+			margin-left: -8px;
+			margin-right: -8px;
+			pointer-events: none;
+			display: inline-block;
+			height: 1.6rem;
+			mask: var(--icon);
+			position: relative;
+			top: .2rem;
+			width: 1.6rem;
+		}
+			.docs__search-button .DocSearch-Search-Icon {
+				display: none;
+			}
 			.docs__search-button .DocSearch-Button-Placeholder {
 				font-size: inherit;
+				margin-left: 2rem;
 				padding: 0;
 			}
+			.docs__search-button .DocSearch-Button-Keys {
+				margin-left: 0.2rem;
+				margin-right: -0.8rem;
+			}
+				.docs__search-button .DocSearch-Button-Key {
+					align-items: center;
+					background: none;
+					border: 1px solid rgba(255,255,255, 0.5);
+					border-radius: var(--block-radius);
+					box-shadow: none;
+					color: rgb(255,255,255);
+					font-size: 1.4rem;
+					height: auto;
+					justify-content: center;
+					line-height: 1;
+					margin-left: 0.2rem;
+					margin-right: 0;
+					padding: 0.2rem 0.4rem;
+					position: static;
+					width: auto;
+				}
+				/* This is to swap the CTRL which is added as an SVG, so kill the SVG and add it as text so we can match both keys. */
+				.docs__search-button .DocSearch-Button-Key:has(svg.DocSearch-Control-Key-Icon) svg {
+					display: none;
+				}
+				.docs__search-button .DocSearch-Button-Key:has(svg.DocSearch-Control-Key-Icon):first-child:after {
+					content: 'CTRL';
+					font-size: 1rem;
+					padding-top: 0.2rem;
+				}
+	/* Search popup, I'm not doing any changes past this currently. */
+	.DocSearch.DocSearch-Container {
+		background: rgba(var(--midnight), 0.8);
+		z-index: 700;
+	}
 
 /* This is to hide/show different iterations of things like the sidebar toggle on narrower screens. */
 .docs__narrow {
@@ -157,12 +221,11 @@
 }
 
 
+/* Sidebar. */
 
-
-
-
-
-
+.sidebar__footer p {
+	width: 100%;
+}
 
 
 /* Sticky breadcrumb. */
@@ -192,7 +255,7 @@
 
 
 /* Sidebar animation. */
-.page__sidebar {
+/* .page__sidebar {
 	transition: flex 0.3s ease-out;
 }
 	@keyframes view {
@@ -210,7 +273,18 @@
 	.js__sidebar[minimized="1"] .sidebar__footer,
 	.js__sidebar[minimized="1"] .docs__expand-all {
 		opacity: 0;
-	}
+	} */
+		/* We should indicate if something in the sidebar is gonna take the user away from the site. */
+		.page__sidebar .menu__content[href^='http'] .menu__text:after {
+			color: currentColor;
+			content: '\279C';
+			display: inline-block;
+			font-size: .7em;
+			line-height: .1em;
+			margin-left: .2em;
+			transform: rotate(-45deg);
+			vertical-align: super;
+		}
 
 
 /* Expand all toggle button. */
@@ -241,6 +315,14 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		grid-template-areas:
 			'title toc'
 			'text toc';
+	}
+	.docs__layout:not(:has(.docs__layout__toc)) {
+		column-gap: 0;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			'title'
+			'text';
 	}
 		.docs__layout__title {
 			grid-area: title;
@@ -368,17 +450,90 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 }
 
 
+/* Pagination. */
+.pagination {
+	margin-top: 3.2rem;
+}
+
+
 /* Page content. */
 
+.docs__layout__text {
+	tab-size: 4;
+	word-wrap: anywhere;
+}
+
 /* Typography. */
-.docs__layout__text h1:first-child, 
+/* .docs__layout__text h1:first-child, 
 .docs__layout__text h2:first-child,
 .docs__layout__text h3:first-child {
 	margin-top: 3.2rem !important;
-}
-.docs__layout__text h4:first-child {
+} */
+/* .docs__layout__text h4:first-child {
 	margin-top: 2.4rem !important;
+} */
+
+
+
+.docs__layout__text div:has(> h1:first-child), 
+.docs__layout__text div:has(> h2:first-child),
+.docs__layout__text div:has(> h3:first-child) {
+	margin-top: 3.2rem;
+	background: rgba(0,255,0,0.25);
 }
+.docs__layout__text div:has(> h4:first-child) {
+	margin-top: 2.4rem;
+	background: rgba(0,255,0,0.25);
+}
+
+.docs__layout__text div:has(h1) h1 + div div:has(h1:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h2:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h2) h2 + div div:has(h2:first-child):first-child,
+.docs__layout__text div:has(h2) h2 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h2) h2 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h3) h3 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h3) h3 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h1) h1 + div:has(> h1:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h2:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h3:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h4:first-child),
+
+.docs__layout__text div:has(h2) h2 + div:has(> h2:first-child),
+.docs__layout__text div:has(h2) h2 + div:has(> h3:first-child),
+.docs__layout__text div:has(h2) h2 + div:has(> h4:first-child),
+
+.docs__layout__text div:has(h3) h3 + div:has(> h4:first-child),
+.docs__layout__text div:has(h3) h3 + div:has(> h3:first-child) {
+	margin-top: 0 !important;
+	background: rgba(255,0,0,0.25);
+}
+.docs__layout__text .doc div:first-child:has(h1:first-child),
+.docs__layout__text .doc div:first-child:has(h2:first-child),
+.docs__layout__text .doc div:first-child:has(h3:first-child),
+.docs__layout__text .doc div:first-child:has(h4:first-child),
+.docs__content:not(:has(.docs__layout__title)) .docs__layout__text .doc > div:first-child {
+	margin-top: 0 !important;
+	background: rgba(0,0,255,0.25);
+}
+
+/* .docs__layout__text div:has(h1) h1 + div div:has(h2:first-child):first-child h2,
+.docs__layout__text div:has(h1) h1 + div div:has(h3:first-child):first-child h3,
+.docs__layout__text div:has(h1) h1 + div div:has(h4:first-child):first-child h4,
+
+.docs__layout__text div:has(h2) h2 + div div:has(h3:first-child):first-child h3,
+.docs__layout__text div:has(h2) h2 + div div:has(h4:first-child):first-child h4,
+
+.docs__layout__text div:has(h3) h3 + div div:has(h4:first-child):first-child h4 {
+	background: rgba(255,255,0,0.5);
+} */
+
+
+
 .docs__layout__text .paragraph > p,
 .docs__layout__text ul,
 .docs__layout__text ol {
@@ -499,6 +654,63 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		line-height: 1;
 	}
 
+/* General content adjustments. */
+.docs__layout__text .path {
+  hyphens: none;
+}
+.docs__layout__text .left {
+	float: left;
+	margin-right: 1.6rem;
+}
+.docs__layout__text .right {
+	float: right;
+	margin-left: 1.6rem;
+}
+.docs__layout__text .text-left {
+	text-align: left;
+}
+.docs__layout__text .text-center {
+	text-align: center;
+}
+.docs__layout__text .text-right {
+	text-align: right;
+}
+.docs__layout__text .text-justify {
+	text-align: justify;
+}
+.docs__layout__text .stretch {
+	width: 100%;
+}
+.docs__layout__text .big {
+	font-size: larger;
+}
+.docs__layout__text .small {
+	font-size: smaller;
+}
+.docs__layout__text .underline {
+	text-decoration: underline;
+}
+.docs__layout__text .line-through {
+	text-decoration: line-through;
+}
+.docs__layout__text :not(pre).nowrap {
+	white-space: nowrap;
+}
+.docs__layout__text .nobreak {
+	hyphens: none;
+	word-wrap: normal;
+}
+.docs__layout__text :not(pre).pre-wrap {
+	white-space: pre-wrap;
+}
+.docs__layout__text #footnotes {
+	font-size: 0.85em;
+	margin-top: 1.6rem;
+}
+	.docs__layout__text #footnotes .footnote:not(:first-child) {
+		margin-top: 0.4rem;
+	}
+
 /* Syntax highlighted codeblock. */
 /* Codeblock. */
 /* Example. */
@@ -530,12 +742,37 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		.docs__layout__text .source-toolbox {
 			font-size: 1.2rem;
 			font-weight: 700;
-			opacity: 0.75;
+			opacity: 0;
 			position: absolute;
-			right: calc(var(--padding) / 2);
+			right: 0;
 			text-transform: uppercase;
-			top: calc(var(--padding) / 4);
+			top: 0;
 		}
+		.docs__layout__text .source-toolbox .source-lang {
+			display: inline-block;
+			padding: 0.8rem;
+		}
+		.docs__layout__text .listingblock:hover .source-toolbox,
+		.docs__layout__text .listingblock:focus-within .source-toolbox {
+			opacity: 0.75;
+		}
+			.docs__layout__text .source-toolbox > :not(:last-child)::after {
+				content: "|";
+				padding-left: 0.8rem;
+			}
+			.docs__layout__text .source-toolbox .copy-button {
+				margin-left: -0.8rem;
+			}
+				.docs__layout__text .source-toolbox .copy-button .icon2,
+				.docs__layout__text .source-toolbox .copy-button.clicked .icon1 {
+					opacity: 0;
+					transition: opacity 0.5s ease 0.5s;
+				}
+				.docs__layout__text .source-toolbox .copy-button .icon1,
+				.docs__layout__text .source-toolbox .copy-button.clicked .icon2 {
+					opacity: 1;
+					transition: opacity 0.5s ease 0.5s;
+				}
 
 /* Numbered Descriptions on images and other things. */
 .docs__layout__text .colist {
@@ -587,13 +824,105 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		margin-bottom: 0 !important;
 	}
 
+
+
+
+
 /* Table. */
 .docs__layout__text table.tableblock {
-	background: #f66;
+	margin-bottom: 1.6rem;
 }
 	.docs__layout__text table.tableblock .title {
 		font-weight: 700;
+		margin-bottom: 0.8rem;
+		text-align: left;
 	}
+	.docs__layout__text table.tableblock th, 
+	.docs__layout__text table.tableblock td {
+		padding: 0.8rem var(--padding);
+	}
+	.docs__layout__text table.tableblock, 
+	.docs__layout__text table.tableblock > * > tr > * {
+		border: solid 0px rgba(var(--table), var(--table-border-opacity));
+	}
+	.docs__layout__text table.tableblock.grid-all > * > tr > * {
+		border-width: 1px;
+	}
+	.docs__layout__text table.tableblock.grid-cols > * > tr > * {
+		border-width: 0 1px;
+	}
+	.docs__layout__text table.tableblock.grid-rows > * > tr > * {
+		border-width: 1px 0;
+	}
+	.docs__layout__text table.tableblock thead th {
+		font-weight: 700;
+	}
+	.docs__layout__text table.tableblock.grid-all > thead th,
+	.docs__layout__text table.tableblock.grid-rows > thead th {
+		background: rgba(var(--table), var(--table-header-opacity));
+		color: rgb(var(--table-header-text));
+	}
+.docs__layout__text table.tableblock.frame-all {
+	border-width: 1px;
+}
+.docs__layout__text table.tableblock.frame-ends {
+	border-width: 1px 0;
+}
+.docs__layout__text table.tableblock.frame-sides {
+	border-width: 0 1px;
+}
+	.docs__layout__text table.tableblock.frame-none > colgroup + * > :first-child > *,
+	.docs__layout__text table.tableblock.frame-sides > colgroup + * > :first-child > * {
+		border-top-width: 0;
+	}
+	/* NOTE let the grid win in case of frame-none */
+	.docs__layout__text table.tableblock.frame-sides > :last-child > :last-child > * {
+		border-bottom-width: 0;
+	}
+	.docs__layout__text table.tableblock.frame-none > * > tr > :first-child,
+	.docs__layout__text table.tableblock.frame-ends > * > tr > :first-child {
+		border-left-width: 0;
+	}
+	.docs__layout__text table.tableblock.frame-none > * > tr > :last-child,
+	.docs__layout__text table.tableblock.frame-ends > * > tr > :last-child {
+		border-right-width: 0;
+	}
+	.docs__layout__text table.tableblock.stripes-all > tbody > tr,
+	.docs__layout__text table.tableblock.stripes-odd > tbody > tr:nth-of-type(odd),
+	.docs__layout__text table.tableblock.stripes-even > tbody > tr:nth-of-type(even),
+	.docs__layout__text table.tableblock.stripes-hover > tbody > tr:hover {
+			background: rgba(var(--table), 0.05);
+	}
+	.docs__layout__text table.tableblock > tfoot {
+		background: rgba(var(--table), 0.1);
+	}
+		.doc td.tableblock > .content {
+			/* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
+			word-wrap: anywhere; 
+		}
+
+		.docs__layout__text .halign-left {
+			text-align: left;
+		}
+		.docs__layout__text .halign-right {
+			text-align: right;
+		}
+		.docs__layout__text .halign-center {
+			text-align: center;
+		}
+		.docs__layout__text .valign-top {
+			vertical-align: top;
+		}
+		.docs__layout__text .valign-bottom {
+			vertical-align: bottom;
+		}
+		.docs__layout__text .valign-middle {
+			vertical-align: middle;
+		}
+
+
+
+
 
 /* Admonition blocks. */
 .docs__layout__text .admonitionblock {
@@ -638,9 +967,13 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 			.docs__layout__text .admonitionblock .paragraph:last-child p {
 				margin-bottom: 0 !important;
 			}
+			.docs__layout__text .admonitionblock .listingblock {
+				background: rgba(255,255,255, var(--card-background-opacity));
+			}
 			.docs__layout__text .admonitionblock .listingblock:last-child {
 				margin-bottom: 0 !important;
 			}
+
 
 .docs__layout__text .admonitionblock.tip {
 	--admonitionblock-bk: var(--frog);
@@ -661,11 +994,6 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 }
 
 /* Images. */
-/* This in theory could apply elsewhere so don't tie it to closely to images. */
-.docs__layout__text .right {
-	float: right;
-	margin-left: 1.6rem;
-}
 .docs__layout__text .imageblock, .docs__layout__text .videoblock {
 	align-items: center;
 	display: flex;
