@@ -3631,15 +3631,29 @@
 				.menu {
 					--indent: 1.2rem;
 				}
+				/* Level 2 */
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__content {
 					/* padding-left: 3.2rem; */
 					/* padding-left: calc(var(--padding) * 2); */
 					padding-left: calc(var(--padding) + var(--indent));
 				}
+				/* Level 3 */
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__content {
 					/* padding-left: 4.4rem; */
 					/* padding-left: calc(var(--padding) * 3); */
 					padding-left: calc(var(--padding) + (var(--indent) * 2));
+				}
+				/* Level 4 */
+				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__group .menu__content {
+					padding-left: calc(var(--padding) + (var(--indent) * 4));
+				}
+				/* Level 5 */
+				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__group .menu__group .menu__content {
+					padding-left: calc(var(--padding) + (var(--indent) * 5));
+				}
+				/* Level 6 */
+				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__group .menu__group .menu__group .menu__content {
+					padding-left: calc(var(--padding) + (var(--indent) * 5));
 				}
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__content > .icon:first-child {
 					/* margin-left: 0.4rem; */

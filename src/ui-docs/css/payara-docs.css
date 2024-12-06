@@ -43,6 +43,12 @@
 	.docs__cloud .docs__title {
 		color: rgb(var(--concrete));
 	}
+	.filter-menu {
+		margin: 0 calc((var(--gutter) /2) - 2px);
+	}
+	.buttons--light {
+		margin: 0 calc((var(--gutter) /2) - 2px);
+	}
 	/* Set version filter to a width specific to the content. */
 	.filter-menu__list {
 		width: 11em;
@@ -67,7 +73,7 @@
 		height: auto;
 		/* justify-content: space-between; */
 		line-height: inherit;
-		margin: 0 0 0 calc((var(--gutter) /2) - 2px);
+		margin: 0 calc((var(--gutter) /2) - 2px);
 		outline: 0;
 		padding: 0.8rem 2rem;
 		text-align: center;
@@ -275,6 +281,7 @@
 		opacity: 0;
 	} */
 		/* We should indicate if something in the sidebar is gonna take the user away from the site. */
+		.docs__layout__text a[href^='http']:after,
 		.page__sidebar .menu__content[href^='http'] .menu__text:after {
 			color: currentColor;
 			content: '\279C';
@@ -463,27 +470,15 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 	word-wrap: anywhere;
 }
 
-/* Typography. */
-/* .docs__layout__text h1:first-child, 
-.docs__layout__text h2:first-child,
-.docs__layout__text h3:first-child {
-	margin-top: 3.2rem !important;
-} */
-/* .docs__layout__text h4:first-child {
-	margin-top: 2.4rem !important;
-} */
-
-
+/* Typography. */ 
 
 .docs__layout__text div:has(> h1:first-child), 
 .docs__layout__text div:has(> h2:first-child),
 .docs__layout__text div:has(> h3:first-child) {
 	margin-top: 3.2rem;
-	background: rgba(0,255,0,0.25);
 }
 .docs__layout__text div:has(> h4:first-child) {
 	margin-top: 2.4rem;
-	background: rgba(0,255,0,0.25);
 }
 
 .docs__layout__text div:has(h1) h1 + div div:has(h1:first-child):first-child,
@@ -510,7 +505,6 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 .docs__layout__text div:has(h3) h3 + div:has(> h4:first-child),
 .docs__layout__text div:has(h3) h3 + div:has(> h3:first-child) {
 	margin-top: 0 !important;
-	background: rgba(255,0,0,0.25);
 }
 .docs__layout__text .doc div:first-child:has(h1:first-child),
 .docs__layout__text .doc div:first-child:has(h2:first-child),
@@ -518,21 +512,7 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 .docs__layout__text .doc div:first-child:has(h4:first-child),
 .docs__content:not(:has(.docs__layout__title)) .docs__layout__text .doc > div:first-child {
 	margin-top: 0 !important;
-	background: rgba(0,0,255,0.25);
 }
-
-/* .docs__layout__text div:has(h1) h1 + div div:has(h2:first-child):first-child h2,
-.docs__layout__text div:has(h1) h1 + div div:has(h3:first-child):first-child h3,
-.docs__layout__text div:has(h1) h1 + div div:has(h4:first-child):first-child h4,
-
-.docs__layout__text div:has(h2) h2 + div div:has(h3:first-child):first-child h3,
-.docs__layout__text div:has(h2) h2 + div div:has(h4:first-child):first-child h4,
-
-.docs__layout__text div:has(h3) h3 + div div:has(h4:first-child):first-child h4 {
-	background: rgba(255,255,0,0.5);
-} */
-
-
 
 .docs__layout__text .paragraph > p,
 .docs__layout__text ul,
@@ -717,6 +697,7 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 .docs__layout__text .exampleblock,
 .docs__layout__text .listingblock,
 .docs__layout__text .literalblock {
+	background: rgba(var(--basalt),0.025);
 	border: 1px dashed rgb(var(--smurf));
 	border-radius: var(--block-radius);
 	margin-bottom: 1.6rem;
@@ -735,9 +716,10 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		overflow: auto;
 		width: 100%;
 	}
-		.docs__layout__text .listingblock > .content pre,
-		.docs__layout__text .literalblock > .content pre {
-			margin-right: var(--padding);
+		.docs__layout__text .listingblock > .content code,
+		.docs__layout__text .literalblock > .content code {
+			display: inline-block;
+			padding-right: var(--padding);
 		}
 		.docs__layout__text .source-toolbox {
 			font-size: 1.2rem;
@@ -748,13 +730,15 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 			text-transform: uppercase;
 			top: 0;
 		}
-		.docs__layout__text .source-toolbox .source-lang {
-			display: inline-block;
-			padding: 0.8rem;
-		}
+			.docs__layout__text .source-toolbox .source-lang {
+				display: inline-block;
+				padding: 0.8rem;
+			}
 		.docs__layout__text .listingblock:hover .source-toolbox,
 		.docs__layout__text .listingblock:focus-within .source-toolbox {
-			opacity: 0.75;
+			background: rgb(255,255,255);
+			border-bottom-left-radius: var(--block-radius);
+			opacity: 0.9;
 		}
 			.docs__layout__text .source-toolbox > :not(:last-child)::after {
 				content: "|";
@@ -896,10 +880,17 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 	.docs__layout__text table.tableblock > tfoot {
 		background: rgba(var(--table), 0.1);
 	}
-		.doc td.tableblock > .content {
+		.docs__layout__text td.tableblock > .content {
 			/* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
 			word-wrap: anywhere; 
 		}
+		.docs__layout__text td.tableblock > .content > :last-child > :last-child {
+			margin-bottom: 0 !important;
+		}
+			.docs__layout__text table.tableblock pre {
+				/* Stops PREs from pushing table columns too wide. */
+				white-space: pre-wrap;
+			}
 
 		.docs__layout__text .halign-left {
 			text-align: left;
@@ -941,6 +932,7 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		.docs__layout__text .admonitionblock .icon {
 			height: auto;
 			left: -1px;
+			padding: 0;
 			position: absolute;
 			top: -1px;
 			width: auto;

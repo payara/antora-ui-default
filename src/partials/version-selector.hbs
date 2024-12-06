@@ -1,18 +1,18 @@
-<blinky-filter-menu class="filter-menu filter-menu--right" no-matches="No versions found.">
-	<span class="filter-menu__text">Currently <span>Viewing</span></span>
-	<button class="button filter-menu__current">{{@root.page.componentVersion.displayVersion}}</button>
-	<span class="filter-menu__list  text-align--left">
-		<a href="#" class="filter-menu__skip">Skip version selector.</a>
-		<ul>
-			{{#each site.components}}
-				{{#if (or ./versions.[1] ./versions.[0].version (ne ./versions.[0].displayVersion 'default'))}}
-					{{#each ./versions}}
+{{#with page.versions}}
+	<blinky-filter-menu class="filter-menu filter-menu--right" no-matches="No versions found.">
+		<span class="filter-menu__text">Currently <span>Viewing</span></span>
+		<button class="button filter-menu__current">{{@root.page.componentVersion.displayVersion}}</button>
+		<span class="filter-menu__list  text-align--left">
+			<a href="#" class="filter-menu__skip">Skip version selector.</a>
+			<ul>
+				{{#each this}}
+					{{~#if (ne ./version @root.page.version)}}
 						<li>
-							<a href="{{{relativize ./url}}}">{{./displayVersion}}</a>
+							<a{{~#if ./missing}} class="is-missing"{{/if}} href="{{{relativize ./url}}}">{{./displayVersion}}</a>
 						</li>
-					{{/each}}
-				{{/if}}
-			{{/each}}
-		</ul>
-	</span>
-</blinky-filter-menu>
+					{{/if~}}
+				{{/each}}
+			</ul>
+		</span>
+	</blinky-filter-menu>
+{{/with}}

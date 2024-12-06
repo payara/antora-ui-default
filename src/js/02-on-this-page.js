@@ -1,7 +1,7 @@
 ;(function () {
   'use strict'
 
-  var sidebar = document.querySelector('aside.toc.sidebar')
+  var sidebar = document.querySelector('aside.toc.toc-sidebar')
   var sidebarContainer = document.querySelector('.docs__layout__toc')
   if (!sidebar) return
   if (document.querySelector('body.-toc')) return sidebarContainer.remove()
