@@ -119,16 +119,17 @@ function force_sidebar_scroll() {
 }
 
 document.querySelector('body').addEventListener('click', (e) => {
-	if (e.target.id == 'external-toggle-sidebar') {
+	// if (e.target.id == 'external-toggle-sidebar') {
+	if (e.target.classList.contains('sidebar__toggle')) {
 		if (document.getElementById('sidebar1').getAttribute('minimized') == '0') {
 			force_sidebar_scroll();
 		}
-	} else if (e.target.classList.contains('sidebar__toggle') && !e.target.id ) {
-		if (document.getElementById('sidebar1').getAttribute('minimized') == '0') {
-			document.querySelector('#sidebar1').addEventListener("transitionend", () => {
-				force_sidebar_scroll();
-			}, { once: true });
-		}
+	// } else if (e.target.classList.contains('sidebar__toggle') && !e.target.id ) {
+	// 	if (document.getElementById('sidebar1').getAttribute('minimized') == '0') {
+	// 		document.querySelector('#sidebar1').addEventListener("transitionend", () => {
+	// 			force_sidebar_scroll();
+	// 		}, { once: true });
+	// 	}
 	}
 })
 

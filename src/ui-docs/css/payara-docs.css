@@ -16,7 +16,7 @@
 		.page__content {
 			background: var(--page-background);
 		}
-		@media only screen and (max-width: 60rem) {
+		@media only screen and (max-width: 67rem) {
 			.js__sidebar[minimized="0"] ~ .page__content {
 				overflow: hidden;
 			}
@@ -53,6 +53,10 @@
 	.filter-menu__list {
 		width: 11em;
 		min-width: 0;
+	}
+	/* Community. */
+	.docs__community .filter-menu__list {
+		width: 13em;
 	}
 	/* Uses different version labels, they are longer. */
 	.docs__cloud .filter-menu__list {
@@ -160,7 +164,7 @@
 }
 
 /* RWD for header. */
-@media only screen and (max-width: 75rem) {
+@media only screen and (max-width: 80rem) {
 	/* Header content fits the longest docs header title. */
 
 	/* Squish the version filter up a little. */
@@ -188,7 +192,7 @@
 	}
 }
 
-@media only screen and (max-width: 60rem) {
+@media only screen and (max-width: 67rem) {
 	/* Hide the sidebar toggle in the sidebar because we're using the one in the header. */
 	.js__sidebar[minimized="1"] .sidebar__header,
 	.sidebar__header .sidebar__toggle {
@@ -302,7 +306,7 @@
 blinky-sidebar[minimized="1"] .docs__expand-all {
 	display: none;
 }
-@media only screen and (max-width: 60rem) {
+@media only screen and (max-width: 67rem) {
 	.docs__expand-all {
 		margin-right: 0 !important;
 	}
