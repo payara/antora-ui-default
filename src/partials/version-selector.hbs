@@ -1,16 +1,18 @@
 {{#with page.versions}}
-  <div class="navbar-item">
-    Version:
-  </div>
-  <div class="navbar-item has-dropdown is-hoverable hide-for-print">
-    <a class="navbar-link" href="#">{{@root.page.componentVersion.displayVersion}}</a>
-    <div class="navbar-dropdown">
-      {{#each this}}
-        {{~#if (ne ./version @root.page.version)}}
-          <a class="navbar-item
-            {{~#if ./missing}} is-missing{{/if}}" href="{{{relativize ./url}}}">{{./displayVersion}}</a>
-        {{/if~}}
-      {{/each}}
-    </div>
-  </div>
+	<blinky-filter-menu class="filter-menu filter-menu--right" no-matches="No versions found.">
+		<span class="filter-menu__text">Currently <span>Viewing</span></span>
+		<button class="button filter-menu__current">{{@root.page.componentVersion.displayVersion}}</button>
+		<span class="filter-menu__list  text-align--left">
+			<a href="#" class="filter-menu__skip">Skip version selector.</a>
+			<ul>
+				{{#each this}}
+					{{~#if (ne ./version @root.page.version)}}
+						<li>
+							<a{{~#if ./missing}} class="is-missing"{{/if}} href="{{{relativize ./url}}}">{{./displayVersion}}</a>
+						</li>
+					{{/if~}}
+				{{/each}}
+			</ul>
+		</span>
+	</blinky-filter-menu>
 {{/with}}

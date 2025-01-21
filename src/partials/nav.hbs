@@ -1,8 +1,26 @@
-<div class="nav-container"{{#if page.component}} data-component="{{page.component.name}}" data-version="{{page.version}}"{{/if}}>
-  <aside class="nav">
-    <div class="panels">
-{{> nav-menu}}
-{{> nav-explore}}
-    </div>
-  </aside>
-</div>
+<blinky-sidebar class="page__sidebar page__sidebar--wider" id="sidebar1" toggle="1" minimized="0" toggle-label="Toggle Sidebar"{{#if page.component}} data-component="{{page.component.name}}" data-version="{{page.version}}"{{/if}}>
+	<header class="sidebar__header">
+		<docs-expand-all>
+			<blinky-toggle-button type="icon-only" button-class="button docs__expand-all" icon-0="expand" text-0="Expand All" icon-1="collapse" text-1="Collapse All" toggled="0">
+			</blinky-toggle-button>
+		</docs-expand-all>
+	</header>
+	{{> nav-menu}}
+	<footer class="sidebar__footer">
+		<p class="text-align--right">
+			{{#if (eq page.attributes.site-edition "enterprise")}}
+				<span class="buttons--light docs__narrow">
+					<a href="https://www.payara.fish/page/payara-enterprise-downloads/" class="button button--ghost">Request Evaluation</a>
+				</span>
+				<a href="https://support.payara.fish" class="button docs__narrow">Support</a>
+			{{else if (eq page.attributes.site-edition "community")}}
+				<span class="buttons--light docs__narrow">
+					<a href="https://www.payara.fish/products/downloads/" class="button button--ghost">Download</a>
+				</span>
+				<a href="https://docs.payara.fish/enterprise" class="button docs__narrow">Enterprise Documentation</a>
+			{{else}}
+				<a href="https://support.payara.fish" class="button docs__narrow">Premium Support</a>
+			{{/if}}
+		</p>
+	</footer>
+</blinky-sidebar>

@@ -1,0 +1,111 @@
+:root {
+	--page-text: 0,0,0;
+}
+.page,
+.page__content {
+	background: none;
+}
+.cards > * {
+	padding: 0;
+}
+.page__header,
+.page__sidebar,
+.docs__sticky-breadcrumb,
+.docs__layout__toc {
+	display: none;
+}
+tr,
+img,
+object,
+svg,
+.docs__layout__text .admonitionblock,
+.docs__layout__text .sidebarblock,
+.docs__layout__text .exampleblock,
+.docs__layout__text .listingblock,
+.docs__layout__text .literalblock,
+.docs__layout__text table.tableblock {
+	page-break-inside: avoid;
+}
+/* Clear the grid, it breaks across pages. */
+.docs__layout {
+	display: block;
+}
+	/* Reinstate the page title spacing now we're not relying on grid gap, */
+	.docs__layout .docs__layout__title h1 {
+		margin-bottom: 1.6rem !important;
+	}
+p {
+	orphans: 3;
+	widows: 3;
+}
+/* Hide empty and anchored links. */
+a:not([href^="http"]) {
+	color: rgb(var(--page-text));
+	text-decoration: none;
+}
+/* Show URL of external links. */
+a[href^="http"]:after {
+	color: rgb(var(--page-text));
+	content: ' (URL: ' attr(href) ') ';
+	font-size: 1.4rem;
+}
+.docs__layout__text .source-toolbox {
+	opacity: 1;
+}
+	.docs__layout__text .source-toolbox > :not(:last-child)::after,
+	.docs__layout__text .source-toolbox .copy-button {
+		display: none;
+	}
+/* Remove scrolling on wide items as they just get cropped. */
+.docs__layout__text .exampleblock > .content,
+.docs__layout__text .listingblock > .content,
+.docs__layout__text .literalblock > .content {
+	overflow: unset;
+}
+	pre {
+		white-space: pre-wrap;
+	}
+/* Dial down the content sidebar background. */
+.docs__layout__text .sidebarblock {
+	background: none;
+	border: solid 1pt rgb(var(--page-text));
+}
+/* Swap text from white. */
+.docs__layout__text .admonitionblock .icon i {
+	color: rgb(var(--admonitionblock-bk, 102,102,102));
+	border: solid 1pt rgb(var(--admonitionblock-bk, 102,102,102));
+}
+.docs__layout__text .admonitionblock td.content {
+	border: solid 1pt rgb(var(--admonitionblock-bk, 102,102,102));
+}
+/* Darken warning down a little. */
+.docs__layout__text .admonitionblock.warning .icon i {
+	color: rgb(173, 110, 19);
+	border: solid 1pt rgb(173, 110, 19);
+}
+.docs__layout__text .admonitionblock.warning td.content {
+	border: solid 1pt rgb(173, 110, 19);
+}
+.docs__layout__text table.tableblock,
+.docs__layout__text table.tableblock th,
+.docs__layout__text table.tableblock td {
+	border-width: 1pt;
+}
+.docs__layout__text table.tableblock.grid-all > thead th,
+.docs__layout__text table.tableblock.grid-rows > thead th {
+	background: none;
+	color: rgb(var(--page-text));
+}
+/* The tick in the checklist uses masking, which definitely won't print so swap it for a standard ASCII code.
+ */
+.docs__layout__text .checklist i.fa-check-square-o {
+	background-color: transparent;
+	color: rgba(var(--page-text),0.75);
+	mask: initial;
+}
+.docs__layout__text .checklist i.fa-check-square-o:after {
+	content: '\2714';
+}
+.docs__layout__text mark {
+	text-decoration: underline overline;
+}

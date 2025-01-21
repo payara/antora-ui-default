@@ -2,12 +2,12 @@ var docsearch = require('@docsearch/js')
 
 function getCurrentVersion () {
   var docsVersion = null
-  var versionMetaTag = document.querySelector('meta[name="docsearch:version"]')
+  var versionMetaTag = document.querySelector('cmeta[name="docsearch:version"]')
   if (versionMetaTag) {
     docsVersion = versionMetaTag.content
   }
   if (!docsVersion) {
-    var containerElement = document.getElementsByClassName('nav-container')[0]
+    var containerElement = document.getElementsByClassName('page__sidebar')[0]
     if (containerElement) {
       var versionAttribute = containerElement.attributes['data-version']
       if (versionAttribute) {

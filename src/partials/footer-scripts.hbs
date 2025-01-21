@@ -1,4 +1,10 @@
-<script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}"></script>
+<script src="{{{uiRootPath}}}/ui/js/interface.js"></script>
+<script src="{{{uiRootPath}}}/ui-docs/js/interface-docs.js"></script>
+<script>
+	// Start menus.
+	menu.init();
+</script>
+<script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}" data-svg-as="svg"></script>
 <script async src="{{{uiRootPath}}}/js/vendor/highlight.js"></script>
 {{#if env.SITE_SEARCH_PROVIDER}}
 {{> search-scripts}}

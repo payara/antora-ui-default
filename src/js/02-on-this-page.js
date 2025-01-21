@@ -1,9 +1,10 @@
 ;(function () {
   'use strict'
 
-  var sidebar = document.querySelector('aside.toc.sidebar')
+  var sidebar = document.querySelector('aside.toc.toc-sidebar')
+  var sidebarContainer = document.querySelector('.docs__layout__toc')
   if (!sidebar) return
-  if (document.querySelector('body.-toc')) return sidebar.parentNode.removeChild(sidebar)
+  if (document.querySelector('body.-toc')) return sidebarContainer.remove()
   var levels = parseInt(sidebar.dataset.levels || 2, 10)
   if (levels < 0) return
 
@@ -22,7 +23,7 @@
     headingsSelector.push(headingSelector.join('>'))
   }
   var headings = find(headingsSelector.join(','), article.parentNode)
-  if (!headings.length) return sidebar.parentNode.removeChild(sidebar)
+  if (!headings.length) return sidebarContainer.remove()
 
   var lastActiveFragment
   var links = {}
@@ -41,9 +42,10 @@
   if (!menu) (menu = document.createElement('div')).className = 'toc-menu'
 
   var title = document.createElement('h3')
-  title.textContent = sidebar.dataset.title || 'Contents'
-  menu.appendChild(title)
-  menu.appendChild(list)
+  title.textContent = sidebar.dataset.title || 'Page Contents'
+  menu.prepend(title)
+  const blinkyScrollHints = document.querySelector('.toc-menu .scroll')
+  blinkyScrollHints.append(list)
 
   var startOfContent = !document.getElementById('toc') && article.querySelector('h1.page ~ :not(.is-before-toc)')
   if (startOfContent) {
@@ -60,8 +62,9 @@
 
   function onScroll () {
     var scrolledBy = window.pageYOffset
-    var buffer = getNumericStyleVal(document.documentElement, 'fontSize') * 1.15
-    var ceil = article.offsetTop
+    var buffer = getNumericStyleVal(document.querySelector('.page'), 'fontSize') * 1.15
+    // This will not recalculate if the user resizes the page.
+    var ceil = document.querySelector('.docs__sticky-breadcrumb').getBoundingClientRect().bottom + 16
     if (scrolledBy && window.innerHeight + scrolledBy + 2 >= document.documentElement.scrollHeight) {
       lastActiveFragment = Array.isArray(lastActiveFragment) ? lastActiveFragment : Array(lastActiveFragment || 0)
       var activeFragments = []
@@ -95,8 +98,9 @@
       if (lastActiveFragment) links[lastActiveFragment].classList.remove('is-active')
       var activeLink = links[activeFragment]
       activeLink.classList.add('is-active')
-      if (list.scrollHeight > list.offsetHeight) {
-        list.scrollTop = Math.max(0, activeLink.offsetTop + activeLink.offsetHeight - list.offsetHeight)
+      if (blinkyScrollHints.scrollHeight > blinkyScrollHints.offsetHeight) {
+        blinkyScrollHints.scrollTop =
+          Math.max(0, activeLink.offsetTop + activeLink.offsetHeight - blinkyScrollHints.offsetHeight)
       }
       lastActiveFragment = activeFragment
     } else if (lastActiveFragment) {

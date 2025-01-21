@@ -1,14 +1,14 @@
-<div class="nav-panel-explore{{#unless page.navigation}} is-active{{/unless}}" data-panel="explore">
+<span class="nav-panel-explore{{#unless page.navigation}} is-active{{/unless}}" data-panel="explore" style="background: blue">
   {{#if page.component}}
-  <div class="context">
+  <span class="context">
     <span class="title">{{page.component.title}}</span>
     <span class="version">{{#if (or page.componentVersion.version (ne page.componentVersion.displayVersion 'default'))}}{{page.componentVersion.displayVersion}}{{/if}}</span>
-  </div>
+  </span>
   {{/if}}
   <ul class="components">
     {{#each site.components}}
     <li class="component{{#if (eq this @root.page.component)}} is-current{{/if}}">
-      <div class="title"><a href="{{{relativize ./url}}}">{{{./title}}}</a></div>
+      <span class="title"><a href="{{{relativize ./url}}}">{{{./title}}}</a></span>
       {{#if (or ./versions.[1] ./versions.[0].version (ne ./versions.[0].displayVersion 'default'))}}
       <ul class="versions">
         {{#each ./versions}}
@@ -23,4 +23,4 @@
     </li>
     {{/each}}
   </ul>
-</div>
+</span>

@@ -1,0 +1,1008 @@
+/* Adustments to basic page structure. */
+
+.page {
+	background: rgb(var(--coal));
+}
+	/* Needed to keep the mobile menu fully on the screen. */
+	.page__main {
+		position: relative;
+	}
+	/* Only limit the content width when the sizebar isn't minimized. */
+	.page__main:has(.page__sidebar[minimized="0"]) {
+		align-self: center;
+		max-width: 165rem;
+		width: 100%;
+	}
+		.page__content {
+			background: var(--page-background);
+		}
+		@media only screen and (max-width: 67rem) {
+			.js__sidebar[minimized="0"] ~ .page__content {
+				overflow: hidden;
+			}
+		}
+
+		
+/* Header. */
+
+.page__header__cards {
+	align-items: center;
+}
+
+	.docs__title {
+		line-height: 1.25;
+	}
+	/* Site adjustments for Enterprise, Community and Cloud. */
+	.docs__enterprise .docs__title {
+		color: rgb(var(--tango));
+	}
+	.docs__community .docs__title {
+		/* Smurf with 25% white overlay */
+		color: #409dd1;
+	}
+	.docs__cloud .docs__title {
+		color: rgb(var(--concrete));
+	}
+	.filter-menu {
+		margin: 0 calc((var(--gutter) /2) - 2px);
+	}
+	.buttons--light {
+		margin: 0 calc((var(--gutter) /2) - 2px);
+	}
+	/* Set version filter to a width specific to the content. */
+	.filter-menu__list {
+		width: 11em;
+		min-width: 0;
+	}
+	/* Community. */
+	.docs__community .filter-menu__list {
+		width: 13em;
+	}
+	/* Uses different version labels, they are longer. */
+	.docs__cloud .filter-menu__list {
+		width: 15em;
+	}
+		.filter-menu__list .nav__group {
+			max-height: 50vh;
+			overflow: auto;
+		}
+	/* Because this HTML is coming on from an external source do what we can to make it look nice. */
+	.docs__search-button .DocSearch-Button {
+		align-items: center;
+		background: var(--button-bk);
+		border: none;
+		border-radius: var(--button-radius);
+		box-shadow: 0 1px 0 0 rgba(var(--button-shadow), 0.3);
+		color: rgb(255,255,255);
+		display: inline-flex;
+		font-family: inherit;
+		font-size: 100%;
+		font-weight: 400;
+		height: auto;
+		/* justify-content: space-between; */
+		line-height: inherit;
+		margin: 0 calc((var(--gutter) /2) - 2px);
+		outline: 0;
+		padding: 0.8rem 2rem;
+		text-align: center;
+		text-decoration: none;
+		user-select: none;
+	}
+	.docs__search-button .DocSearch-Button:hover {
+		background: var(--button-bk-hover);
+		box-shadow: none;
+		color: rgb(255,255,255);
+	}
+	.docs__search-button .DocSearch-Button:focus {
+		background: var(--button-bk);
+		box-shadow: none;
+		color: rgb(255,255,255);
+	}
+	.docs__search-button .DocSearch-Button:focus-visible {
+		box-shadow: 0 0 0 4px rgb(var(--smurf)) !important;
+	}
+		.docs__search-button .DocSearch-Button-Container {
+			display: initial;
+		}
+		.docs__search-button .DocSearch-Button-Container:before {
+			--icon: url('data:image/svg+xml,<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 1c3.3137 0 6 2.6863 6 6 0 .9263-.21 1.8036-.5848 2.587l2.7772 2.777c.3905.3905.3905 1.0237 0 1.4142l-1.4142 1.4142c-.3905.3905-1.0237.3905-1.4142 0l-2.777-2.7772C8.8035 12.7901 7.9262 13 7 13c-3.3137 0-6-2.6863-6-6s2.6863-6 6-6Zm0 2.5C5.067 3.5 3.5 5.067 3.5 7s1.567 3.5 3.5 3.5 3.5-1.567 3.5-3.5S8.933 3.5 7 3.5Z"/></svg>');
+			background-color: rgb(255,255,255);
+			content: '';
+			margin-left: -8px;
+			margin-right: -8px;
+			pointer-events: none;
+			display: inline-block;
+			height: 1.6rem;
+			mask: var(--icon);
+			position: relative;
+			top: .2rem;
+			width: 1.6rem;
+		}
+			.docs__search-button .DocSearch-Search-Icon {
+				display: none;
+			}
+			.docs__search-button .DocSearch-Button-Placeholder {
+				font-size: inherit;
+				margin-left: 2rem;
+				padding: 0;
+			}
+			.docs__search-button .DocSearch-Button-Keys {
+				margin-left: 0.2rem;
+				margin-right: -0.8rem;
+			}
+				.docs__search-button .DocSearch-Button-Key {
+					align-items: center;
+					background: none;
+					border: 1px solid rgba(255,255,255, 0.5);
+					border-radius: var(--block-radius);
+					box-shadow: none;
+					color: rgb(255,255,255);
+					font-size: 1.4rem;
+					height: auto;
+					justify-content: center;
+					line-height: 1;
+					margin-left: 0.2rem;
+					margin-right: 0;
+					padding: 0.2rem 0.4rem;
+					position: static;
+					width: auto;
+				}
+				/* This is to swap the CTRL which is added as an SVG, so kill the SVG and add it as text so we can match both keys. */
+				.docs__search-button .DocSearch-Button-Key:has(svg.DocSearch-Control-Key-Icon) svg {
+					display: none;
+				}
+				.docs__search-button .DocSearch-Button-Key:has(svg.DocSearch-Control-Key-Icon):first-child:after {
+					content: 'CTRL';
+					font-size: 1rem;
+					padding-top: 0.2rem;
+				}
+	/* Search popup, I'm not doing any changes past this currently. */
+	.DocSearch.DocSearch-Container {
+		background: rgba(var(--midnight), 0.8);
+		z-index: 700;
+	}
+
+/* This is to hide/show different iterations of things like the sidebar toggle on narrower screens. */
+.docs__narrow {
+	display: none;
+}
+
+/* RWD for header. */
+@media only screen and (max-width: 80rem) {
+	/* Header content fits the longest docs header title. */
+
+	/* Squish the version filter up a little. */
+	.filter-menu__text {
+		font-size: 1.3rem;
+		line-height: 1.25;
+		padding-top: 0.3rem;
+	}
+		.filter-menu__text span {
+			display: block;
+		}
+	/* Hide the search button label a11y. */
+	.page__header .docs__search-button .button__text {
+		clip: rect(0 0 0 0);
+		clip-path: inset(100%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+	/* Reduce title size. */
+	.page__header h3 {
+		font-size: 1em;
+	}
+}
+
+@media only screen and (max-width: 67rem) {
+	/* Hide the sidebar toggle in the sidebar because we're using the one in the header. */
+	.js__sidebar[minimized="1"] .sidebar__header,
+	.sidebar__header .sidebar__toggle {
+		display: none;
+	}
+
+	/* All the hidden elements on wider screens are swapped. */
+	.docs__wide {
+		display: none;
+	}
+	.docs__narrow {
+		display: inline-block;
+	}
+}
+
+@media only screen and (max-width: 46rem) {
+	/* 750px-ish. Really narrow screen, stack the header items. */
+	.page__header__cards {
+		display: grid;
+		grid-template-columns: fit-content(50%) 1fr;
+		grid-template-areas:
+			"b b"
+			"a c";
+		row-gap: calc(var(--gutter) / 2);
+	}
+		.page__header__cards .docs__logo {
+			grid-area: a;
+		}
+		.page__header__cards .docs__title {
+			grid-area: b;
+			text-align: center;
+		}
+		.page__header__cards .docs__header-nav {
+			grid-area: c;
+		}
+}
+
+
+/* Sidebar. */
+
+.sidebar__footer p {
+	width: 100%;
+}
+
+
+/* Sticky breadcrumb. */
+.js__docs__sticky-breadcrumb {
+	--breadcrumb-offset: 0;
+	background: var(--page-background);
+	display: block;
+	position: sticky;
+	top: -1px;
+	overflow: hidden;
+	padding-top: var(--breadcrumb-offset);
+	margin-bottom: calc(var(--gutter) * -1);
+	margin-top: calc(var(--breadcrumb-offset) * -1);
+	transition: background 0.3s ease-out;
+	z-index: 190;
+}
+.js__docs__sticky-breadcrumb.stuck {
+	background: rgb(var(--coal));
+	color: rgb(255,255,255);
+}
+		.js__docs__sticky-breadcrumb.stuck a {
+			color: rgb(255,255,255);
+		}
+		.js__docs__sticky-breadcrumb.stuck li:before {
+			border-left-color: rgb(255,255,255);
+		}
+
+
+/* Sidebar animation. */
+/* .page__sidebar {
+	transition: flex 0.3s ease-out;
+}
+	@keyframes view {
+		0% { opacity: 0; }
+		99% { opacity: 0; }
+		100% { opacity: 1; }
+	}
+	.js__sidebar .sidebar__content,
+	.js__sidebar .sidebar__footer,
+	.js__sidebar .docs__expand-all {
+		animation: 0.3s 0s forwards 1 view;
+		opacity: 1;
+	}
+	.js__sidebar[minimized="1"] .sidebar__content,
+	.js__sidebar[minimized="1"] .sidebar__footer,
+	.js__sidebar[minimized="1"] .docs__expand-all {
+		opacity: 0;
+	} */
+		/* We should indicate if something in the sidebar is gonna take the user away from the site. */
+		.docs__layout__text a[href^='http']:after,
+		.page__sidebar .menu__content[href^='http'] .menu__text:after {
+			color: currentColor;
+			content: '\279C';
+			display: inline-block;
+			font-size: .7em;
+			line-height: .1em;
+			margin-left: .2em;
+			transform: rotate(-45deg);
+			vertical-align: super;
+		}
+
+
+/* Expand all toggle button. */
+.docs__expand-all {
+	float: right;
+	margin-right: calc(var(--gutter) - 4px) !important;
+}
+blinky-sidebar[minimized="1"] .docs__expand-all {
+	display: none;
+}
+@media only screen and (max-width: 67rem) {
+	.docs__expand-all {
+		margin-right: 0 !important;
+	}
+}
+
+
+/* Content layout. */
+.docs__content {
+	container-type: inline-size;
+	container-name: max-content;
+}
+	.docs__layout {
+		display: grid;
+		gap: var(--gutter);
+		grid-template-columns: 1fr fit-content(20em);
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			'title toc'
+			'text toc';
+	}
+	.docs__layout:not(:has(.docs__layout__toc)) {
+		column-gap: 0;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			'title'
+			'text';
+	}
+		.docs__layout__title {
+			grid-area: title;
+		}
+		.docs__layout__toc {
+			grid-area: toc;
+			min-width: 20em;
+		}
+		.docs__layout__text {
+			grid-area: text;
+			min-width: 0;
+		}
+			/* On wider layouts we stick the TOC and make if follow the user down the page. */
+			.js__docs__toc-sticky {
+				display: block;
+				position: sticky;
+			}
+
+@container max-content (max-width: 100rem) {
+	.docs__content > .cards {
+		flex-direction: column-reverse;
+	}
+	.docs__layout {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas:
+			'title'
+			'toc'
+			'text';
+	}
+		/* Unstick the TOC on narrower screens, there's no point sticking if we're stacking the content. */
+		.js__docs__toc-sticky {
+			position: static;
+		}
+}
+
+
+/* Content anchors need to offset from the sticky header so anything with an ID will have this offset value, set from the DocsSticky component. */
+.docs__content [id] {
+	scroll-margin-top: var(--offset-scroll);
+}
+
+
+/* Table of contents. */
+.docs__toc {
+	background: rgba(var(--concrete), 0.5);
+	border-radius: var(--block-radius);
+	color: rgb(var(--page-text));
+	font-size: 1.4rem;
+	padding-bottom: var(--padding);
+	scroll-margin-top: var(--offset-scroll);
+}
+.docs__toc .scroll {
+	/* We don't need to waste resources getting the heights here, it just needs to be roughly a height that makes sense when sat next to the longer main page text block. */
+	max-height: calc(100vh - var(--offset-scroll) - 120px);
+}
+	.docs__toc h3 {
+		padding: var(--padding);
+		padding-bottom: 0;
+		font-size: 1.6rem;
+		margin-bottom: .8rem;
+	}
+	.docs__toc ul {
+		margin: 0;
+		list-style-type: none;
+	}
+		.docs__toc a {
+			color: rgb(var(--link-color));
+			display: block;
+			padding: calc(var(--padding) / 8) var(--padding);
+			padding-left: 3rem;
+			position: relative;
+		}
+		.docs__toc a:before {
+			content: "\2022";
+			left: 1.6rem;
+			position: absolute;
+		}
+		.docs__toc a.is-active {
+			background: rgb(var(--tango));
+			color: rgb(var(--onyx));
+		}
+		/* Quick fix for weird bug where everything is being marked as os-active on pages where there's no scrolling needed. */
+		.docs__toc li:has(a.is-active) + li:has(a.is-active) a  {
+			background: none;
+			color: rgb(var(--link-color));
+		}
+		/* .docs__toc li:has(a.is-active):not(:has(+ li:has(a.is-active))) a  {
+			background: green !important;
+		} */
+
+/* "Nested". */
+.docs__toc li[data-level="2"] a { padding-left: 4.6rem; }
+.docs__toc li[data-level="2"] a:before { left: 3rem; }
+
+.docs__toc li[data-level="3"] a { padding-left: 6.2rem; }
+.docs__toc li[data-level="3"] a:before { left: 4.6rem; }
+
+.docs__toc li[data-level="4"] a { padding-left: 7.8rem; }
+.docs__toc li[data-level="4"] a:before { left: 6.2rem; }
+
+.docs__toc li[data-level="5"] a { padding-left: 9.4rem; }
+.docs__toc li[data-level="5"] a:before { left: 7.8rem; }
+
+/* Show a back to top button on smaller screens where the TOC isn't sticky. */
+.back-to-top {
+	display: none;
+	position: fixed;
+	bottom: calc(var(--gutter) * 2);
+	right: calc(var(--gutter) * 2);
+}
+
+/* Compress TOC a little on smaller screens. */
+@container max-content (max-width: 100rem) {
+	.docs__toc {
+		padding-bottom: var(--padding);
+	}
+		.docs__toc .scroll {
+			max-height: none;
+		}
+
+	.js__back-to-top--show {
+		display: block;
+	}
+}
+
+
+/* Pagination. */
+.pagination {
+	margin-top: 3.2rem;
+}
+
+
+/* Page content. */
+
+.docs__layout__text {
+	tab-size: 4;
+	word-wrap: anywhere;
+}
+
+/* Typography. */ 
+
+.docs__layout__text div:has(> h1:first-child), 
+.docs__layout__text div:has(> h2:first-child),
+.docs__layout__text div:has(> h3:first-child) {
+	margin-top: 3.2rem;
+}
+.docs__layout__text div:has(> h4:first-child) {
+	margin-top: 2.4rem;
+}
+
+.docs__layout__text div:has(h1) h1 + div div:has(h1:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h2:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h1) h1 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h2) h2 + div div:has(h2:first-child):first-child,
+.docs__layout__text div:has(h2) h2 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h2) h2 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h3) h3 + div div:has(h3:first-child):first-child,
+.docs__layout__text div:has(h3) h3 + div div:has(h4:first-child):first-child,
+
+.docs__layout__text div:has(h1) h1 + div:has(> h1:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h2:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h3:first-child),
+.docs__layout__text div:has(h1) h1 + div:has(> h4:first-child),
+
+.docs__layout__text div:has(h2) h2 + div:has(> h2:first-child),
+.docs__layout__text div:has(h2) h2 + div:has(> h3:first-child),
+.docs__layout__text div:has(h2) h2 + div:has(> h4:first-child),
+
+.docs__layout__text div:has(h3) h3 + div:has(> h4:first-child),
+.docs__layout__text div:has(h3) h3 + div:has(> h3:first-child) {
+	margin-top: 0 !important;
+}
+.docs__layout__text .doc div:first-child:has(h1:first-child),
+.docs__layout__text .doc div:first-child:has(h2:first-child),
+.docs__layout__text .doc div:first-child:has(h3:first-child),
+.docs__layout__text .doc div:first-child:has(h4:first-child),
+.docs__content:not(:has(.docs__layout__title)) .docs__layout__text .doc > div:first-child {
+	margin-top: 0 !important;
+}
+
+.docs__layout__text .paragraph > p,
+.docs__layout__text ul,
+.docs__layout__text ol {
+	margin-bottom: 1.6rem !important;
+}
+.docs__layout__text ol {
+	list-style-type: decimal;
+	margin-bottom: 1.6rem;
+	margin-left: 4.8rem;
+}
+
+/* Checklist. */
+.docs__layout__text ul.checklist {
+	margin-left: 2.4rem;
+}
+	.docs__layout__text .checklist i {
+		display: inline-block;
+		height: 1em;
+		margin-right: 3px;
+		width: 1em;
+	}
+	.docs__layout__text .checklist i.fa-check-square-o {
+		--icon: url('data:image/svg+xml,<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="m14.1421 2.7071.7071.7071c.3906.3905.3906 1.0237 0 1.4142L7.0787 12.599a1.0199 1.0199 0 0 1-.0076.0077l-.7071.7071a.9954.9954 0 0 1-.5307.2773l-.1174.0139h-.118a.9962.9962 0 0 1-.6482-.2912L.7071 9.0711c-.3905-.3906-.3905-1.0237 0-1.4142l.7071-.7072c.3905-.3905 1.0237-.3905 1.4142 0L5.657 9.778l7.071-7.0709c.3904-.3905 1.0236-.3905 1.4141 0Z"/></svg>');
+		background-color: rgb(var(--frog));
+		mask: var(--icon);
+	}
+	.docs__layout__text .checklist i.fa-square-o {
+		position: relative;
+	}
+	.docs__layout__text .checklist i.fa-square-o:after {
+		border: solid 2px rgba(var(--basalt),0.75);
+		border-radius: var(--block-radius);
+		bottom: 0;
+		content: '';
+		height: 0.8em;
+		position: absolute;
+		right: 0.1em;
+		width: 0.8em;
+	}
+
+/* Definition list. */
+.docs__layout__text .dlist dl {
+	margin-bottom: 1.6rem;
+}
+	.docs__layout__text .dlist dt {
+		font-weight: 700;
+	}
+	.docs__layout__text dt:not(:first-of-type) {
+		margin-top: 1.6rem;
+	}
+
+.docs__layout__text mark {
+	background: rgba(var(--tango), 0.5);
+	padding: 0 2px;
+}
+
+/* Blockquote */
+.docs__layout__text .quoteblock {
+	border-left: solid 4px rgba(var(--basalt), 0.25);
+	margin-bottom: 1.6rem;
+	padding-left: var(--padding);
+}
+	.docs__layout__text .quoteblock .attribution {
+		font-weight: 700;
+	}
+	.docs__layout__text .quoteblock .attribution cite {
+		margin-left: 1em;
+	}
+
+/* Button. */
+.docs__layout__text b.button {
+	background: none !important;
+	border-radius: 0;
+	box-shadow: none;
+	color: rgb(var(--page-text)) !important;
+	display: inline;
+	font-weight: 700;
+	margin: 0;
+	padding: 0 !important;
+}
+	.docs__layout__text b.button::before {
+		content: "[";
+		padding-right: 0.25em;
+	}
+	.docs__layout__text b.button::after {
+		content: "]";
+		padding-left: 0.25em;
+	}
+
+/* Key. */
+.docs__layout__text .keyseq {
+	font-size: 1.3rem;
+}
+.docs__layout__text kbd {
+	border: 1px solid rgba(var(--basalt), 0.5);
+	border-radius: var(--block-radius);
+	line-height: 1;
+	display: inline-block;
+	font-size: 1.4rem;
+	padding: 0.2rem 0.4rem;
+}
+
+/* Some content in Cloud docs has a class of .page on a link! We need to clear out the actual framework page styles. */
+.docs__layout__text a.page {
+	display: inline;
+	background: none;
+	color: rgb(var(--link-color));
+}
+
+/* Menu. */
+.docs__layout__text .menuseq {
+	font-weight: 700;
+	hyphens: none;
+}
+	.docs__layout__text .menuseq i.caret::before {
+		content: "\203a";
+		font-size: 1.1em;
+		line-height: 1;
+	}
+
+/* General content adjustments. */
+.docs__layout__text .path {
+  hyphens: none;
+}
+.docs__layout__text .left {
+	float: left;
+	margin-right: 1.6rem;
+}
+.docs__layout__text .right {
+	float: right;
+	margin-left: 1.6rem;
+}
+.docs__layout__text .text-left {
+	text-align: left;
+}
+.docs__layout__text .text-center {
+	text-align: center;
+}
+.docs__layout__text .text-right {
+	text-align: right;
+}
+.docs__layout__text .text-justify {
+	text-align: justify;
+}
+.docs__layout__text .stretch {
+	width: 100%;
+}
+.docs__layout__text .big {
+	font-size: larger;
+}
+.docs__layout__text .small {
+	font-size: smaller;
+}
+.docs__layout__text .underline {
+	text-decoration: underline;
+}
+.docs__layout__text .line-through {
+	text-decoration: line-through;
+}
+.docs__layout__text :not(pre).nowrap {
+	white-space: nowrap;
+}
+.docs__layout__text .nobreak {
+	hyphens: none;
+	word-wrap: normal;
+}
+.docs__layout__text :not(pre).pre-wrap {
+	white-space: pre-wrap;
+}
+.docs__layout__text #footnotes {
+	font-size: 0.85em;
+	margin-top: 1.6rem;
+}
+	.docs__layout__text #footnotes .footnote:not(:first-child) {
+		margin-top: 0.4rem;
+	}
+
+/* Syntax highlighted codeblock. */
+/* Codeblock. */
+/* Example. */
+.docs__layout__text .exampleblock,
+.docs__layout__text .listingblock,
+.docs__layout__text .literalblock {
+	background: rgba(var(--basalt),0.025);
+	border: 1px dashed rgb(var(--smurf));
+	border-radius: var(--block-radius);
+	margin-bottom: 1.6rem;
+	position: relative;
+	width: 100%;
+}
+	.docs__layout__text .exampleblock > .title,
+	.docs__layout__text .listingblock > .title {
+		font-weight: 700;
+		padding: var(--padding) var(--padding) 0 var(--padding);
+	}
+	.docs__layout__text .exampleblock > .content,
+	.docs__layout__text .listingblock > .content,
+	.docs__layout__text .literalblock > .content {
+		padding: var(--padding);
+		overflow: auto;
+		width: 100%;
+	}
+		.docs__layout__text .listingblock > .content code,
+		.docs__layout__text .literalblock > .content code {
+			display: inline-block;
+			padding-right: var(--padding);
+		}
+		.docs__layout__text .source-toolbox {
+			font-size: 1.2rem;
+			font-weight: 700;
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			text-transform: uppercase;
+			top: 0;
+		}
+			.docs__layout__text .source-toolbox .source-lang {
+				display: inline-block;
+				padding: 0.8rem;
+			}
+		.docs__layout__text .listingblock:hover .source-toolbox,
+		.docs__layout__text .listingblock:focus-within .source-toolbox {
+			background: rgb(255,255,255);
+			border-bottom-left-radius: var(--block-radius);
+			opacity: 0.9;
+		}
+			.docs__layout__text .source-toolbox > :not(:last-child)::after {
+				content: "|";
+				padding-left: 0.8rem;
+			}
+			.docs__layout__text .source-toolbox .copy-button {
+				margin-left: -0.8rem;
+			}
+				.docs__layout__text .source-toolbox .copy-button .icon2,
+				.docs__layout__text .source-toolbox .copy-button.clicked .icon1 {
+					opacity: 0;
+					transition: opacity 0.5s ease 0.5s;
+				}
+				.docs__layout__text .source-toolbox .copy-button .icon1,
+				.docs__layout__text .source-toolbox .copy-button.clicked .icon2 {
+					opacity: 1;
+					transition: opacity 0.5s ease 0.5s;
+				}
+
+/* Numbered Descriptions on images and other things. */
+.docs__layout__text .colist {
+	margin-bottom: 1.6rem;
+}
+.docs__layout__text .listingblock:has(.conum) + .colist {
+	margin-top: -0.8rem;
+}
+	.docs__layout__text .conum[data-value] {
+		background: rgb(var(--basalt));
+		border-radius: 50%;
+		color: rgb(255,255,255);
+		display: inline-block;
+		font-size: 1.3rem;
+		font-style: normal;
+		height: 1.3em;
+		width: 1.3em;
+		line-height: 1.2;
+		text-align: center;
+	}
+	.docs__layout__text .conum[data-value]::after {
+	content: attr(data-value);
+	}
+	.docs__layout__text .conum[data-value] + b {
+		display: none;
+	}
+	.docs__layout__text .colist td {
+		vertical-align: top;
+	}
+	.docs__layout__text .colist tr:not(:last-child) td {
+		padding-bottom: calc(var(--padding) / 4);
+	}
+	.docs__layout__text .colist tr td:first-child {
+		padding-right: calc(var(--padding) / 4);
+	}
+
+/* Sidebar block. */
+.docs__layout__text .sidebarblock {
+	background: rgb(var(--tango));
+	border-radius: var(--block-radius);
+	margin-bottom: 1.6rem;
+	padding: var(--padding);
+}
+	.docs__layout__text .sidebarblock .title {
+		font-weight: 700;
+		margin-bottom: 1.6rem;
+	}
+	.docs__layout__text .sidebarblock .paragraph:last-child p {
+		margin-bottom: 0 !important;
+	}
+
+
+
+
+
+/* Table. */
+.docs__layout__text table.tableblock {
+	margin-bottom: 1.6rem;
+}
+	.docs__layout__text table.tableblock .title {
+		font-weight: 700;
+		margin-bottom: 0.8rem;
+		text-align: left;
+	}
+	.docs__layout__text table.tableblock th, 
+	.docs__layout__text table.tableblock td {
+		padding: 0.8rem var(--padding);
+	}
+	.docs__layout__text table.tableblock, 
+	.docs__layout__text table.tableblock > * > tr > * {
+		border: solid 0px rgba(var(--table), var(--table-border-opacity));
+	}
+	.docs__layout__text table.tableblock.grid-all > * > tr > * {
+		border-width: 1px;
+	}
+	.docs__layout__text table.tableblock.grid-cols > * > tr > * {
+		border-width: 0 1px;
+	}
+	.docs__layout__text table.tableblock.grid-rows > * > tr > * {
+		border-width: 1px 0;
+	}
+	.docs__layout__text table.tableblock thead th {
+		font-weight: 700;
+	}
+	.docs__layout__text table.tableblock.grid-all > thead th,
+	.docs__layout__text table.tableblock.grid-rows > thead th {
+		background: rgba(var(--table), var(--table-header-opacity));
+		color: rgb(var(--table-header-text));
+	}
+.docs__layout__text table.tableblock.frame-all {
+	border-width: 1px;
+}
+.docs__layout__text table.tableblock.frame-ends {
+	border-width: 1px 0;
+}
+.docs__layout__text table.tableblock.frame-sides {
+	border-width: 0 1px;
+}
+	.docs__layout__text table.tableblock.frame-none > colgroup + * > :first-child > *,
+	.docs__layout__text table.tableblock.frame-sides > colgroup + * > :first-child > * {
+		border-top-width: 0;
+	}
+	/* NOTE let the grid win in case of frame-none */
+	.docs__layout__text table.tableblock.frame-sides > :last-child > :last-child > * {
+		border-bottom-width: 0;
+	}
+	.docs__layout__text table.tableblock.frame-none > * > tr > :first-child,
+	.docs__layout__text table.tableblock.frame-ends > * > tr > :first-child {
+		border-left-width: 0;
+	}
+	.docs__layout__text table.tableblock.frame-none > * > tr > :last-child,
+	.docs__layout__text table.tableblock.frame-ends > * > tr > :last-child {
+		border-right-width: 0;
+	}
+	.docs__layout__text table.tableblock.stripes-all > tbody > tr,
+	.docs__layout__text table.tableblock.stripes-odd > tbody > tr:nth-of-type(odd),
+	.docs__layout__text table.tableblock.stripes-even > tbody > tr:nth-of-type(even),
+	.docs__layout__text table.tableblock.stripes-hover > tbody > tr:hover {
+			background: rgba(var(--table), 0.05);
+	}
+	.docs__layout__text table.tableblock > tfoot {
+		background: rgba(var(--table), 0.1);
+	}
+		.docs__layout__text td.tableblock > .content {
+			/* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
+			word-wrap: anywhere; 
+		}
+		.docs__layout__text td.tableblock > .content > :last-child > :last-child {
+			margin-bottom: 0 !important;
+		}
+			.docs__layout__text table.tableblock pre {
+				/* Stops PREs from pushing table columns too wide. */
+				white-space: pre-wrap;
+			}
+
+		.docs__layout__text .halign-left {
+			text-align: left;
+		}
+		.docs__layout__text .halign-right {
+			text-align: right;
+		}
+		.docs__layout__text .halign-center {
+			text-align: center;
+		}
+		.docs__layout__text .valign-top {
+			vertical-align: top;
+		}
+		.docs__layout__text .valign-bottom {
+			vertical-align: bottom;
+		}
+		.docs__layout__text .valign-middle {
+			vertical-align: middle;
+		}
+
+
+
+
+
+/* Admonition blocks. */
+.docs__layout__text .admonitionblock {
+	border-radius: var(--block-radius);
+	margin-bottom: 1.6rem;
+	overflow: hidden;
+	position: relative;
+}
+	.docs__layout__text .admonitionblock > table {
+		table-layout: fixed;
+		width: 100%;
+	}
+		.docs__layout__text .admonitionblock td {
+			display: block;
+		}
+		.docs__layout__text .admonitionblock .icon {
+			height: auto;
+			left: -1px;
+			padding: 0;
+			position: absolute;
+			top: -1px;
+			width: auto;
+		}
+			.docs__layout__text .admonitionblock .icon i {
+				background: rgb(var(--admonitionblock-bk, 102,102,102));
+				border-bottom-right-radius: var(--block-radius);
+				color: rgb(var(--admonitionblock-txt, 255,255,255));
+				display: inline-block;
+				font-style: normal;
+				font-weight: 700;
+				padding: 0 var(--padding);
+				text-transform: uppercase;
+			}
+			.docs__layout__text .admonitionblock .icon i:after {
+				content: attr(title);
+			}
+		.docs__layout__text .admonitionblock td.content {
+			background: rgba(var(--admonitionblock-bk, 102,102,102), var(--admonitionblock-op, 0.1));
+			padding: calc(var(--padding) * 2) var(--padding) var(--padding) var(--padding);
+		}
+			.docs__layout__text .admonitionblock .title {
+				font-weight: 700;
+				margin-bottom: 1.6rem;
+			}
+			.docs__layout__text .admonitionblock .paragraph:last-child p {
+				margin-bottom: 0 !important;
+			}
+			.docs__layout__text .admonitionblock .listingblock {
+				background: rgba(255,255,255, var(--card-background-opacity));
+			}
+			.docs__layout__text .admonitionblock .listingblock:last-child {
+				margin-bottom: 0 !important;
+			}
+
+
+.docs__layout__text .admonitionblock.tip {
+	--admonitionblock-bk: var(--frog);
+}
+.docs__layout__text .admonitionblock.note {
+	--admonitionblock-bk: var(--smurf);
+}
+.docs__layout__text .admonitionblock.warning {
+	--admonitionblock-bk: var(--tango);
+	--admonitionblock-op: 0.15;
+	--admonitionblock-txt: var(--coal);
+}
+.docs__layout__text .admonitionblock.caution {
+	--admonitionblock-bk: var(--plum);
+}
+.docs__layout__text .admonitionblock.important {
+	--admonitionblock-bk: var(--cherry);
+}
+
+/* Images. */
+.docs__layout__text .imageblock, .docs__layout__text .videoblock {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1.6rem;
+}
+	.docs__layout__text .imageblock .title {
+		font-weight: 700;
+		margin-top: 0.8rem;
+	}

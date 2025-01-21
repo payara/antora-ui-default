@@ -22,7 +22,7 @@
 
 This project is the source code and also a repository for the UI bundle that is used by {url-antora}[Antora] for both Payara Documentation editions to generate the {url-payara-docs}[Payara Platform and Cloud Documentation site].
 
-The UI is based on the {url-project}[default Antora UI].
+The UI is based on the {url-project}[default Antora UI] and https://github.com/payara/pattern-library[Payara Blinky Pattern Library].
 
 == Configuration Attributes
 
@@ -34,6 +34,17 @@ One of:
 * `enterprise`
 * `community`
 * `cloud`
+
+== Theme Changes
+
+This theme now uses Blinky for all HTML and CSS, the JS is a mix of Blinky for component interaction and the original Antora theme JS for generating menu states, jumping to positions on the page, and generating the TOCs. The original JS as some changes to work with the altered HTML structure. Please note that the icons will not be visible if you view the pages by simply dragging them into a browser window, they must be loaded from a server.
+
+== Additions to Taskrunners
+
+A couple of extra Gulp scripts have been added to copy the Blinky UI files needed that run along with the default theme scripts so you do not need to do anything extra. The new script files are:
+
+* `gulp.d/blinky.js` - copies UI files into the public folder
+* `gulp.d/blinkyJS.js` - copies and minifies UI JS files into the public folder
 
 == Copyright and License
 

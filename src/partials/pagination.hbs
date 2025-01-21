@@ -1,16 +1,26 @@
 {{#unless (eq page.attributes.pagination undefined)}}
-{{#if (or page.previous page.next)}}
-<nav class="pagination">
-  {{#if (ne page.attributes.pagination 'next')}}
-  {{#with page.previous}}
-  <span class="prev"><a href="{{{relativize ./url}}}">{{{./content}}}</a></span>
-  {{/with}}
-  {{/if}}
-  {{#if (ne page.attributes.pagination 'prev')}}
-  {{#with page.next}}
-  <span class="next"><a href="{{{relativize ./url}}}">{{{./content}}}</a></span>
-  {{/with}}
-  {{/if}}
-</nav>
-{{/if}}
+	{{#if (or page.previous page.next)}}
+		<nav class="pagination text-align--center">
+			{{#if (ne page.attributes.pagination 'next')}}
+				{{#with page.previous}}
+					<a href="{{{relativize ./url}}}" class="button">
+						<svg class="icon icon--90deg" width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<use href="{{{uiRootPath}}}/ui/images/icons.svg#icon-arrow"></use>
+						</svg>
+						<span class="button__text">{{{./content}}}</span>
+					</a>
+				{{/with}}
+			{{/if}}
+			{{#if (ne page.attributes.pagination 'prev')}}
+				{{#with page.next}}
+					<a href="{{{relativize ./url}}}" class="button">
+						<svg class="icon icon--270deg" width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<use href="{{{uiRootPath}}}/ui/images/icons.svg#icon-arrow"></use>
+						</svg>
+						<span class="button__text">{{{./content}}}</span>
+					</a>
+				{{/with}}
+			{{/if}}
+		</nav>
+	{{/if}}
 {{/unless}}
