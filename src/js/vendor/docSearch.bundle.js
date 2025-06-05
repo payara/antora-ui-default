@@ -2,7 +2,7 @@ var docsearch = require('@docsearch/js')
 
 function getCurrentVersion () {
   var docsVersion = null
-  var versionMetaTag = document.querySelector('cmeta[name="docsearch:version"]')
+  var versionMetaTag = document.querySelector('meta[name="docsearch:version"]')
   if (versionMetaTag) {
     docsVersion = versionMetaTag.content
   }
