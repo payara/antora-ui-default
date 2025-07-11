@@ -6,6 +6,8 @@
 					<img src="{{{uiRootPath}}}/ui/images/logo-enterprise.svg" alt="{{site.title}}" class="logo__full" />
 				{{else if (eq page.attributes.site-edition "community")}}
 					<img src="{{{uiRootPath}}}/ui/images/logo-community.svg" alt="{{site.title}}" class="logo__full" />
+				{{else if (eq page.attributes.site-edition "qube")}}
+          <img src="{{{uiRootPath}}}/ui/images/logo-qube.svg" alt="{{site.title}}" class="logo__full" />
 				{{else}}
 					<img src="{{{uiRootPath}}}/ui/images/logo-cloud.svg" alt="{{site.title}}" class="logo__full" />
 				{{/if}}
