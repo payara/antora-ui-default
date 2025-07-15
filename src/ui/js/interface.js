@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.73.0 */
+/*! Payara Pattern Library version: 0.78.1 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 // Always set a top level class to indicate if we have JS available.
@@ -1788,6 +1788,12 @@ class BlinkyNewthing extends HTMLElement {
 			ul.classList.add('nav__group');
 		}
 
+		// We only want to set a max-height to the main UL.
+		const nav_group = this.querySelector('.nav__group');
+		if (this.hasAttribute('list-height')) {
+			nav_group.setAttribute('style', 'max-height: '+this.getAttribute('list-height'));
+		}
+
 		const nav_li = this.querySelectorAll('.filter-menu__list li');
 		for (let li of nav_li) {
 			li.classList.add('nav__item');
@@ -2440,60 +2446,123 @@ var form_steps = (function() {
 	};
 
 })();
-var help_toggle = (function() {
-
-	/*
-		This can either be run to grab all of the .form__help-toggle elements by 
-		default a group of elements, or in a more specific per element way.
-
-		Find all default: help_toggle.init();
-		Find all: help_toggle.init('.CSS-class-goes-here');
-		Target specific element: help_toggle.toggle(el);
-
-		el in toggle can either be an actual element or an ID.
-	*/
-
-	var __init = function(els) {
-
-		// Find all instances of help toggles and loop through them. If nothing is passed across then we search for the default .form__help-toggle
-		var help_toggles;
-		if (els) {
-			help_toggles = document.querySelectorAll(els);
-		} else {
-			help_toggles = document.querySelectorAll('.form__help-toggle');
-		}
-
-		for (i=0; i<help_toggles.length; i++) {
-			__toggle(help_toggles[i]);
-		}
-	};
-
-	var __toggle = function(el) {
-		if (el) {
-
-			// Check if we've been passed a CSS ID or class rather than an element and grab it as an element.
-			if (!el.tagName) el = document.querySelector(el);
-			
-			if (el) {
-				el.addEventListener('click', function(e) {
-					if (e.target.getAttribute('aria-expanded') == 'false') {
-						e.target.setAttribute('aria-expanded', true);
-					} else {
-						e.target.setAttribute('aria-expanded', false);
-					}
-					e.target.parentElement.classList.toggle('form__help-text--open');
-					e.preventDefault();
-				}, false);
-			}
-		}
-	};
-
-	return {
-		init: __init,
-		toggle: __toggle
-	};
+class BlinkyHelpText extends HTMLElement {
 	
-})();
+	static get observedAttributes() {
+		return ['expanded'];
+	}
+	
+	constructor() {
+		super();
+	}
+	
+	_addToggle() {
+		let btn = document.createElement('button');
+		btn.setAttribute('class', 'button help-text__toggle');
+		btn.setAttribute('type', 'button');
+		btn.setAttribute('aria-expanded', 'false');
+		btn.setAttribute('aria-controls', this.id+'-text');
+
+		let btnIcon = document.createElement('span');
+		btnIcon.setAttribute('class', 'help-text__toggle-icon');
+		btn.append(btnIcon);
+
+		const icon_svg = blinky_addIcon(this.getAttribute('icon') || 'help', this);
+		btnIcon.append(icon_svg);
+
+		let btnLabel = document.createElement('span');
+		btnLabel.setAttribute('class', 'visually-hidden');
+		this.setAttribute('help-label-0', this.getAttribute('help-label-0') || 'Help');
+		btnLabel.innerText = this.getAttribute('help-label-0');
+		this.setAttribute('help-label-1', this.getAttribute('help-label-1') || 'Displaying Help');
+		btn.append(btnLabel);
+
+		let el = document.getElementById(this.getAttribute('btn-container'));
+		if ( el != null ) {
+			el.append(btn);
+		} else {
+			this.prepend(btn);
+		}
+
+		// Flip the epanded attribute between 0 and 1, this kickstarts all
+		// the other functionality due to the attribute being observable.
+		btn.addEventListener(
+			'click',
+			(e) => {
+				this.setAttribute('expanded', Number(!JSON.parse(this.getAttribute('expanded'))));
+			}
+		);
+	}
+	
+	_toggleBtnState() {
+		// Update button.
+		const btn = document.querySelector('button[aria-controls="'+this.id+'-text"]');
+		// Set the aria attribute on the toggle to match the main observable attribute on the WC.
+		btn.setAttribute('aria-expanded', this.getAttribute('expanded') || '0');
+		// Change the button label to the text attribute that is appended with the current 0 or 1 of the expanded value.
+		btn.querySelector('.visually-hidden').innerText = this.getAttribute('help-label-'+this.getAttribute('expanded'));
+	}
+	
+	_connectHelpToInput() {
+		// Add the aria attribute if we have data of which field the help text is refering to.
+		if (this.getAttribute('describes') && document.getElementById(this.getAttribute('describes'))) {
+			document.getElementById(this.getAttribute('describes')).setAttribute('aria-describedby', this.id+'-text');
+		}
+	}
+	
+	connectedCallback() {
+		// Does the WC have an ID? If not add a generated one.
+		this.id = this.id || 'gen'+Math.random().toString(36).slice(2);
+		
+		// We use this to guard actions in attributeChangedCallback() but 
+		// also to apply any CSS that may only be needed on the JSed element
+		this.classList.add('js__help-text');
+
+		// Wrap the help text in a span for styling.
+		const help_content = document.createElement('span');
+		help_content.classList.add('help-text__content');
+		help_content.id = this.id+'-text';
+		Blinky_wrap_content({
+			el: this,
+			wrapper: help_content
+		});
+		
+		// Create and add the toggle button.
+		this._addToggle();
+		
+		// Make sure we have the correct CSS class.
+		this.classList.add('help-text');
+		
+		// Set the expanded attribute default if none exists.
+		this.setAttribute('expanded', this.getAttribute('expanded') || '0');
+		
+		// If the WC has a 'describes' attribute we can connect
+		// the help text to the field via aria-describedby.
+		this._connectHelpToInput();
+
+		// Set the correct state for toggle label and aria attribute.
+		this._toggleBtnState();
+	}
+	
+	disconnectedCallback() {
+		// Remove any external connected toggle buttons.
+		try {
+			document.querySelector('button[aria-controls="'+this.id+'-text"]').remove();
+		} catch(err) {}
+	}
+	
+	attributeChangedCallback(att, old_v, new_v) {
+		// Because this method fires purely on the element being inited we 
+		// guard the actions by checking to make sure it's not the first run.
+		// Also, only run if the attribute was actually updated.
+		if ((!this.classList.contains('js__help-text')) || (old_v === new_v)) return false;
+		
+		// Update the toggle button.
+		if (att === 'expanded') this._toggleBtnState();
+	}
+}
+
+customElements.define('blinky-help-text', BlinkyHelpText);
 
 
 
@@ -2889,6 +2958,10 @@ var switch_toggle = (function() {
 
 		switched = e.target.getAttribute('aria-pressed') === 'true';
 		e.target.setAttribute('aria-pressed', String(!switched));
+
+		let ev = new Event('switchPressed');
+		ev.state = String(!switched);
+		e.target.dispatchEvent(ev);
 	};
 	
 	

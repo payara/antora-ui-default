@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.73.0 */
+/*! Payara Pattern Library version: 0.78.1 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 /* Reset */
@@ -118,6 +118,7 @@
 		/* Primary Payara Colours. */
 		--tango: 240,152,27;
 		--midnight: 0,44,62;
+		--snow: 255,255,255;
 
 		/* Secondary Payara Colours. */
 		--smurf: 0,124,194;
@@ -125,11 +126,12 @@
 		--concrete: 218,224,226;
 
 		/* Statuses, can be paired with white text to comply with AA a11y. */
-		--cherry: 155,18,0;		/* Error */
+		/* --cherry: 155,18,0;		Error */
+		--cherry: 219,26,0;		/* Error */
 		--frog: 0,103,41;		/* Success */
 
-		--cherry-on-dark: 255,150,130;
-		--cherry-on-dark: 255,86,65;	/* This should not be used for text colour, more for edge cases like error borders on form fields. */
+		/* --cherry-on-dark: 255,150,130; */
+		/* --cherry-on-dark: 255,86,65;	This should not be used for text colour, more for edge cases like error borders on form fields. */
 		/* --frog-on-dark:  */
 
 		/* Used for dark mode, shadows, etc. */
@@ -242,6 +244,16 @@
 	}
 	.color-fill--midnight {
 		fill: rgb(var(--midnight)) !important;
+	}
+
+	.color--snow {
+		color: rgb(var(--snow)) !important;
+	}
+	.color-bk--snow {
+		background: rgb(var(--snow)) !important;
+	}
+	.color-fill--snow {
+		fill: rgb(var(--snow)) !important;
 	}
 
 	.color--smurf {
@@ -379,32 +391,38 @@
 		font-weight: 700;
 		margin-bottom: 1.6rem;
 		margin-top: 3.2rem;
+		text-wrap: balance;
 	}
 	h2:not([class]), .h2 {
 		font-size: 2.6rem;
 		font-weight: 700;
 		margin-bottom: 1.6rem;
 		margin-top: 3.2rem;
+		text-wrap: balance;
 	}
 	h3:not([class]), .h3 {
 		font-size: 2rem;
 		font-weight: 700;
 		margin-bottom: 1.6rem;
 		margin-top: 3.2rem;
+		text-wrap: balance;
 	}
 	h4:not([class]), .h4 {
 		font-size: 1.6rem;
 		font-weight: 700;
 		margin-bottom: 1.6rem;
 		margin-top: 2.4rem;
+		text-wrap: balance;
 	}
 	h5:not([class]), .h5 {
 		font-size: 1.6rem;
 		font-weight: 700;
+		text-wrap: balance;
 	} 
 	h6:not([class]), .h6 {
 		font-size: 1.6rem;
 		font-weight: 700;
+		text-wrap: balance;
 	}
 
 	/* Squish the excessive margins when titles are placed next to each other. */
@@ -505,6 +523,15 @@
 		margin-bottom: 0;
 	}
 
+	.ul--half-indent {
+		list-style-type: disc;
+		margin-bottom: 1.6rem;
+		margin-left: 1.6rem;
+	}
+	.ul--half-indent:last-child {
+		margin-bottom: 0;
+	}
+
 
 	
 /* Ordered List */
@@ -515,6 +542,15 @@
 		margin-left: 4.8rem;
 	}
 	ol:not([class]):last-child {
+		margin-bottom: 0;
+	}
+
+	.ol--half-indent {
+		list-style-type: decimal;
+		margin-bottom: 1.6rem;
+		margin-left: 1.6rem;
+	}
+	.ol--half-indent:last-child {
 		margin-bottom: 0;
 	}
 
@@ -816,6 +852,16 @@
 		text-align: right;
 	}
 
+	.table tr.text-align--left :where(th, td) {
+		text-align: left;
+	}
+	.table tr.text-align--center :where(th, td) {
+		text-align: center;
+	}
+	.table tr.text-align--right :where(th, td) {
+		text-align: right;
+	}
+
 
 	
 /* No wrapping */
@@ -977,17 +1023,20 @@
 
 		/* VERSION 1.0.0: This line is kept in purely for backwards compatibility, when we bump the major version number it can go. */
 		.cards > *, 
-		.cards > .card, 
-		/* Nested cards by default do not add the card background or padding, this is to try and discourage "everything in a box" design, we can add these back in by using this card--bk class. */
-		.cards .cards.card--bk > .card, 
-		.cards .cards .card.card--bk {
-			background: rgba(255,255,255, var(--card-background-opacity));
-			border-radius: var(--block-radius);
+		.cards > .card {
 			/* IE11 fallback. */
 			flex: 1 0 6rem;
 			/* This fits a single icon-only button plus padding, realistically 
 			   nothing should actually be this small. */
 			flex: 1 0 calc(4rem + calc(var(--padding) * 2));
+		}
+		.cards > *, 
+		.cards > .card,
+		/* Nested cards by default do not add the card background or padding, this is to try and discourage "everything in a box" design, we can add these back in by using this card--bk class. */
+		.cards .cards.card--bk > .card, 
+		.cards .cards .card.card--bk {
+			background: rgba(255,255,255, var(--card-background-opacity));
+			border-radius: var(--block-radius);
 			padding: var(--padding);
 		}
 
@@ -1014,7 +1063,8 @@
 		}
 		/* For if we want to use the card layout without the backgrounds. */
 		.card--no-bk,
-		.card.card--no-bk {
+		.card.card--no-bk,
+		.cards.card--no-bk > * {
 			background: none;
 		}
 		
@@ -1179,20 +1229,24 @@
 
 		/* Sets a maximum width on the card container, if the available screen size exceeds this amount the extra space is distributed evenly on the left and right margins. */
 
-		.cards--max-width {
+		/* .cards--max-width {
 			margin: auto;
-		}
-		.cards--max-width > .cards {
+		} */
+		/* Not sure this is needed. */
+		/* .cards--max-width > .cards {
 			margin-left: calc((var(--gutter)/ 2) - var(--gutter));
 			margin-right: calc((var(--gutter)/ 2) - var(--gutter));
-		}
+		} */
 		.cards--max-width--small {
+			margin: auto;
 			max-width: 45rem;
 		}
 		.cards--max-width--medium {
+			margin: auto;
 			max-width: 65rem;
 		}
 		.cards--max-width--large {
+			margin: auto;
 			max-width: 130rem;
 		}
 
@@ -1219,23 +1273,28 @@
 	
 
 
-	.cards > .card.card--callout--tango {
-		background: rgb(var(--tango));
-		color: rgb(var(--basalt));
+	.cards > .card.card--callout--tango,
+	.cards > .card.card-bk--tango {
+		background: rgb(var(--tango)) !important;
+		color: rgb(var(--basalt)) !important;
 		padding: var(--padding);
 	}
-	.cards > .card.card--callout--blue {
-		background: rgb(var(--smurf));
-		color: rgb(255,255,255);
+	.cards > .card.card--callout--blue,
+	.cards > .card.card--callout--smurf,
+	.cards > .card.card-bk--smurf {
+		background: rgb(var(--smurf)) !important;
+		color: rgb(255,255,255) !important;
 		padding: var(--padding);
 	}
-	.cards > .card.card--callout--grey {
-		background: var(--card-calout-grey-bk);
-		padding: var(--padding);
+	.cards > .card.card--callout--grey,
+	.cards > .card.card-bk--grey {
+		background: var(--card-calout-grey-bk) !important;
+		padding: var(--padding) !important;
 	}
-	.cards > .card.card--callout--default {
-		background: rgba(255,255,255, var(--card-background-opacity));
-		padding: var(--padding);
+	.cards > .card.card--callout--default,
+	.cards > .card.card-bk {
+		background: rgba(255,255,255, var(--card-background-opacity)) !important;
+		padding: var(--padding) !important;
 	}
 
 
@@ -1545,298 +1604,524 @@
 
 
 
-/* Table */
+/* Comparison Group */
 
 	:root {
-		--table: var(--basalt);
-		--table-tint: var(--concrete);
-		--table-header-text: 255,255,255;
-		--table-border-opacity: 0.25;
-		--table-header-opacity: 1;
-		--table-horizontal-header-opacity: 0.1;
-		--table-tint-opacity: 0.5;
-		--table-highlight: rgba(var(--tango), 0.75);
-		--table-highlight-th: 
+		--compare-bk: 
 			linear-gradient(
-				rgba(var(--tango), 0.5), 
-				rgba(var(--tango), 0.5)),
-			rgba(var(--table), var(--table-header-opacity));
-		--table-highlight-row:
+				0deg,
+				rgba(var(--basalt),0.075) 0,
+				rgba(var(--basalt),0.075) 100%
+			),
 			linear-gradient(
-				rgba(var(--tango), 0.8), 
-				rgba(var(--tango), 0.8)),
-			rgba(var(--table), var(--table-horizontal-header-opacity));
-		--table-highlight-intersect: rgba(var(--tango), 0.9);
+				0deg,
+				rgb(255,255,255) 0,
+				rgb(255,255,255) 100%
+			);
+		--compare-alt-bk: rgb(255,255,255);
+		--compare--stripe: rgb(var(--tango));
+		--compare--stripe-disabled: rgba(var(--basalt),0.3);
 	}
 	.theme--light {
-		--table: var(--basalt);
-		--table-tint: var(--concrete);
-		--table-header-text: 255,255,255;
-		--table-border-opacity: 0.25;
-		--table-header-opacity: 1;
-		--table-tint-opacity: 0.5;
-		--table-highlight: rgba(var(--tango), 0.75);
-		--table-highlight-th: 
+		--compare-bk: 
 			linear-gradient(
-				rgba(var(--tango), 0.5), 
-				rgba(var(--tango), 0.5)),
-			rgba(var(--table), var(--table-header-opacity));
-		--table-highlight-row:
+				0deg,
+				rgba(var(--basalt),0.075) 0,
+				rgba(var(--basalt),0.075) 100%
+			),
 			linear-gradient(
-				rgba(var(--tango), 0.8), 
-				rgba(var(--tango), 0.8)),
-			rgba(var(--table), var(--table-horizontal-header-opacity));
-		--table-highlight-intersect: rgba(var(--tango), 0.9);
-		
+				0deg,
+				rgb(255,255,255) 0,
+				rgb(255,255,255) 100%
+			);
+		--compare-alt-bk: rgb(255,255,255);
+		--compare--stripe: rgb(var(--tango));
+		--compare--stripe-disabled: rgba(var(--basalt),0.3);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--table: 255,255,255;
-			--table-tint: 255,255,255;
-			--table-header-text: 255,255,255;
-			--table-border-opacity: 0.15;
-			--table-header-opacity: 0.2;
-			--table-tint-opacity: 0.1;
-			--table-highlight: rgba(var(--tango), 0.4);
-			--table-highlight-th: 
+			--compare-bk: 
 				linear-gradient(
-					rgba(var(--tango), 0.4), 
-					rgba(var(--tango), 0.4)),
-				rgba(var(--table), var(--table-header-opacity));
-			--table-highlight-row:
+					0deg,
+					rgba(255,255,255,0.1) 0,
+					rgba(255,255,255,0.1) 100%
+				),
 				linear-gradient(
-					rgba(var(--tango), 0.4), 
-					rgba(var(--tango), 0.4)),
-				rgba(var(--table), var(--table-horizontal-header-opacity));
-			--table-highlight-intersect: rgba(var(--tango), 0.5);
+					0deg,
+					rgb(var(--coal)) 0,
+					rgb(var(--coal)) 100%
+				);
+			--compare-alt-bk: rgba(255,255,255,0.05);
+			--compare--stripe-disabled: rgba(255,255,255,0.15);
 		}
 	}
 	.theme--dark {
-		--table: 255,255,255;
-		--table-tint: 255,255,255;
-		--table-header-text: 255,255,255;
-		--table-border-opacity: 0.15;
-		--table-header-opacity: 0.2;
-		--table-tint-opacity: 0.1;
-		--table-highlight: rgba(var(--tango), 0.4);
-		--table-highlight-th: 
+		--compare-bk: 
 			linear-gradient(
-				rgba(var(--tango), 0.4), 
-				rgba(var(--tango), 0.4)),
-			rgba(var(--table), var(--table-header-opacity));
-		--table-highlight-row:
+				0deg,
+				rgba(255,255,255,0.1) 0,
+				rgba(255,255,255,0.1) 100%
+			),
 			linear-gradient(
-				rgba(var(--tango), 0.4), 
-				rgba(var(--tango), 0.4)),
-			rgba(var(--table), var(--table-horizontal-header-opacity));
-		--table-highlight-intersect: rgba(var(--tango), 0.5);
+				0deg,
+				rgb(var(--coal)) 0,
+				rgb(var(--coal)) 100%
+			);
+		--compare-alt-bk: rgba(255,255,255,0.05);
+		--compare--stripe-disabled: rgba(255,255,255,0.15);
 	}
 
+	.compare {
+		/* Used later to set the number of columns displayed at different container sizes. */
+		container-type: inline-size;
+		container-name: compare-group;
+	}
+		.compare .cards {
+			/* If group is a top level element, so not nested inside another set of cards we need to clear the vertical margins. */
+			margin-bottom: 0;
+			margin-top: 0;
+			/* Set a basic grid of all elements forced into columns. We do a dumb force everything into a single row so we have full control over when the layout shifts, so we can avoid single wrapping items. */
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+		}
+
+		/*
+			As we can't use CSS custom values directly in a CSS query we have to effectively switch our viewpoint and have static container size queries where the grid settings is fed in by the custom value. We do things this way as the breakpoint is content dependent, a group of simple cards may not need to have the columns adjusted, where something text-heavy may need to shift sooner. We let the HTML decide.
+
+		  Because we have a breakpoint in Blinky where the base text size switches we need to cover both base text sizes in the container query, which means layering up with a media query too.
+
+			Base Text Size (shown in px for simplicity)
+			Window width 0-1600px: 16px
+			Window width +1600px: 18px
+
+			This is a difference of 1.125%. We use this % to calulate the container size in the min-width media query.
+
+			Finally, remember that each pair of queries has to cover the 1px that will be missed if we just run from even 100em, etc, hence the max-width of 9909375em.
+		*/
+
+		/* 1100-1300px */
+		@media only screen and (max-width: 99.9375em) {
+			@container compare-group (max-width: 130rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-large, auto-fit), minmax(0, 1fr));
+				}
+			}
+		}
+		@media only screen and (min-width: 100em) {
+			@container compare-group (max-width: 115.555555556rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-large, auto-fit), minmax(0, 1fr));
+				}
+			}
+		}
+
+		/* 900-1100px */
+		@media only screen and (max-width: 99.9375em) {
+			@container compare-group (max-width: 110rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-medium, var(--bp-large, auto-fit)), minmax(0, 1fr));
+				}
+			}
+		}
+		@media only screen and (min-width: 100em) {
+			@container compare-group (max-width: 97.777777778rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-medium, (--bp-large, auto-fit)), minmax(0, 1fr));
+				}
+			}
+		}
+
+		/* 700-900px */
+		@media only screen and (max-width: 99.9375em) {
+			@container compare-group (max-width: 90rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit))), minmax(0, 1fr));
+				}
+			}
+		}
+		@media only screen and (min-width: 100em) {
+			@container compare-group (max-width: 80rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit))), minmax(0, 1fr));
+				}
+			}
+		}
+
+		/* 500-700px */
+		@media only screen and (max-width: 99.9375em) {
+			@container compare-group (max-width: 70rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-tiny, var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit)))), minmax(0, 1fr));
+				}
+			}
+		}
+		@media only screen and (min-width: 100em) {
+			@container compare-group (max-width: 62.222222222rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-tiny, var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit)))), minmax(0, 1fr));
+				}
+			}
+		}
+
+		/* 300-500px */
+		@media only screen and (max-width: 99.9375em) {
+			@container compare-group (max-width: 50rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-micro, var(--bp-tiny, var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit))))), minmax(0, 1fr));
+				}
+			}
+		}
+		@media only screen and (min-width: 100em) {
+			@container compare-group (max-width: 44.444444444rem) {
+				.compare > .cards {
+					grid-template-columns: repeat(var(--bp-micro, var(--bp-tiny, var(--bp-small, var(--bp-medium, var(--bp-large, auto-fit))))), minmax(0, 1fr));
+				}
+			}
+		}
+
+			.compare .card,
+			/* This is to override the nested card behaviour. */
+			.cards .compare .card {
+				background: var(--compare-bk);
+				padding: var(--padding);
+				
+				display: grid;
+				gap: var(--gutter);
+				grid-template-rows: subgrid;
+			}
+			/* This is used if the compare group isn't in a card with a background. */
+			.compare.compare--alt .card,
+			.cards .compare.compare--alt .card {
+				background: var(--compare-alt-bk);
+			}
+				/* Check the first card, if it's missing an element we hide that same element on all other cards in the group. We do this to properly enforce the subgrid as it needs a consistent number of elements. */
+				.compare > .cards:not(:has(.card:first-child .compare__header)) .compare__header,
+				.compare > .cards:not(:has(.card:first-child .compare__stripe)) .compare__stripe,
+				.compare > .cards:not(:has(.card:first-child .compare__cta)) .compare__cta,
+				.compare > .cards:not(:has(.card:first-child .compare__content)) .compare__content {
+					display: none;
+				}
+			/* Using the first card we set the subgrid grid-row to the number of children in the card. */
+			.compare > .cards:has(.card:first-child *:nth-child(2)) .card {
+				grid-row: span 2;
+			}
+			.compare > .cards:has(.card:first-child *:nth-child(3)) .card {
+				grid-row: span 3;
+			}
+			.compare > .cards:has(.card:first-child *:nth-child(4)) .card {
+				grid-row: span 4;
+			}
+		
+				.compare__header,
+				.compare__cta,
+				.compare__stripe {
+					text-align: center;
+				}
+				.compare__stripe {
+					background: var(--compare--stripe);
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					margin-left: calc(var(--padding) * -1);
+					margin-right: calc(var(--padding) * -1);
+					padding: calc(var(--padding) / 2);
+				}
+				.compare .card--callout--tango .compare__stripe {
+					background: var(--compare-bk);
+				}
+					.compare__stripe span {
+						margin-bottom: 0;
+					}
+				.compare__content ul {
+					font-size: 1.4rem;
+					font-weight: 500;
+				}
+
+			.card.compare--disabled {
+				color: rgba(var(--page-text), 0.75);
+			}
+				.card.compare--disabled .compare__stripe {
+					background: var(--compare--stripe-disabled);
+				}
+	/* Table */
+
+	:root {
+		--table-hightlight-bk: var(--tango);
+		--table-hightlight-opacity: 0.5;
+	}
+	.theme--light {
+		--table-hightlight-opacity: 0.5;
+	}
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--table-hightlight-opacity: 0.25;
+		}
+	}
+	.theme--dark {
+		--table-hightlight-opacity: 0.25;
+	}
+	
+	
 	.table {
-		border-collapse: separate;
+		border-collapse:separate;
+		min-width: min-content;
 	}
 	.table--full-width {
 		width: 100%;
 	}
-	.table--align-center {
-		margin-left: auto;
-		margin-right: auto;
+
+	/* Is the table block followed immediately with some basic text types? */
+	.table:has( + :where(p, ul, ol)),
+	.scroll:has(.table):has( + :where(p, ul, ol)) {
+		margin-bottom: calc(var(--gutter) * 2);
 	}
-		.table th, 
-		.table td {
-			border-bottom: solid 1px rgba(var(--table), var(--table-border-opacity));
-			padding: 0.8rem var(--padding);
-			text-align: left;
+
+	/* Fix for parent items breaking the horizontal scroll, I've added it here for the moment as this needs much more testing for something so fundamental as the card system. */
+	.card:has(blinky-scroll-hints.scroll .table) {
+		overflow: auto;
+	}
+
+	/* If we assume ltr content order then... */
+	/* Left. */
+	.table.table__align--start {
+		margin-inline-end: auto;
+	}
+	/* Right. */
+	.table.table__align--end {
+		margin-inline-start: auto;
+	}
+	/* Centre. */
+	.table.table__align--center,
+	/* TODO: Old class, in use in Cloud, when I nuke it it can be removed. */
+	.table.table--align-center {
+		margin-inline-start: auto;
+		margin-inline-end: auto;
+	}
+
+	.table.table__align--top :where(th, td),
+	.table .table__align--top {
+		vertical-align: top;
+	}
+	.table.table__align--bottom :where(th, td),
+	.table .table__align--bottom {
+		vertical-align: bottom;
+	}
+
+		.table :where(th, td) {
+			border-block-end: solid 1px color-mix(in srgb, currentColor 15%, transparent);
+			padding: calc(var(--padding) / 2) var(--padding);
+			text-align: start;
 		}
-		.table th {
-			background: rgba(var(--table), var(--table-header-opacity));
-			color: rgb(var(--table-header-text));
-			font-weight: 700;
+		/* If there's no thead add a top border. */
+		.table:not(:has(thead)) :where(th, td) {
+			border-block-start: solid 1px color-mix(in srgb, currentColor 15%, transparent);
 		}
 
-		/* Row header. */
-		.table [scope="row"] {
-			background: rgba(var(--table), var(--table-header-opacity));
-			font-weight: 700;
-		}
-		/* Row header if there's a horizontal table header. */
-		.table thead + tbody [scope="row"],
-		.table__thead ~ tr [scope="row"] {
-			background: rgba(var(--table), var(--table-horizontal-header-opacity));
+		/* Used in tbody. */
+		.table th {
 			font-weight: 500;
 		}
-		.table__tint td,
-		td.table__tint {
-			background: rgba(var(--table), var(--table-horizontal-header-opacity));
+		/* Give the th more prominence when the table is a vertical rather then having a secondary row key on a horizontal table. */
+		.table:not(:has(thead)) tbody th {
+			font-weight: 700;
+		}
+		/* Extra emphasis when in an actual table thead. */
+		.table thead th {
+			border-block-end-width: 2px;
+			font-weight: 700;
+		}
+		/* Repeat header row further down the table, useful for long tables. */
+		.table tr + tr:not(:has(td)) th,
+		.table tbody > tr:not(:has(td)) th {
+			border-block-end-width: 2px;
+			padding-top: calc(var(--padding) * 1.5);
 		}
 
-		/* Left and right table edges. */
-		.table thead th:first-child {
-			border-left: solid 1px rgba(var(--table), var(--table-header-opacity));
+		.table.table--emphasise-headers thead th,
+		.table.table--emphasise-headers tr + tr:not(:has(td)) th,
+		.table.table--emphasise-headers tbody > tr:not(:has(td)) th {
+			background: color-mix(in srgb, currentColor 5%, transparent);
+			padding-top: calc(var(--padding) / 2);
 		}
-		.table thead th:last-child {
-			border-right: solid 1px rgba(var(--table), var(--table-header-opacity));
-		}
+
+		/* Left and right edge padding. */
+		.table th:first-child,
 		.table td:first-child {
-			border-left: solid 1px rgba(var(--table), var(--table-border-opacity));
+			padding-left: calc(var(--padding) / 4);
 		}
+		.table th:last-child,
 		.table td:last-child {
-			border-right: solid 1px rgba(var(--table), var(--table-border-opacity));
+			padding-right: calc(var(--padding) / 4);
 		}
 
-		/* If there's no THEAD we need to apply a border to the top of the top row. */
-		.table tbody tr:first-child td {
-			border-top: solid 1px rgba(var(--table), var(--table-border-opacity));
+		/* Grouped rows and cols. */
+		.table tr.table--grouped-with :where(th, td) {
+			border-bottom: none;
+			padding-bottom: 0;
 		}
-		.table thead + tbody tr:first-child td {
-			border-top: none;
+		.table tr.table--grouped-with + tr :where(th, td) {
+			padding-top: calc(var(--padding)/ 4)
+		}
+		/* Use :is for the extra specifity. */
+		.table :is(th, td).table--grouped-with {
+			padding-right: 0;
+		}
+		.table :is(th, td).table--grouped-with + :where(th, td) {
+			padding-left: 0.3em;
+		}
+		
+		/* Applying things to columns is painful, leading to code like below. 
+			.table__nowrap can be applied to the TABLE, TR or an individual cell. */
+		.table__nowrap--1 tr > *:nth-child(1), 
+		.table__nowrap--2 tr > *:nth-child(2), 
+		.table__nowrap--3 tr > *:nth-child(3), 
+		.table__nowrap--4 tr > *:nth-child(4), 
+		.table__nowrap--5 tr > *:nth-child(5), 
+		.table__nowrap--6 tr > *:nth-child(6), 
+		.table__nowrap--7 tr > *:nth-child(7), 
+		.table__nowrap--8 tr > *:nth-child(8), 
+		.table__nowrap--9 tr > *:nth-child(9), 
+		tr.table__nowrap > *, 
+		.table__nowrap {
+			white-space: nowrap;
 		}
 
+		/* Brite force a 0 padding, a bit nuclear but sometimes it's needed. */
 		.table .table__cell-no-pad {
 			padding: 0;
 		}
 
-		table.table__align--top th, table.table__align--top td, 
-		.table__align--top {
-			vertical-align: top;
-		}
-		table.table__align--bottom th, table.table__align--bottom td, 
-		.table__align--bottom {
-			vertical-align: bottom;
-		}
 
-		/* Highlights. */
-		tr.table--highlight > *, 
-		td.table--highlight {
-			background: var(--table-highlight);
-		}
-		tr.table--highlight > [scope="row"], 
-		th.table--highlight {
-			background: var(--table-highlight-th);
-		}
-		thead + tbody tr.table--highlight > [scope="row"] {
-			background: var(--table-highlight-row);
-		}
-		tr.table--highlight td.table--highlight {
-			background: var(--table-highlight-intersect);
-		}
+	.table .table--highlight {
+		background: rgba(var(--tango), var(--table-hightlight-opacity));
+	}
 
-			.table th .sort--desc .icon {
-				transform: rotate(180deg);
-			}
-			.sort--inactive .icon {
-				opacity: 0.4;
-			}
-			.table td > .button {
-				margin-bottom: -0.8rem;
-				margin-top: -0.8rem;
-			}
-		
-	/* Applying things to columns is painful, leading to code like below. 
-	   .table__nowrap can be applied to the TABLE, TR or a individual cell. */
-	.table__nowrap--1 tr > *:nth-child(1), 
-	.table__nowrap--2 tr > *:nth-child(2), 
-	.table__nowrap--3 tr > *:nth-child(3), 
-	.table__nowrap--4 tr > *:nth-child(4), 
-	.table__nowrap--5 tr > *:nth-child(5), 
-	.table__nowrap--6 tr > *:nth-child(6), 
-	.table__nowrap--7 tr > *:nth-child(7), 
-	.table__nowrap--8 tr > *:nth-child(8), 
-	.table__nowrap--9 tr > *:nth-child(9), 
-	tr.table__nowrap > *, 
-	.table__nowrap {
+	.table .table__caption {
+			border-block-end: solid 2px color-mix(in srgb, currentColor 15%, transparent);
+			font-weight: 500;
+			padding-bottom: calc(var(--padding) / 2);
+	}
+
+
+	/* Adjust the vertical margins on buttons in thead. */
+	.table thead .button {
+		margin-top: calc( (var(--padding)/ 2) * -1);
+  	margin-bottom: calc( (var(--padding)/ 2) * -1);
+	}
+	.table thead .button:last-child {
+		/* This fixes an annoying issue where about this much space is added due to a space in the code. */
+  	margin-left: -0.25em;
+  	margin-right: calc( var(--padding) * -1);
+	}
+	/* This is applied if the th/td has a button but does not have a .no-wrap around the button and the last word of text. We need this otherwise we can get an unsightly layout where the button is wrapped on its own. */
+	.table thead :where(th, td):has(.button):not(:has(.no-wrap)) {
 		white-space: nowrap;
 	}
-
-	tr.table--grouped-with th, 
-	tr.table--grouped-with td {
-		border-bottom: none;
-		padding-bottom: 0;
-	}
-	th.table--grouped-with, 
-	td.table--grouped-with {
-		padding-right: 0;
-	}
-	th.table--grouped-with + th, 
-	td.table--grouped-with + td {
-		padding-left: 0.3em;
-	}
+		.table th .sort--desc .icon {
+			transform: rotate(180deg);
+		}
+		.table .sort--inactive .icon {
+			opacity: 0.4;
+		}
 
 
 	/* These have to be added as a psuedo element due to the pattern in Cloud where we have console logs inside table cells with no pagging, using a border or partial background on the table will get hidden by the console log. */
-	.table__color-tag {
+	.table tr .table__color-tag,
+	.table tr.table__color-tag > :where(th, td) {
 		position: relative;
+		padding-left: calc((var(--padding) / 4) + 0.4rem);
 	}
-	.table__color-tag:before, 
-	.table__color-tag:after {
+	.table tr .table__color-tag:before, 
+	.table tr .table__color-tag:after,
+	.table tr.table__color-tag > :where(th, td):before,
+	.table tr.table__color-tag > :where(th, td):after {
 		content: "";
-		/* This is 1px for the border and an 8px tag. We position this element over the left border because the difference in border colours looks jarring. */
-		width: 0.9rem;
+		width: 0.4rem;
 		position: absolute;
-		left: -1px;
+		left: 0px;
 	}
-	.table__color-tag:before {
-		/* This is 1px for the border and an 8px tag. We position this element over the left border because the difference in border colours looks jarring. */
+	.table tr .table__color-tag:before,
+	.table tr.table__color-tag > :where(th, td):before {
 		height: 100%;
 		top: 0;
 		opacity: 0.5;
 	}
-	/* Covers the TH bottom border to blend it in a little. */
-	.table__color-tag:after {
+	/* Covers the cell bottom border to blend it in a little. */
+	.table tr .table__color-tag:after,
+	.table tr.table__color-tag > :where(th, td):after {
 		height: 1px;
 		bottom: -1px;
 		opacity: 0.75;
 	}
-	th.table__color-tag:before, 
-	.table__color-tag.table__tint:before,
-	tr.table__tint .table__color-tag:before,
-	.table [scope="row"]:before {
+	.table th.table__color-tag:after
+	.table tr.table__color-tag th:after {
+		height: 2px;
+	}
+	.table th.table__color-tag:before, 
+	.table tr.table__color-tag > th:before {
 		opacity: 1;
 	}
-	.table__color-tag--tango:before, 
-	.table__color-tag--tango:after {
+	.table tr .table__color-tag--tango:before, 
+	.table tr .table__color-tag--tango:after,
+	.table tr.table__color-tag--tango > :where(th, td):before,
+	.table tr.table__color-tag--tango > :where(th, td):after {
 		background: rgb(var(--tango));
 	}
-	.table__color-tag--midnight:before, 
-	.table__color-tag--midnight:after {
+	.table tr .table__color-tag--midnight:before, 
+	.table tr .table__color-tag--midnight:after,
+	.table tr.table__color-tag--midnight > :where(th, td):before,
+	.table tr.table__color-tag--midnight > :where(th, td):after {
 		background: rgb(var(--midnight));
 	}
-	.table__color-tag--smurf:before, 
-	.table__color-tag--smurf:after {
+	.table tr .table__color-tag--smurf:before, 
+	.table tr .table__color-tag--smurf:after,
+	.table tr.table__color-tag--smurf > :where(th, td):before,
+	.table tr.table__color-tag--smurf > :where(th, td):after {
 		background: rgb(var(--smurf));
 	}
-	.table__color-tag--marmalade:before, 
-	.table__color-tag--marmalade:after {
+	.table tr .table__color-tag--marmalade:before, 
+	.table tr .table__color-tag--marmalade:after,
+	.table tr.table__color-tag--marmalade > :where(th, td):before,
+	.table tr.table__color-tag--marmalade > :where(th, td):after {
 		background: rgb(var(--marmalade));
 	}
-	.table__color-tag--gecko:before, 
-	.table__color-tag--gecko:after {
+	.table tr .table__color-tag--gecko:before, 
+	.table tr .table__color-tag--gecko:after,
+	.table tr.table__color-tag--gecko > :where(th, td):before,
+	.table tr.table__color-tag--gecko > :where(th, td):after {
 		background: rgb(var(--gecko));
 	}
-	.table__color-tag--plum:before, 
-	.table__color-tag--plum:after {
+	.table tr .table__color-tag--plum:before, 
+	.table tr .table__color-tag--plum:after,
+	.table tr.table__color-tag--plum > :where(th, td):before,
+	.table tr.table__color-tag--plum > :where(th, td):after {
 		background: rgb(var(--plum));
 	}
-	.table__color-tag--candy:before, 
-	.table__color-tag--candy:after {
+	.table tr .table__color-tag--candy:before, 
+	.table tr .table__color-tag--candy:after,
+	.table tr.table__color-tag--candy > :where(th, td):before,
+	.table tr.table__color-tag--candy > :where(th, td):after {
 		background: rgb(var(--candy));
 	}
-	.table__color-tag--mud:before, 
-	.table__color-tag--mud:after {
+	.table tr .table__color-tag--mud:before, 
+	.table tr .table__color-tag--mud:after,
+	.table tr.table__color-tag--mud > :where(th, td):before,
+	.table tr.table__color-tag--mud > :where(th, td):after {
 		background: rgb(var(--mud));
 	}
-	.table__color-tag--slate:before, 
-	.table__color-tag--slate:after {
+	.table tr .table__color-tag--slate:before, 
+	.table tr .table__color-tag--slate:after,
+	.table tr.table__color-tag--slate > :where(th, td):before,
+	.table tr.table__color-tag--slate > :where(th, td):after {
 		background: rgb(var(--slate));
 	}
-	.table__color-tag--ortolan:before, 
-	.table__color-tag--ortolan:after {
+	.table tr .table__color-tag--ortolan:before, 
+	.table tr .table__color-tag--ortolan:after,
+	.table tr.table__color-tag--ortolan > :where(th, td):before,
+	.table tr.table__color-tag--ortolan > :where(th, td):after {
 		background: rgb(var(--ortolan));
 	}
-
-
-
-	
 /* Tab Group */
 
 	:root {
@@ -2030,8 +2315,8 @@
 		}
 		/* Adjust the padding slightly for consoles inside tables so the left margin matches. */
 		.table .console pre {
-			padding-left: var(--padding);
-			padding-right: var(--padding);
+			padding-left: 0;
+			padding-right: 0;
 		}
 
 
@@ -2130,6 +2415,7 @@
 	.highlights__status {
 		border-right: var(--hl-status-border-h);
 		border-bottom: var(--hl-status-border-b);
+		white-space: nowrap;
 	}
 	.highlights--center .highlights__status, 
 	.highlights--right .highlights__status {
@@ -3992,6 +4278,10 @@
 			height: auto;
 			position: initial;
 		}
+		.filter-menu__list .nav__group {
+			max-height: calc(100vh - 9em);
+			overflow: auto;
+		}
 		/* Add some spacing if the list has at least one item visible. */
 		.js__filter-menu .nav__group:has(.nav__item:not(.filter-menu__hide)) {
 			margin-top: calc(var(--padding) / 2);
@@ -4894,116 +5184,12 @@
 			vertical-align: super;
 		}
 
-
-	/* Help toggle */
-	.button.form__help-toggle {
-		background: none !important;
-		box-shadow: none !important;
-		margin-left: calc((var(--gutter) /2) - 2px) !important;
-		padding-bottom: 1.6rem;
-		position: absolute;
-		bottom: 0.2rem;
-	}
-	.button.form__help-toggle:hover {
-		background: none;
-		transform: translateY(0);
-	}
-	.button.form__help-toggle:focus {
-		box-shadow: none !important;
-	}
-		.form__help-toggle-icon {
-			background: var(--form-help);
-			border-radius: var(--button-radius);
-			display: block;
-			height: 1.6rem;
-			margin: 0 0 0 -2rem;
-			pointer-events: none;
-			position: relative;
-			top: 0.4rem;
-			transition: all 0.3s cubic-bezier(0.175, 0.885, 0.320, 0.5);
-			width: 1.6rem;
-		}
-			.button.form__help-toggle .icon {
-				fill: rgb(255,255,255);
-				padding: 0.2rem;
-				pointer-events: none;
-				top: 0;
-				transition: inherit;
-				vertical-align: top;
-			}
-			/* Fix for icons in popups overruling the fill above. */
-			body .form .button.form__help-toggle .icon {
-				fill: rgb(255,255,255) !important;
-			}
-		.button.form__help-toggle:focus .form__help-toggle-icon, 
-		.button.form__help-toggle:focus-visible .form__help-toggle-icon {
-			box-shadow: 0 0 0 4px rgb(var(--smurf));
-		}
-		.button.form__help-toggle:focus:not(:focus-visible) .form__help-toggle-icon {
-			box-shadow: none;
-		}
-		.button.form__help-toggle[aria-expanded="true"] .form__help-toggle-icon {
-			transform: rotate(-45deg);
-		}
-		.button.form__help-toggle[aria-expanded="true"] .icon {
-			transform: rotate(45deg);
-		}
-
 		@container form-horizontal-fields (min-width: 40em) {
 			@supports(display: contents) {
 				.form__horizontal-fields .form__label {
 					padding-top: 0.4rem;
 				}
-				.form__horizontal-fields .button.form__help-toggle {
-					/* By default we set the button to be positioned so it doesn't impact vertical spacing, we switch this off here. */
-					position: static;
-
-					/* Because it's no longer positioned it dickers with the margin, tweak it to match. */
-					margin: 0 calc(-1 * var(--gutter)) calc(-1 * var(--gutter)) calc((var(--gutter) / 2) - 0.6rem) !important;
-
-					/* Reduce the size of the button so we aren't overlapping the actual foed. */
-					padding: 0 1.4rem 2.4rem 2rem;
-				}
-					.form__horizontal-fields .form__help-toggle-icon {
-						top: 0.2rem;
-					}
 			}
-		}
-		
-
-	/* Help text */
-	.form__help-text {
-		background: var(--form-help);
-		border-radius: var(--button-radius);
-		color: rgb(255,255,255);
-		display: block;
-		height: 0;
-		opacity: 0;
-		overflow: hidden;
-		padding: 0 0.8rem;
-		transition: all 0.3s cubic-bezier(0.175, 0.885, 0.320, 0.5);
-		transition-property: height, opacity;
-		visibility: hidden;
-	}
-	.form__help-text--open + .form__help-text, 
-	.form__help-text--open + span > .form__help-text {
-		height: auto;
-		margin-bottom: 0.8rem;
-		opacity: 1;
-		padding: 0.4rem 0.8rem;
-		visibility: visible;
-	}
-		.form__help-text a:not([class]) {
-			color: currentColor;
-		}
-		.form__help-text a:focus:not([class]), 
-		.form__help-text a:focus-visible:not([class]) {
-			background: rgb(255,255,255);
-			color: rgb(var(--coal));
-		}
-		.form__help-text a:focus:not(:focus-visible):not([class]) {
-			background: none;
-			color: currentColor;
 		}
 
 
@@ -5022,6 +5208,143 @@
 	.form__error .icon {
 		fill: rgb(var(--form-error));
 	}
+/* Help Text */
+
+	:root {
+		--help-bk: rgba(var(--basalt), 0.7);
+	}
+	.theme--light {
+		--help-bk: rgba(var(--basalt), 0.7);
+	}
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--help-bk: rgba(255,255,255, 0.25);
+		}
+	}
+	.theme--dark,
+	.table th {
+		--help-bk: rgba(255,255,255, 0.25);
+	}
+
+	@keyframes show-help-text {
+		0% {
+			visibility: hidden;
+		}
+		100% {
+			visibility: visible;
+		}
+	}
+	blinky-help-text {
+		visibility: hidden;
+	}
+	blinky-help-text {
+		animation: 0s 1s forwards 1 show-help-text;
+	}
+	blinky-help-text.js__help-text {
+		visibility: visible;
+	}
+
+	/* NonJS styling */
+	blinky-help-text:not(.js__help-text) {
+		display: block;
+	}
+	/* Fixes an issue where the BR doubles up when we have a display block too. */
+	.help-text[expanded='1'] + br,
+	blinky-help-text:not(.js__help-text) + br {
+		display: none;
+	}
+
+		.button.help-text__toggle {
+			background: none !important;
+			box-shadow: none !important;
+			margin: -1.2rem -1.6rem 0 0;
+			padding: 0.8rem 1.6rem !important;
+		}
+
+		/* Clear the outer button focus styles. */
+		.button.help-text__toggle:hover {
+			background: none;
+		}
+		.button.help-text__toggle:focus {
+			box-shadow: none !important;
+		}
+			.help-text__toggle-icon {
+				background: var(--help-bk);
+				border-radius: var(--button-radius);
+				display: block;
+				height: 1.6rem;
+				margin: 0 0 0 -1.6rem;
+				pointer-events: none;
+				position: relative;
+				top: 0.4rem;
+				transition: all 0.3s cubic-bezier(0.175, 0.885, 0.320, 0.5);
+				width: 1.6rem;
+			}
+			
+			/* The toggled button state. */
+			.button.help-text__toggle[aria-expanded="1"] .help-text__toggle-icon {
+				transform: rotate(-45deg);
+			}
+				.button.help-text__toggle[aria-expanded="1"] .icon {
+					transform: rotate(45deg);
+				}
+
+			/* Focus state of toggle button. */
+			.button.help-text__toggle:focus .help-text__toggle-icon, 
+			.button.help-text__toggle:focus-visible .help-text__toggle-icon {
+				box-shadow: 0 0 0 4px rgb(var(--smurf));
+			}
+			.button.help-text__toggle:focus:not(:focus-visible) .help-text__toggle-icon {
+				box-shadow: none;
+			}
+				.help-text__toggle-icon .icon {
+					fill: rgb(255,255,255);
+					padding: 0.2rem;
+					pointer-events: none;
+					top: 0;
+					transition: inherit;
+					vertical-align: top;
+				}
+				/* Fix for icons in popups overruling the fill above. */
+				body .help-text__toggle-icon .icon {
+					fill: rgb(255,255,255) !important;
+				}
+
+		.help-text__content,
+		/* Provide fallback nonJS styling. */
+		blinky-help-text:not(.js__help-text) {
+			background: var(--help-bk);
+			border-radius: var(--button-radius);
+			color: rgb(255,255,255);
+			font-weight: normal;
+			margin-bottom: 0.8rem;
+			margin-top: 0.4rem;
+			padding: 0.4rem 0.8rem;
+		}
+		.js__help-text .help-text__content {
+			display: none;
+		}
+		.js__help-text[expanded='1'] .help-text__content {
+			display: block;
+		}
+			.help-text__content a:not([class]) {
+				color: rgb(255,255,255);
+			}
+
+	@container form-horizontal-fields (min-width: 40em) {
+		@supports(display: contents) {
+			.form__horizontal-fields .button.help-text__toggle {
+				/* Because it's no longer positioned it dickers with the margin, tweak it to match. */
+				margin: 0 calc(-1 * var(--gutter)) calc(-1 * var(--gutter)) calc((var(--gutter) / 2) - 0.6rem) !important;
+
+				/* Reduce the size of the button. */
+				padding: 0 1.4rem 2.4rem 2rem;
+			}
+		}
+	}
+
+
+
 /* Inline fields */
 
 	.form__inline {
@@ -5055,14 +5378,14 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--form-error: var(--cherry-on-dark);
+			--form-error: var(--cherry);
 			--form-field-background: var(--form-field-background-dark);
 			--form-field-border: var(--form-field-border-dark);
 			--form-field-border-hover: var(--form-field-border-hover-dark);
 		}
 	}
 	.theme--dark {
-		--form-error: var(--cherry-on-dark);
+		--form-error: var(--cherry);
 		--form-field-background: var(--form-field-background-dark);
 		--form-field-border: var(--form-field-border-dark);
 		--form-field-border-hover: var(--form-field-border-hover-dark);
@@ -5743,6 +6066,18 @@
 	:root {
 		--switch: rgba(var(--basalt),0.5);
 		--switch-hover: rgba(var(--basalt),0.4);
+		--switch-on: var(--frog);
+		--switch-on-alt: 
+			linear-gradient(
+				0deg,
+				rgba(255,255,255,0.25) 0,
+				rgba(255,255,255,0.25) 100%
+			),
+			linear-gradient(
+				0deg,
+				rgb(var(--frog)) 0,
+				rgb(var(--frog)) 100%
+			);
 	}
 	.theme--light {
 		--switch: rgba(var(--basalt),0.5);
@@ -5762,6 +6097,7 @@
 	.form__switch {
 		background: none;
 		border: none;
+		color: inherit;
 		font-size: inherit;
 		line-height: inherit;
 		padding: 0.4rem 0 0.4rem 5rem;
@@ -5807,13 +6143,17 @@
 		}
 
 	.form__switch[aria-pressed="true"]:before {
-		background: rgb(var(--frog));
+		background: rgb(var(--switch-on));
 	}
+	/* .table th .form__switch[aria-pressed="true"]:before {
+		background: var(--switch-on-alt);
+	} */
 		.form__switch[aria-pressed="true"] .form__switch__dot {
+			color: rgb(var(--basalt));
 			transform: translateX(1.6rem);
 		}
 		.form__switch[aria-pressed="true"] .form__switch__dot:after {
-			border: 0.3rem solid rgb(var(--frog));
+			border: 0.3rem solid rgb(var(--switch-on));
 			border-top: 0;
 			border-left: 0;
 			content: '';
