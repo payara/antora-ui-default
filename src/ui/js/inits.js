@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.73.0 */
+/*! Payara Pattern Library version: 0.78.1 */
 // ONLY FOR DEMONSTRATION!
 
 
@@ -38,9 +38,6 @@ step_through.init();
 form_steps.init();
 
 
-
-// Start help toggle.
-help_toggle.init();
 
 // Multi-suggest field
 multi_suggest.init();
