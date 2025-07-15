@@ -825,68 +825,39 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 	margin-bottom: 1.6rem;
 }
 	.docs__layout__text table.tableblock .title {
-		font-weight: 700;
-		margin-bottom: 0.8rem;
-		text-align: left;
+		border-block-end: solid 2px color-mix(in srgb, currentColor 15%, transparent);
+		font-weight: 500;
+		padding-bottom: calc(var(--padding) / 2);
 	}
 	.docs__layout__text table.tableblock th, 
 	.docs__layout__text table.tableblock td {
-		padding: 0.8rem var(--padding);
+		padding: calc(var(--padding) / 2) var(--padding);
+	}
+	.docs__layout__text table.tableblock :where(th, td):first-child {
+		padding-left: calc(var(--padding) / 4);
+	}
+	.docs__layout__text table.tableblock :where(th, td):last-child {
+		padding-right: calc(var(--padding) / 4);
 	}
 	.docs__layout__text table.tableblock, 
 	.docs__layout__text table.tableblock > * > tr > * {
-		border: solid 0px rgba(var(--table), var(--table-border-opacity));
+		border-block-end: solid 0px color-mix(in srgb, currentColor 15%, transparent);
+	}
+	.docs__layout__text table.tableblock:not(:has(thead)) :where(th, td) {
+		border-block-start: solid 0px color-mix(in srgb, currentColor 15%, transparent);
 	}
 	.docs__layout__text table.tableblock.grid-all > * > tr > * {
 		border-width: 1px;
 	}
-	.docs__layout__text table.tableblock.grid-cols > * > tr > * {
-		border-width: 0 1px;
+	.docs__layout__text table.tableblock th {
+		font-weight: 500;
 	}
-	.docs__layout__text table.tableblock.grid-rows > * > tr > * {
-		border-width: 1px 0;
-	}
-	.docs__layout__text table.tableblock thead th {
+	.docs__layout__text table.tableblock:not(:has(thead)) tbody th {
 		font-weight: 700;
 	}
-	.docs__layout__text table.tableblock.grid-all > thead th,
-	.docs__layout__text table.tableblock.grid-rows > thead th {
-		background: rgba(var(--table), var(--table-header-opacity));
-		color: rgb(var(--table-header-text));
-	}
-.docs__layout__text table.tableblock.frame-all {
-	border-width: 1px;
-}
-.docs__layout__text table.tableblock.frame-ends {
-	border-width: 1px 0;
-}
-.docs__layout__text table.tableblock.frame-sides {
-	border-width: 0 1px;
-}
-	.docs__layout__text table.tableblock.frame-none > colgroup + * > :first-child > *,
-	.docs__layout__text table.tableblock.frame-sides > colgroup + * > :first-child > * {
-		border-top-width: 0;
-	}
-	/* NOTE let the grid win in case of frame-none */
-	.docs__layout__text table.tableblock.frame-sides > :last-child > :last-child > * {
-		border-bottom-width: 0;
-	}
-	.docs__layout__text table.tableblock.frame-none > * > tr > :first-child,
-	.docs__layout__text table.tableblock.frame-ends > * > tr > :first-child {
-		border-left-width: 0;
-	}
-	.docs__layout__text table.tableblock.frame-none > * > tr > :last-child,
-	.docs__layout__text table.tableblock.frame-ends > * > tr > :last-child {
-		border-right-width: 0;
-	}
-	.docs__layout__text table.tableblock.stripes-all > tbody > tr,
-	.docs__layout__text table.tableblock.stripes-odd > tbody > tr:nth-of-type(odd),
-	.docs__layout__text table.tableblock.stripes-even > tbody > tr:nth-of-type(even),
-	.docs__layout__text table.tableblock.stripes-hover > tbody > tr:hover {
-			background: rgba(var(--table), 0.05);
-	}
-	.docs__layout__text table.tableblock > tfoot {
-		background: rgba(var(--table), 0.1);
+	.docs__layout__text .doc table.tableblock thead th {
+		border-block-end-width: 2px;
+		font-weight: 700;
 	}
 		.docs__layout__text td.tableblock > .content {
 			/* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
@@ -937,7 +908,7 @@ blinky-sidebar[minimized="1"] .docs__expand-all {
 		.docs__layout__text .admonitionblock td {
 			display: block;
 		}
-		.docs__layout__text .admonitionblock .icon {
+		.docs__layout__text .admonitionblock td.icon {
 			height: auto;
 			left: -1px;
 			padding: 0;
