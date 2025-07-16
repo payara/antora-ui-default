@@ -110,6 +110,7 @@
 			display: inline-block;
 			height: 1.6rem;
 			mask: var(--icon);
+			mask-repeat: no-repeat;
 			position: relative;
 			top: .2rem;
 			width: 1.6rem;
