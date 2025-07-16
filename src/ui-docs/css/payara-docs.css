@@ -62,10 +62,6 @@
 	.docs__cloud .filter-menu__list {
 		width: 15em;
 	}
-		.filter-menu__list .nav__group {
-			max-height: 50vh;
-			overflow: auto;
-		}
 	/* Because this HTML is coming on from an external source do what we can to make it look nice. */
 	.docs__search-button .DocSearch-Button {
 		align-items: center;
