@@ -47,6 +47,37 @@ A couple of extra Gulp scripts have been added to copy the Blinky UI files neede
 * `gulp.d/blinky.js` - copies UI files into the public folder
 * `gulp.d/blinkyJS.js` - copies and minifies UI JS files into the public folder
 
+== Previewing the Theme Locally
+
+The theme can be preview either on it's own or you can build against some of our documentation.
+
+First, install the relevant Node scripts in the top level of the repo, in a terminal type:
+
+`npm install`
+
+=== Preview Theme Only
+
+In the top level of this repo, in a terminal type:
+
+`npx gulp preiew`
+
+You should see some output in your terminal pointing you to a local address and port. Viewing this will shoe you the place-holder content types.
+
+=== Preview Theme with Real Content
+
+The resulting build does not includes a means to serve the content so for this you will need to run a small web server, it only needs to host HTML so nothing complicated is required. You can either use your own setup or alternatively clone the repo below that was created specifically for this purpose, see the readme in the server repo for how to use it.
+
+* A Payara Documentation repo
+* https://github.com/diturner/previewAntoraLocally[previewAntoraLocally]
+
+Create the theme zip file we'll pull into a docs build. This will create a zip at `build/ui-bundle.zip`. In the top level of the theme repo type:
+
+`npx gulp bundle`
+
+From the top level of the documentation repo build the docs, this example uses the Cloud docs repo. I'm assuming here that both the theme and the docs repos are in the same folder:
+
+`npx antora --fetch local-playbook.yml --ui-bundle-url "./../antora-ui-default/build/ui-bundle.zip"`
+
 == Copyright and License
 
 This code is based on the {url-project}[default Antora UI].
