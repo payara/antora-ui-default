@@ -7,10 +7,12 @@
 		{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}
 		{{#if (eq page.attributes.site-edition "enterprise")}}
 			docs__enterprise
+			voxel
 		{{else if (eq page.attributes.site-edition "community")}}
 			docs__community
 		{{else}}
 			docs__cloud
+			voxel
 		{{/if}}
 	">
 		{{> header}}

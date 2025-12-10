@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.78.1 */
+/*! Payara Pattern Library version: 0.81.0 */
 // ONLY FOR DEMONSTRATION!
 
 
@@ -18,7 +18,6 @@ menu_wrap.init();
 // Tab panel.
 tab_group.init();
 
-accordion.init();
 notification_toggle.init();
 
 
