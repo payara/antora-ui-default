@@ -37,14 +37,14 @@
 	}
 	/* Site adjustments for Enterprise, Community and Cloud. */
 	.docs__enterprise .docs__title {
-		color: rgb(var(--grey));
+		color: rgb(var(--neutral-100));
 	}
 	.docs__community .docs__title {
 		/* Smurf with 25% white overlay */
 		color: #409dd1;
 	}
 	.docs__cloud .docs__title {
-		color: rgb(var(--grey));
+		color: rgb(var(--neutral-100));
 	}
 	.filter-menu {
 		margin: 0 calc((var(--gutter) /2) - 2px);
@@ -159,14 +159,14 @@
 
 	.voxel .docs__search-button .DocSearch-Button {
 		background: none;
-		box-shadow: inset 0 0 0 1px rgb(var(--grey-500));
-		color: rgb(var(--grey));
+		box-shadow: inset 0 0 0 1px rgb(var(--neutral-500));
+		color: rgb(var(--neutral-100));
 	}
 	.voxel .docs__search-button .DocSearch-Button:hover {
-		box-shadow: inset 0 0 0 1px rgb(var(--grey-300)) !important;
+		box-shadow: inset 0 0 0 1px rgb(var(--neutral-300)) !important;
 	}
 	.voxel .docs__search-button .DocSearch-Button:focus-visible {
-		box-shadow: 0 0 0 2px rgb(var(--grey-500)) !important;
+		box-shadow: 0 0 0 2px rgb(var(--neutral-500)) !important;
 	}
 
 	/* Search popup, I'm not doing any changes past this currently. */

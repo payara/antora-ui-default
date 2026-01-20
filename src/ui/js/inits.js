@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.81.0 */
+/*! Payara Pattern Library version: 0.82.0 */
 // ONLY FOR DEMONSTRATION!
 
 

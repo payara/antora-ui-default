@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.81.0 */
+/*! Payara Pattern Library version: 0.82.0 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 // Always set a top level class to indicate if we have JS available.
@@ -1983,7 +1983,7 @@ class BlinkyNewthing extends HTMLElement {
 		this.addEventListener('keyup', this.close_filter_menu_esc = (e) => {
 			if (e.keyCode == 27) {
 				this.setAttribute('expanded', '0');
-				this.querySelector('.filter-list__current').focus();
+				this.querySelector('.filter-menu__current').focus();
 			}
 		});
 		// Save event.
