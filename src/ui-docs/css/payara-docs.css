@@ -3,6 +3,9 @@
 .page {
 	background: rgb(var(--coal));
 }
+.voxel.page {
+	background: rgb(var(--blue-900));
+}
 	/* Needed to keep the mobile menu fully on the screen. */
 	.page__main {
 		position: relative;
@@ -34,14 +37,14 @@
 	}
 	/* Site adjustments for Enterprise, Community and Cloud. */
 	.docs__enterprise .docs__title {
-		color: rgb(var(--tango));
+		color: rgb(var(--neutral-100));
 	}
 	.docs__community .docs__title {
 		/* Smurf with 25% white overlay */
 		color: #409dd1;
 	}
 	.docs__cloud .docs__title {
-		color: rgb(var(--concrete));
+		color: rgb(var(--neutral-100));
 	}
 	.filter-menu {
 		margin: 0 calc((var(--gutter) /2) - 2px);
@@ -153,6 +156,19 @@
 					font-size: 1rem;
 					padding-top: 0.2rem;
 				}
+
+	.voxel .docs__search-button .DocSearch-Button {
+		background: none;
+		box-shadow: inset 0 0 0 1px rgb(var(--neutral-500));
+		color: rgb(var(--neutral-100));
+	}
+	.voxel .docs__search-button .DocSearch-Button:hover {
+		box-shadow: inset 0 0 0 1px rgb(var(--neutral-300)) !important;
+	}
+	.voxel .docs__search-button .DocSearch-Button:focus-visible {
+		box-shadow: 0 0 0 2px rgb(var(--neutral-500)) !important;
+	}
+
 	/* Search popup, I'm not doing any changes past this currently. */
 	.DocSearch.DocSearch-Container {
 		background: rgba(var(--midnight), 0.8);
@@ -256,6 +272,9 @@
 .js__docs__sticky-breadcrumb.stuck {
 	background: rgb(var(--coal));
 	color: rgb(255,255,255);
+}
+.voxel .js__docs__sticky-breadcrumb.stuck {
+	background: rgb(var(--blue-900));
 }
 		.js__docs__sticky-breadcrumb.stuck a {
 			color: rgb(255,255,255);

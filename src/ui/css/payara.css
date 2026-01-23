@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.78.1 */
+/*! Payara Pattern Library version: 0.82.0 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 /* Reset */
@@ -66,13 +66,12 @@
 	th {
 		font-weight: normal;
 	}
+	pre, code {
+		font-family: ui-monospace, "Cascadia Mono", Monaco, "Source Code Pro", "Courier New", monospace;
+	}
 	pre {
-		font-size: 2ex;	
 		margin: 0;
 		tab-size: 4;
-	}
-	code {
-		font-size: 2ex;
 	}
 
 	/* For safety only reset buttons that have a class attached. */
@@ -129,6 +128,11 @@
 		/* --cherry: 155,18,0;		Error */
 		--cherry: 219,26,0;		/* Error */
 		--frog: 0,103,41;		/* Success */
+
+		/* 30% smurf over midnight. */
+		--midnight-smurf-30: 0,76,108;
+		/* 40% smurf over midnight. */
+		--midnight-smurf-40: 0,86,123;
 
 		/* --cherry-on-dark: 255,150,130; */
 		/* --cherry-on-dark: 255,86,65;	This should not be used for text colour, more for edge cases like error borders on form fields. */
@@ -297,10 +301,7 @@
 		font-weight: 400;
 		/* Uses the visitor's locally installed copy if available. */
 		src: local('IBM Plex Sans'), local('IBMPlexSans'),
-			/* Super Modern Browsers */
-			url('../fonts/ibm-plex-sans-v2-latin-regular.woff2') format('woff2'), 
-			/* Modern Browsers */
-			url('../fonts/ibm-plex-sans-v2-latin-regular.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-regular.woff2') format('woff2');
 		font-display: swap;
 	}
 
@@ -310,8 +311,7 @@
 		font-style: italic;
 		font-weight: 400;
 		src: local('IBM Plex Sans Italic'), local('IBMPlexSans-Italic'),
-			url('../fonts/ibm-plex-sans-v2-latin-italic.woff2') format('woff2'),
-			url('../fonts/ibm-plex-sans-v2-latin-italic.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-italic.woff2') format('woff2');
 		font-display: swap;
 	}
 	
@@ -321,8 +321,7 @@
 		font-style: normal;
 		font-weight: 700;
 		src: local('IBM Plex Sans Bold'), local('IBMPlexSans-Bold'),
-			url('../fonts/ibm-plex-sans-v2-latin-700.woff2') format('woff2'),
-			url('../fonts/ibm-plex-sans-v2-latin-700.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-700.woff2') format('woff2');
 		font-display: swap;
 	}
 
@@ -332,8 +331,7 @@
 		font-style: italic;
 		font-weight: 700;
 		src: local('IBM Plex Sans Bold Italic'), local('IBMPlexSans-BoldItalic'),
-			url('../fonts/ibm-plex-sans-v2-latin-700italic.woff2') format('woff2'),
-			url('../fonts/ibm-plex-sans-v2-latin-700italic.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-700italic.woff2') format('woff2');
 		font-display: swap;
 	}
 
@@ -343,8 +341,7 @@
 		font-style: normal;
 		font-weight: 500;
 		src: local('IBM Plex Sans Medium'), local('IBMPlexSans-Medium'),
-			url('../fonts/ibm-plex-sans-v2-latin-500.woff2') format('woff2'),
-			url('../fonts/ibm-plex-sans-v2-latin-500.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-500.woff2') format('woff2');
 		font-display: swap;
 	}
 
@@ -354,18 +351,34 @@
 		font-style: italic;
 		font-weight: 500;
 		src: local('IBM Plex Sans Medium Italic'), local('IBMPlexSans-MediumItalic'),
-			url('../fonts/ibm-plex-sans-v2-latin-500italic.woff2') format('woff2'),
-			url('../fonts/ibm-plex-sans-v2-latin-500italic.woff') format('woff');
+			url('../fonts/ibm-plex-sans-v2-latin-500italic.woff2') format('woff2');
 		font-display: swap;
 	}
 
 	body {
 		font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
-		font-size: 1.6rem;
+		font-size: var(--text-size-m);
+		line-height: var(--text-line-height-normal);
+	}
 
-		/* We don't put a unit type here as this way the browser keeps it as a 
-		   multiple of the text size. */
-		line-height: 1.5;
+
+
+/* Text Size Properties */
+
+	:root {
+		--text-size-xs: 1.1rem;
+		--text-size-s: 1.3rem;
+		--text-size-m: 1.6rem;
+		--text-size-l: 2rem;
+		--text-size-xl: 2.5rem;
+		--text-size-xxl: 3.1rem;
+
+		--text-weight-normal: 400;
+		--text-weight-medium: 500;
+		--text-weight-bold: 700;
+
+		--text-line-height-normal: 1.5;
+		--text-line-height-tight: 1.2;
 	}
 
 
@@ -373,7 +386,7 @@
 /* Paragraph */
 
 	p:not([class]), .p {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	p:not([class]):last-child, .p:last-child {
 		margin-bottom: 0;
@@ -387,41 +400,44 @@
 	   added or where a specific style is needed, never to both. This is so we can 
 	   make an H2 look like an H1 wehilst keeping the correct document structure. */
 	h1:not([class]), .h1 {
-		font-size: 3.2rem;
-		font-weight: 700;
-		margin-bottom: 1.6rem;
-		margin-top: 3.2rem;
+		font-size: var(--text-size-xxl);
+		font-weight: var(--text-weight-bold);
+		line-height: var(--text-line-height-tight);
+		margin-bottom: var(--gutter);
+		margin-top: var(--gutter-x2);
 		text-wrap: balance;
 	}
 	h2:not([class]), .h2 {
-		font-size: 2.6rem;
-		font-weight: 700;
-		margin-bottom: 1.6rem;
-		margin-top: 3.2rem;
+		font-size: var(--text-size-xl);
+		font-weight: var(--text-weight-bold);
+		line-height: var(--text-line-height-tight);
+		margin-bottom: var(--gutter);
+		margin-top: var(--gutter-x2);
 		text-wrap: balance;
 	}
 	h3:not([class]), .h3 {
-		font-size: 2rem;
-		font-weight: 700;
-		margin-bottom: 1.6rem;
-		margin-top: 3.2rem;
+		font-size: var(--text-size-l);
+		font-weight: var(--text-weight-bold);
+		line-height: var(--text-line-height-tight);
+		margin-bottom: var(--gutter);
+		margin-top: var(--gutter-x2);
 		text-wrap: balance;
 	}
 	h4:not([class]), .h4 {
-		font-size: 1.6rem;
-		font-weight: 700;
-		margin-bottom: 1.6rem;
-		margin-top: 2.4rem;
+		font-size: var(--text-size-m);
+		font-weight: var(--text-weight-bold);
+		margin-bottom: var(--gutter);
+		margin-top: var(--gutter-x1_5);
 		text-wrap: balance;
 	}
 	h5:not([class]), .h5 {
-		font-size: 1.6rem;
-		font-weight: 700;
+		font-size: var(--text-size-m);
+		font-weight: var(--text-weight-bold);
 		text-wrap: balance;
 	} 
 	h6:not([class]), .h6 {
-		font-size: 1.6rem;
-		font-weight: 700;
+		font-size: var(--text-size-m);
+		font-weight: var(--text-weight-bold);
 		text-wrap: balance;
 	}
 
@@ -498,7 +514,7 @@
 
 	/* Sometimes the full spacing is too much so provide an option for half spacing. */
 	.h1.half-space, .h2.half-space, .h3.half-space, .h4.half-space {
-		margin-bottom: 0.8rem;
+		margin-bottom: var(--gutter-x0_5);
 	}
 
 
@@ -507,8 +523,8 @@
 
 	ul:not([class]) {
 		list-style-type: disc;
-		margin-bottom: 1.6rem;
-		margin-left: 4.8rem;
+		margin-bottom: var(--gutter);
+		margin-left: var(--gutter-x3);
 	}
 	ul:not([class]):last-child {
 		margin-bottom: 0;
@@ -516,8 +532,7 @@
 
 	.ul--no-indent {
 		list-style-type: disc;
-		margin-bottom: 1.6rem;
-		/* margin-left: 4.8rem; */
+		margin-bottom: var(--gutter);
 	}
 	.ul--no-indent:last-child {
 		margin-bottom: 0;
@@ -525,8 +540,8 @@
 
 	.ul--half-indent {
 		list-style-type: disc;
-		margin-bottom: 1.6rem;
-		margin-left: 1.6rem;
+		margin-bottom: var(--gutter);
+		margin-left: var(--gutter);
 	}
 	.ul--half-indent:last-child {
 		margin-bottom: 0;
@@ -538,8 +553,8 @@
 
 	ol:not([class]) {
 		list-style-type: decimal;
-		margin-bottom: 1.6rem;
-		margin-left: 4.8rem;
+		margin-bottom: var(--gutter);
+		margin-left: var(--gutter-x3);
 	}
 	ol:not([class]):last-child {
 		margin-bottom: 0;
@@ -547,8 +562,8 @@
 
 	.ol--half-indent {
 		list-style-type: decimal;
-		margin-bottom: 1.6rem;
-		margin-left: 1.6rem;
+		margin-bottom: var(--gutter);
+		margin-left: var(--gutter);
 	}
 	.ol--half-indent:last-child {
 		margin-bottom: 0;
@@ -559,31 +574,31 @@
 /* Definition List */
 
 	dl:not([class]) {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	dl:not([class]):last-child {
 		margin-bottom: 0;
 	}
 		dl:not([class]) dt {
-			font-weight: 700;
+			font-weight: var(--text-weight-bold);
 		}
 
 	.dl--long-form {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	.dl--long-form:last-child {
 		margin-bottom: 0;
 	}
 		.dl--long-form dt {
-			font-weight: 700;
+			font-weight: var(--text-weight-bold);
 		}
 		.dl--long-form dt:not(:first-of-type) {
-			margin-top: 1.6rem;
+			margin-top: var(--gutter);
 		}
 
 	/* Horizontal DL */
 	.dl--horizontal {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	.dl--horizontal:last-child {
 		margin-bottom: 0;
@@ -592,10 +607,10 @@
 			display: inline;
 		}
 		.dl--horizontal dt {
-			font-weight: 700;
+			font-weight: var(--text-weight-bold);
 		}
 		.dl--horizontal > dd:not(:last-child) {
-			margin-right: 1.6rem;
+			margin-right: var(--gutter);
 		}
 
 	.dl--container {
@@ -614,7 +629,7 @@
 
 	/* Grid DL */
 	.dl--grid {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	.dl--grid:last-child {
 		margin-bottom: 0;
@@ -622,8 +637,8 @@
 		.dl--grid dt {
 			clear: left;
 			float: left;
-			font-weight: 700;
-			margin-right: 1.6rem;
+			font-weight: var(--text-weight-bold);
+			margin-right: var(--gutter);
 		}
 		.dl--grid dd {
 			float: left;
@@ -657,7 +672,7 @@
 
 	.icon-list {
 		list-style-type: none;
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 		/* margin-left: 2.8rem; */
 		padding-left: 2rem;
 	}
@@ -678,25 +693,10 @@
 
 
 
-/* Large text */
-
-	.text--large {
-		font-size: 2em;
-	}
-
-	p.text--large {
-		margin-bottom: 1.6rem;
-	}
-	p.text--large:last-child {
-		margin-bottom: 0;
-	}
-
-
-
 /* Pre */
 
 	pre:not([class]) {
-		margin-bottom: 1.6rem;
+		margin-bottom: var(--gutter);
 	}
 	pre:not([class]):last-child {
 		margin-bottom: 0;
@@ -707,7 +707,7 @@
 /* Small text */
 
 	small {
-		font-size: 1.4rem;
+		font-size: var(--text-size-s);
 	}
 	small.block {
 		display: block;
@@ -822,8 +822,8 @@
 	/* Fixes issue where we are applying padding to the same element we want to scroll, not ideal and don't do it moving forward. */
 	.sidebar__content.js__scroll[data-shadow_top="1"]:before,
 	.sidebar__content.js__scroll[data-shadow_bottom="1"] > .js__shadow {
-		margin-left: calc(-1 * var(--padding));
-		margin-right: calc(-1 * var(--padding));
+		margin-left: var(--gutter-neg);
+		margin-right: var(--gutter-neg);
 		width: calc(100% + (var(--padding)*2));
 	}
 
@@ -864,6 +864,26 @@
 
 
 	
+/* Block Alignment */
+
+	.block-align--center,
+	.cards.card--no-pad > .block-align--center {
+		margin-inline-start: auto;
+		margin-inline-end: auto;
+	}
+	.block-align--start,
+	.cards.card--no-pad > .block-align--start {
+		margin-inline-start: 0;
+		margin-inline-end: auto;
+	}
+	.block-align--end,
+	.cards.card--no-pad > .block-align--end {
+		margin-inline-start: auto;
+		margin-inline-end: 0;
+	}
+
+
+
 /* No wrapping */
 
 	.no-wrap {
@@ -877,6 +897,46 @@
 
 
 	
+/* Line Limiter */
+
+	:root {
+		--line-limit--100: 100rem;
+		--line-limit--90: 90rem;
+		--line-limit--80: 80rem;
+		--line-limit--70: 70rem;
+		--line-limit--60: 60rem;
+		--line-limit--50: 50rem;
+		--line-limit--40: 40rem;
+		--line-limit--30: 30rem;
+	}
+
+	:not(.cards).line-limit--100 {
+		max-width: var(--line-limit--100);
+	}
+	:not(.cards).line-limit--90 {
+		max-width: var(--line-limit--90);
+	}
+	:not(.cards).line-limit--80 {
+		max-width: var(--line-limit--80);
+	}
+	:not(.cards).line-limit--70 {
+		max-width: var(--line-limit--70);
+	}
+	:not(.cards).line-limit--60 {
+		max-width: var(--line-limit--60);
+	}
+	:not(.cards).line-limit--50 {
+		max-width: var(--line-limit--50);
+	}
+	:not(.cards).line-limit--40 {
+		max-width: var(--line-limit--40);
+	}
+	:not(.cards).line-limit--30 {
+		max-width: var(--line-limit--30);
+	}
+
+
+
 /* Gutters */
 
 	:root {
@@ -891,6 +951,21 @@
 		--gutter-medium: 1.6rem;
 		--gutter-loose: 3.2rem;
 		--gutter: var(--gutter-medium);
+
+		--gutter-neg: calc(var(--gutter) * -1);	/* -16px */
+		--gutter-x0_75-neg: calc((var(--gutter) * 0.75) * -1);	/* -12px */
+		--gutter-x0_5-neg: calc((var(--gutter) / 2) * -1);	/* -8px */
+		--gutter-x0_25-neg: calc((var(--gutter) / 4) * -1);	/* -4px */
+		--gutter-x0_125-neg: calc((var(--gutter) / 8) * -1);	/* -2px */
+		--gutter-x0_0625-neg: calc((var(--gutter) / 16) * -1);	/* -1px */
+		--gutter-x0_0625: calc(var(--gutter) / 16);	/* 1px */
+		--gutter-x0_125: calc(var(--gutter) / 8);	/* 2px */
+		--gutter-x0_25: calc(var(--gutter) / 4);	/* 4px */
+		--gutter-x0_5: calc(var(--gutter) / 2);	/* 8px */
+		--gutter-x0_75: calc(var(--gutter) * 0.75);	/* 12px */
+		--gutter-x1_5: calc(var(--gutter) * 1.5);	/* 24px */
+		--gutter-x2: calc(var(--gutter) * 2);	/* 32px */
+		--gutter-x3: calc(var(--gutter) * 3);	/* 48px */
 	}
 
 	/* 
@@ -929,15 +1004,18 @@
 		margin-bottom: var(--gutter);
 	}
 
+	.gutter--v-x2,
 	.gutter--v--double {
-		margin-bottom: calc(var(--gutter) * 2);
-		margin-top: calc(var(--gutter) * 2);
+		margin-bottom: var(--gutter-x2);
+		margin-top: var(--gutter-x2);
 	}
+	.gutter--t-x2,
 	.gutter--t--double {
-		margin-top: calc(var(--gutter) * 2);
+		margin-top: var(--gutter-x2);
 	}
+	.gutter--b-x2,
 	.gutter--b--double {
-		margin-bottom: calc(var(--gutter) * 2);
+		margin-bottom: var(--gutter-x2);
 	}
 
 
@@ -951,6 +1029,15 @@
 		--padding-medium: 1.6rem;
 		--padding-loose: 2rem;
 		--padding: var(--padding-medium);
+
+		--padding-x0_0625: calc(var(--padding) / 16);
+		--padding-x0_125: calc(var(--padding) / 8);
+		--padding-x0_25: calc(var(--padding) / 4);
+		--padding-x0_5: calc(var(--padding) / 2);
+		--padding-x0_75: calc(var(--padding) * 0.75);
+		--padding-x1_5: calc(var(--padding) * 1.5);
+		--padding-x2: calc(var(--padding) * 2);
+		--padding-x3: calc(var(--padding) * 3);
 	}
 
 	.padding {
@@ -996,13 +1083,13 @@
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--card-background-opacity: 0.05;
-			--card-listing-border: rgba(255,255,255, 0.15);
+			--card-listing-border: rgba(var(--snow), 0.15);
 			--card-calout-grey-bk: rgba(var(--concrete), 0.3);
 		}
 	}
 	.theme--dark {
 		--card-background-opacity: 0.05;
-		--card-listing-border: rgba(255,255,255, 0.15);
+		--card-listing-border: rgba(var(--snow), 0.15);
 		--card-calout-grey-bk: rgba(var(--concrete), 0.3);
 	}
 
@@ -1035,7 +1122,7 @@
 		/* Nested cards by default do not add the card background or padding, this is to try and discourage "everything in a box" design, we can add these back in by using this card--bk class. */
 		.cards .cards.card--bk > .card, 
 		.cards .cards .card.card--bk {
-			background: rgba(255,255,255, var(--card-background-opacity));
+			background: rgba(var(--snow), var(--card-background-opacity));
 			border-radius: var(--block-radius);
 			padding: var(--padding);
 		}
@@ -1283,7 +1370,7 @@
 	.cards > .card.card--callout--smurf,
 	.cards > .card.card-bk--smurf {
 		background: rgb(var(--smurf)) !important;
-		color: rgb(255,255,255) !important;
+		color: rgb(var(--snow)) !important;
 		padding: var(--padding);
 	}
 	.cards > .card.card--callout--grey,
@@ -1293,7 +1380,7 @@
 	}
 	.cards > .card.card--callout--default,
 	.cards > .card.card-bk {
-		background: rgba(255,255,255, var(--card-background-opacity)) !important;
+		background: rgba(var(--snow), var(--card-background-opacity)) !important;
 		padding: var(--padding) !important;
 	}
 
@@ -1315,9 +1402,9 @@
 		--page-text: var(--basalt);
 
 		--sidebar-background: rgb(var(--midnight));
-		--sidebar-text: rgb(255,255,255);
+		--sidebar-text: rgb(var(--snow));
 
-		--header-text: rgb(255,255,255);
+		--header-text: rgb(var(--snow));
 	}
 	.theme--light {
 		--page-background: rgb(236,239,240);
@@ -1326,12 +1413,12 @@
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--page-background: rgb(var(--coal));
-			--page-text: 255,255,255;
+			--page-text: var(--snow);
 		}
 	}
 	.theme--dark {
 		--page-background: rgb(var(--coal));
-		--page-text: 255,255,255;
+		--page-text: var(--snow);
 	}
 
 
@@ -1342,7 +1429,7 @@
 		color: rgb(var(--basalt));
 	}
 	html:has(.theme--dark) {
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	
 	.page {
@@ -1362,7 +1449,7 @@
 			}
 		.page__footer {
 			background: rgb(var(--onyx));
-			color: rgba(255,255,255, 0.75);
+			color: rgba(var(--snow), 0.75);
 			padding: var(--padding);
 			text-align: center;
 		}
@@ -1420,7 +1507,7 @@
 					flex: 999 0 auto;
 					height: 0;
 					overflow-y: auto;
-					margin-bottom: calc(var(--gutter) / 2);
+					margin-bottom: var(--gutter-x0_5);
 				}
 	}
 		
@@ -1491,11 +1578,11 @@
 		}
 
 	.page__sidebar .menu {
-		margin: 0 calc(-1 * var(--padding));
+		margin: 0 var(--gutter-neg);
 		width: calc(100% + (var(--padding)*2));
 	}
 	.page__sidebar .sidebar__footer .menu {
-		margin-bottom: calc(-1 * var(--padding));
+		margin-bottom: var(--gutter-neg);
 	}
 
 	/* Menu locks to top of window when page is scrolled, this is the default behaviour for modern browsers. */
@@ -1564,14 +1651,14 @@
 
 	/* Sidebar links. */
 	.page__sidebar h4 a:not([class]) {
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 		text-decoration: none;
 	}
 	.page__sidebar a:hover:not([class]) {
 		text-decoration: underline;
 	}
 	.page__sidebar a:focus-visible:not([class]) {
-		background: rgb(255,255,255);
+		background: rgb(var(--snow));
 	}
 
 
@@ -1582,15 +1669,15 @@
 		--hero-background: 
 			linear-gradient(
 				0deg,
-				rgba(5,152,214,0.5) 0,
-				rgba(5,152,214,0) 100%
+				rgba(var(--smurf) ,0.5) 0,
+				rgba(var(--smurf) ,0) 100%
 			),
 			linear-gradient(
 				0deg,
-				rgb(0,44,62) 0,
-				rgb(0,44,62) 100%
+				rgb(var(--midnight)) 0,
+				rgb(var(--midnight)) 100%
 			);
-		--hero-text: rgb(255,255,255);
+		--hero-text: rgb(var(--snow));
 	}
 
 	.hero {
@@ -1599,7 +1686,7 @@
 		background-size: cover;
 		color: var(--hero-text);
 		overflow: hidden;
-		padding-bottom: var(--gutter);
+		padding-bottom: var(--padding);
 	}
 
 
@@ -1615,10 +1702,10 @@
 			),
 			linear-gradient(
 				0deg,
-				rgb(255,255,255) 0,
-				rgb(255,255,255) 100%
+				rgb(var(--snow)) 0,
+				rgb(var(--snow)) 100%
 			);
-		--compare-alt-bk: rgb(255,255,255);
+		--compare-alt-bk: rgb(var(--snow));
 		--compare--stripe: rgb(var(--tango));
 		--compare--stripe-disabled: rgba(var(--basalt),0.3);
 	}
@@ -1631,10 +1718,10 @@
 			),
 			linear-gradient(
 				0deg,
-				rgb(255,255,255) 0,
-				rgb(255,255,255) 100%
+				rgb(var(--snow)) 0,
+				rgb(var(--snow)) 100%
 			);
-		--compare-alt-bk: rgb(255,255,255);
+		--compare-alt-bk: rgb(var(--snow));
 		--compare--stripe: rgb(var(--tango));
 		--compare--stripe-disabled: rgba(var(--basalt),0.3);
 	}
@@ -1643,32 +1730,32 @@
 			--compare-bk: 
 				linear-gradient(
 					0deg,
-					rgba(255,255,255,0.1) 0,
-					rgba(255,255,255,0.1) 100%
+					rgba(var(--snow),0.1) 0,
+					rgba(var(--snow),0.1) 100%
 				),
 				linear-gradient(
 					0deg,
 					rgb(var(--coal)) 0,
 					rgb(var(--coal)) 100%
 				);
-			--compare-alt-bk: rgba(255,255,255,0.05);
-			--compare--stripe-disabled: rgba(255,255,255,0.15);
+			--compare-alt-bk: rgba(var(--snow),0.05);
+			--compare--stripe-disabled: rgba(var(--snow),0.15);
 		}
 	}
 	.theme--dark {
 		--compare-bk: 
 			linear-gradient(
 				0deg,
-				rgba(255,255,255,0.1) 0,
-				rgba(255,255,255,0.1) 100%
+				rgba(var(--snow),0.1) 0,
+				rgba(var(--snow),0.1) 100%
 			),
 			linear-gradient(
 				0deg,
 				rgb(var(--coal)) 0,
 				rgb(var(--coal)) 100%
 			);
-		--compare-alt-bk: rgba(255,255,255,0.05);
-		--compare--stripe-disabled: rgba(255,255,255,0.15);
+		--compare-alt-bk: rgba(var(--snow),0.05);
+		--compare--stripe-disabled: rgba(var(--snow),0.15);
 	}
 
 	.compare {
@@ -1819,13 +1906,14 @@
 				}
 				.compare__stripe {
 					background: var(--compare--stripe);
+					color: rgb(var(--coal));
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					margin-left: calc(var(--padding) * -1);
-					margin-right: calc(var(--padding) * -1);
-					padding: calc(var(--padding) / 2);
+					margin-left: var(--gutter-neg);
+					margin-right: var(--gutter-neg);
+					padding: var(--padding-x0_5);
 				}
 				.compare .card--callout--tango .compare__stripe {
 					background: var(--compare-bk);
@@ -1834,8 +1922,7 @@
 						margin-bottom: 0;
 					}
 				.compare__content ul {
-					font-size: 1.4rem;
-					font-weight: 500;
+					font-weight: var(--text-weight-medium);
 				}
 
 			.card.compare--disabled {
@@ -1874,7 +1961,7 @@
 	/* Is the table block followed immediately with some basic text types? */
 	.table:has( + :where(p, ul, ol)),
 	.scroll:has(.table):has( + :where(p, ul, ol)) {
-		margin-bottom: calc(var(--gutter) * 2);
+		margin-bottom: var(--gutter-x2);
 	}
 
 	/* Fix for parent items breaking the horizontal scroll, I've added it here for the moment as this needs much more testing for something so fundamental as the card system. */
@@ -1910,7 +1997,7 @@
 
 		.table :where(th, td) {
 			border-block-end: solid 1px color-mix(in srgb, currentColor 15%, transparent);
-			padding: calc(var(--padding) / 2) var(--padding);
+			padding: var(--padding-x0_5) var(--padding);
 			text-align: start;
 		}
 		/* If there's no thead add a top border. */
@@ -1920,39 +2007,39 @@
 
 		/* Used in tbody. */
 		.table th {
-			font-weight: 500;
+			font-weight: var(--text-weight-medium);
 		}
 		/* Give the th more prominence when the table is a vertical rather then having a secondary row key on a horizontal table. */
 		.table:not(:has(thead)) tbody th {
-			font-weight: 700;
+			font-weight: var(--text-weight-bold);
 		}
 		/* Extra emphasis when in an actual table thead. */
 		.table thead th {
 			border-block-end-width: 2px;
-			font-weight: 700;
+			font-weight: var(--text-weight-bold);
 		}
 		/* Repeat header row further down the table, useful for long tables. */
 		.table tr + tr:not(:has(td)) th,
 		.table tbody > tr:not(:has(td)) th {
 			border-block-end-width: 2px;
-			padding-top: calc(var(--padding) * 1.5);
+			padding-top: var(--padding-x1_5);
 		}
 
 		.table.table--emphasise-headers thead th,
 		.table.table--emphasise-headers tr + tr:not(:has(td)) th,
 		.table.table--emphasise-headers tbody > tr:not(:has(td)) th {
 			background: color-mix(in srgb, currentColor 5%, transparent);
-			padding-top: calc(var(--padding) / 2);
+			padding-top: var(--padding-x0_5);
 		}
 
 		/* Left and right edge padding. */
 		.table th:first-child,
 		.table td:first-child {
-			padding-left: calc(var(--padding) / 4);
+			padding-left: var(--padding-x0_25);
 		}
 		.table th:last-child,
 		.table td:last-child {
-			padding-right: calc(var(--padding) / 4);
+			padding-right: var(--padding-x0_25);
 		}
 
 		/* Grouped rows and cols. */
@@ -1961,14 +2048,14 @@
 			padding-bottom: 0;
 		}
 		.table tr.table--grouped-with + tr :where(th, td) {
-			padding-top: calc(var(--padding)/ 4)
+			padding-top: var(--padding-x0_25);
 		}
 		/* Use :is for the extra specifity. */
 		.table :is(th, td).table--grouped-with {
 			padding-right: 0;
 		}
 		.table :is(th, td).table--grouped-with + :where(th, td) {
-			padding-left: 0.3em;
+			padding-left: var(--padding-x0_25);
 		}
 		
 		/* Applying things to columns is painful, leading to code like below. 
@@ -1999,20 +2086,20 @@
 
 	.table .table__caption {
 			border-block-end: solid 2px color-mix(in srgb, currentColor 15%, transparent);
-			font-weight: 500;
-			padding-bottom: calc(var(--padding) / 2);
+			font-weight: var(--text-weight-medium);
+			padding-bottom: var(--padding-x0_5);
 	}
 
 
 	/* Adjust the vertical margins on buttons in thead. */
 	.table thead .button {
-		margin-top: calc( (var(--padding)/ 2) * -1);
-  	margin-bottom: calc( (var(--padding)/ 2) * -1);
+		margin-top: var(--gutter-x0_5-neg);
+  	margin-bottom: var(--gutter-x0_5-neg);
 	}
 	.table thead .button:last-child {
 		/* This fixes an annoying issue where about this much space is added due to a space in the code. */
   	margin-left: -0.25em;
-  	margin-right: calc( var(--padding) * -1);
+  	margin-right: var(--gutter-neg);
 	}
 	/* This is applied if the th/td has a button but does not have a .no-wrap around the button and the last word of text. We need this otherwise we can get an unsightly layout where the button is wrapped on its own. */
 	.table thead :where(th, td):has(.button):not(:has(.no-wrap)) {
@@ -2030,7 +2117,7 @@
 	.table tr .table__color-tag,
 	.table tr.table__color-tag > :where(th, td) {
 		position: relative;
-		padding-left: calc((var(--padding) / 4) + 0.4rem);
+		padding-left: var(--padding-x0_5);
 	}
 	.table tr .table__color-tag:before, 
 	.table tr .table__color-tag:after,
@@ -2126,18 +2213,18 @@
 
 	:root {
 		--tab-group-bk: rgb(var(--concrete));
-		--tab-group-active-bk: rgb(255,255,255);
+		--tab-group-active-bk: rgb(var(--snow));
 	}
 	.theme--light {
 		--tab-group-bk: rgb(var(--concrete));
-		--tab-group-active-bk: rgb(255,255,255);
+		--tab-group-active-bk: rgb(var(--snow));
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--tab-group-bk: 
 				linear-gradient(
-					rgba(255,255,255, 0.05), 
-					rgba(255,255,255, 0.05)), 
+					rgba(var(--snow), 0.05), 
+					rgba(var(--snow), 0.05)), 
 				rgb(var(--coal));
 			--tab-group-active-bk: rgba(var(--coal), 1);
 		}
@@ -2145,8 +2232,8 @@
 	.theme--dark {
 		--tab-group-bk: 
 			linear-gradient(
-				rgba(255,255,255, 0.05), 
-				rgba(255,255,255, 0.05)), 
+				rgba(var(--snow), 0.05), 
+				rgba(var(--snow), 0.05)), 
 			rgb(var(--coal));
 		--tab-group-active-bk: rgba(var(--coal), 1);
 	}
@@ -2167,10 +2254,10 @@
 		display: block;
 	}
 		.tab-group__tab.button:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear) {
-			padding: 0.8rem var(--padding);
+			padding: var(--padding-x0_5) var(--padding);
 			border-radius: var(--button-radius) var(--button-radius) 0 0;
 			box-shadow: none;
-			margin: 0 0rem;
+			margin: 0;
 		}
 		.tab-group__tab[aria-selected=true]:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear):not(:hover), 
 		.tab-group__tab[aria-selected=true]:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear):hover {
@@ -2209,92 +2296,87 @@
 
 /* Accordion */
 
-	:root {
-		--accordion-border: rgba(var(--basalt), 0.25);
+.accordion {
+	display: block
+}
+	.accordion .accordion__details {
+		border: solid 1px currentColor;
+		border-color: color-mix(in srgb, currentColor 15%, transparent);
 	}
-	.theme--light {
-		--accordion-border: rgba(var(--basalt), 0.25);
-	}
-	@media (prefers-color-scheme: dark) {
-		:root {
-			--accordion-border: rgba(255,255,255, 0.15);
-		}
-	}
-	.theme--dark {
-		--accordion-border: rgba(255,255,255, 0.15);
-	}
-
-
-	.accordion__item {
-		border: solid 1px var(--accordion-border);
-		column-gap: var(--padding);
-		display: grid;
-		grid-template-columns: 1fr fit-content(50%);
-		grid-template-areas: 'a b''c c';
-		padding: 0.8rem var(--padding);
-		position: relative;
-	}
-	.accordion__item + .accordion__item {
+	.accordion .accordion__details + .accordion__details {
 		border-top: none;
 	}
-	.accordion__item:first-child {
+
+	/* Add the radii, we ned to add some to the summary so that when focussed we don't suddenly get a sharp corner. */
+	.accordion .accordion__details:first-child,
+	.accordion .accordion__details:first-child .accordion__summary {
 		border-radius: var(--button-radius) var(--button-radius) 0 0;
 	}
-	.accordion__item:last-child {
+	.accordion .accordion__details:last-child,
+	.accordion .accordion__details:last-child .accordion__summary {
 		border-radius: 0 0 var(--button-radius) var(--button-radius);
 	}
-	
-	.accordion__visible {
-		grid-area: a;
-	}
-		.accordion__toggle,
-		.accordion__button {
-			grid-area: b;
-			margin: -0.8rem calc(var(--padding) * -1) !important;
-			white-space: nowrap;
-		}
-		.accordion__toggle.button--ghost,
-		.accordion__button.button--ghost {
-			margin: -0.8rem 0 !important;
-		}
-		.accordion__toggle .icon {
-			transition: all 0.2s ease-in-out;
-		}
-		.accordion__toggle[aria-expanded="false"] .icon {
-			transform: rotate(90deg);
-		}
-		.accordion__toggle[aria-expanded="true"] .icon {
-			transform: rotate(-90deg);
-		}
 
-		.accordion__content {
-			grid-area: c;
-			margin: -0.8rem calc(var(--padding) * -1);
-			margin-top: 0.4rem;
-			overflow: hidden;
-			padding: 0.3rem var(--padding);
-			transition: max-height 0.3s ease-in-out;
+		.accordion .accordion__summary {
+			cursor: pointer;
+			display: grid;
+			font-weight: var(--text-weight-bold);
+			grid-template-columns: 1fr max-content;
+			padding: var(--padding-x0_5) var(--padding);
 		}
-		[aria-expanded="false"] + .accordion__content {
-			max-height: 0vh;
-			padding: 0.3rem var(--padding);
-			visibility: hidden;
+		.accordion .accordion__summary:focus-visible {
+			box-shadow: 0 0 0 4px rgb(var(--smurf)) !important;
+			outline: 0;
 		}
-		[aria-expanded="true"] + .accordion__content {
-			max-height: 100vh;
-			padding: 0.8rem var(--padding);
-			visibility: visible;
-		}
-
-	@media only screen and (max-width: 18em) {
-		.accordion__item {
-			display: block;
-		}
-			.accordion .accordion__item .accordion__toggle,
-			.accordion .accordion__item .accordion__button {
-				display: block;
-				margin: 0 auto -0.8rem auto !important;
+			/* Remove default details arrow. */
+			.accordion .accordion__summary::marker {
+				content: "";
 			}
+			.accordion .accordion__summary::-webkit-details-marker {
+				display: none;
+			}
+
+			/* Toggle */
+			.js__accordion .accordion__toggle,
+			.accordion:not(.js__accordion) .accordion__summary:after {
+				transform: rotate(90deg);
+				transition: all 300ms linear;
+			}
+			.accordion:not(.js__accordion) .accordion__summary:after {
+				content: "\25B6";
+			}
+
+			/* Toggle open */
+			.accordion:not(.js__accordion) .accordion__details[open] .accordion__summary:after,
+			.js__accordion .accordion__details[open] .accordion__toggle {
+				transform: rotate(270deg);
+			}
+
+		.accordion .accordion__details .accordion__content {
+			interpolate-size: allow-keywords;
+			height: 0;
+			overflow: hidden;
+			padding: 0 var(--padding);
+			transition: all 300ms ease-in-out;
+		}
+		.accordion .accordion__details[open] .accordion__content {
+			height: max-content;
+			padding: var(--padding-x0_5) var(--padding);
+		}
+
+	/* Animation */
+	.accordion .accordion__details::details-content {
+		/* This is the bit that allows the close animation to be visible. Without this the animation fires but since the 'open' attribute is removed immediately on click there's nothing to see, content-visibility forces the content that is hidden by removing the 'open' to stay visible and therefore the animation can be seen. */
+		content-visibility: visible;
+	}
+	/* As we're forcing the content to stay visible to enable the animation we now need to fix the problem that collapsed content needs to be hidden from the DOM tree, but again not until after the animation is finished. This delays applying the visibility a little. */
+	.accordion .accordion__details:not([open]) .accordion__summary + .accordion__content {
+		visibility: visible;
+		animation: accordion-content-hide 0s linear 300ms infinite normal forwards;	
+	}
+	@keyframes accordion-content-hide {
+		0% { visibility: visible; }
+		100% { visibility: hidden; }
 	}
 
 
@@ -2303,14 +2385,14 @@
 
 	.console {
 		background: rgb(var(--coal));
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	.console--light {
-		background: rgb(255,255,255);
+		background: rgb(var(--snow));
 		color: rgb(var(--coal));
 	}
 		.console pre {
-			padding: calc(var(--padding) / 2);
+			padding: var(--padding-x0_5);
 			max-height: 30rem;
 		}
 		/* Adjust the padding slightly for consoles inside tables so the left margin matches. */
@@ -2331,11 +2413,11 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--highlights-background: rgba(255,255,255, 0.35);
+			--highlights-background: rgba(var(--snow), 0.35);
 		}
 	}
 	.theme--dark {
-		--highlights-background: rgba(255,255,255, 0.35);
+		--highlights-background: rgba(var(--snow), 0.35);
 	}
 
 
@@ -2432,7 +2514,7 @@
 	.highlights a:focus-visible:not([class]),
 	.highlights .button.button--plain:focus,
 	.highlights .button.button--plain:focus-visible {
-		background: rgb(255,255,255);
+		background: rgb(var(--snow));
 		color: rgb(var(--coal));
 	}
 	.highlights a:focus:not(:focus-visible):not([class]),
@@ -2468,16 +2550,18 @@
 	}
 	.copy-box, 
 	.theme--light .copy-box {
-		--copy-box-background: rgb(255,255,255);
+		--copy-box-background: rgba(var(--concrete), 0.25);
+		--copy-box-background-form: rgba(var(--snow), 0.5);
 		--copy-box-anim:
 			linear-gradient(
 				rgba(var(--smurf), 0.25),
 				rgba(var(--smurf), 0.25))
-			rgb(255,255,255);
+			rgb(var(--snow));
 	}
 	@media (prefers-color-scheme: dark) {
 		.copy-box {
-			--copy-box-background: rgb(var(--coal));
+			--copy-box-background: rgba(var(--snow), 0.1);
+			--copy-box-background-form: var(--copy-box-background);
 			--copy-box-anim:
 				linear-gradient(
 					rgba(var(--smurf), 0.5),
@@ -2486,7 +2570,8 @@
 		}
 	}
 	.theme--dark .copy-box {
-		--copy-box-background: rgb(var(--coal));
+		--copy-box-background: rgba(var(--snow), 0.1);
+		--copy-box-background-form: var(--copy-box-background);
 		--copy-box-anim:
 			linear-gradient(
 				rgba(var(--smurf), 0.5),
@@ -2504,10 +2589,13 @@
 		.copy-box__content {
 			border: 1px dashed var(--copy-box-border);
 			background: var(--copy-box-background);
-			padding: calc(0.8rem - 2px) 0.8rem;
+			padding: calc(var(--padding-x0_5) - 1px) var(--padding-x0_5);
 			position: relative;
 			/* Allows the trick to use the animation to click to select the content. */
 			user-select: all;
+		}
+		.form .copy-box__content {
+			background: var(--copy-box-background-form);
 		}
 		/* Played when the user clicks on the content to copy. The first click selects all the content, a second click allows the user to manually select. Without the animation they would only ever be able to select all. */
 		.no-js .copy-box > *:first-child:focus,
@@ -2547,8 +2635,8 @@
 
 	.status-label {
 		color: currentcolor;
-		font-size: 1.3rem;
-		font-weight: bold;
+		font-size: var(--text-size-s);
+		font-weight: var(--text-weight-bold);
 		text-transform: uppercase;
 		white-space: nowrap;
 	}
@@ -2571,7 +2659,7 @@
 	.status-label--bk {
 		background: color-mix(in srgb, currentColor 10%, transparent);
 		display: inline-block;
-		padding: 0.1rem 0.4rem;
+		padding: var(--padding-x0_0625) var(--padding-x0_25);
 	}
 		.status-label .icon {
 			fill: currentColor;
@@ -2589,16 +2677,16 @@
 /* Status */
 
 	:root {
-		--popup-background: 255,255,255;
+		--popup-background: var(--snow);
 		--popup-text: var(--page-text);
 		--popup-page-text: var(--page-text);
-		--popup-status-link: 0,115,165;
+		--popup-status-link: var(--smurf);
 		--whisper: var(--concrete);
 		--whisper-form:
 			linear-gradient(
 				0deg,
-				rgba(255,255,255,0.65) 0,
-				rgba(255,255,255,0.65) 100%
+				rgba(var(--snow),0.65) 0,
+				rgba(var(--snow),0.65) 100%
 			),
 			linear-gradient(
 				0deg,
@@ -2607,31 +2695,31 @@
 			);
 	}
 	.theme--light {
-		--popup-background: 255,255,255;
+		--popup-background: var(--snow);
 		--popup-text: var(--page-text);
 		--popup-page-text: var(--page-text);
-		--popup-status-link: 0,115,165;
+		--popup-status-link: var(--smurf);
 		--whisper: var(--concrete);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--popup-background: var(--basalt);
 			--popup-text: var(--page-text);
-			--popup-page-text: 255,255,255;
-			--popup-status-link: 255,255,255;
+			--popup-page-text: var(--snow);
+			--popup-status-link: var(--snow);
 		}
 	}
 	.theme--dark {
 		--popup-background: var(--basalt);
 		--popup-text: var(--page-text);
-		--popup-page-text: 255,255,255;
-		--popup-status-link: 255,255,255;
+		--popup-page-text: var(--snow);
+		--popup-status-link: var(--snow);
 		--whisper: var(--jet);
 		--whisper-form:
 			linear-gradient(
 				0deg,
-				rgba(255,255,255,0.03) 0,
-				rgba(255,255,255,0.03) 100%
+				rgba(var(--snow),0.03) 0,
+				rgba(var(--snow),0.03) 100%
 			),
 			linear-gradient(
 				0deg,
@@ -2645,7 +2733,7 @@
 	.status {
 		background: rgb(var(--basalt));
 		border-radius: var(--block-radius);
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 		padding: var(--padding);
 		position: relative;
 	}
@@ -2683,7 +2771,7 @@
 		/* Add some spacing to accommodate the close button in top right. */
 		.status--cb .status__title, 
 		.status--cb .status__content {
-			margin-right: calc(4rem - var(--padding));
+			margin-right: var(--gutter-x1_5);
 		}
 
 
@@ -2714,43 +2802,40 @@
 		}
 		.status--icon .status__title, 
 		.status--icon .status__content {
-			margin-left: calc(var(--padding) + 3.2rem);
-			margin-right: calc(var(--padding) + 3.2rem);
+			margin-left: var(--gutter-x3);
+			margin-right: var(--gutter-x3);
 		}
 
 
 	.status.status--small {
-		padding: calc(var(--padding) / 2);
+		padding: var(--padding-x0_5);
 	}
 		.status--icon.status--small .status__icon {
 			width: 2rem;
 			height: 2rem;
-			top: calc(var(--padding) / 2);
-		}
-		.status--icon.status--small .status__content {
-			margin-left: calc(var(--padding) + 2rem);
+			top: var(--padding-x0_5);
 		}
 
 
 		/* With actions */
 		.status--actions {
 			/* Add 25% extra padding to the bottom to visually balance things out. */
-			padding-bottom: calc(var(--padding) + calc(var(--padding) / 2));
+			padding-bottom: var(--padding-x1_5);
 		}
 			.status--actions .status__actions {
 				display: block;
-				padding-top: calc(var(--gutter) / 4);
+				padding-top: var(--padding-x0_25);
 				text-align: center;
 			}
 			.status--actions:not(.status--small) .status__actions {
-				padding-top: calc(var(--gutter) * 2);
+				padding-top: var(--padding-x2);
 			}
 
 
 	.status:not(.status--whisper) a:not([class]),
 	/* Fix for the broken way we're implementing the popups in Cloud with Unpoly. */
 	.popup:not(.status--success):not(.status--error) .status:not(.status--whisper) a:not([class]) {
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	.popup:not(.status--success):not(.status--error) a:not([class]) {
 		color: rgb(var(--popup-status-link));
@@ -2793,7 +2878,7 @@
 				background: rgb(var(--popup-background));
 				border-radius: var(--block-radius);
 				box-shadow: 0px 20px 20px 4px rgba(var(--onyx),0.9);
-				color: rgb(255,255,255);
+				color: rgb(var(--snow));
 				display: inline-flex;
 				flex-direction: column;
 				margin: var(--gutter) 0;
@@ -2822,7 +2907,7 @@
 
 	.status--tiny {
 		display: inline-block;
-		padding: calc(var(--padding) / 2);
+		padding: var(--padding-x0_5);
 		padding-right: var(--padding);
 	}
 		.status--tiny .status__icon {
@@ -2833,46 +2918,43 @@
 			   one line long, the minimum height of the status block ends up at 
 			   about 48px tall so we show an icon that's 24px in height. */
 			max-height: 50%;
-
-			width: 2rem;
-			height: 2rem;
-			top: calc(var(--padding)/ 1.8);
+			top: var(--gutter-x0_75);
 		}
 		.status--tiny .status__icon ~ .status__content {
-			margin-left: calc(var(--padding) + 2rem);
+			margin-left: var(--gutter-x2);
 			display: flex;
 			flex-wrap: wrap;
-			gap: 0.8rem;
+			gap: var(--padding-x0_5);
 		}
 		
 		.status--tiny .status__actions {
 			display: inline-block;
-			margin: -0.8rem 0;
+			margin: var(--gutter-x0_5-neg) 0;
 		}
 
 
 	
 	:root {
-		--notifictions-bk: rgb(255,255,255);
+		--notifictions-bk: rgb(var(--snow));
 		--notifiction-bk: rgba(var(--concrete), 0.4);
 		--notifictions-text: var(--basalt);
 	}
 	.theme--light {
-		--notifictions-bk: rgb(255,255,255);
+		--notifictions-bk: rgb(var(--snow));
 		--notifiction-bk: rgba(var(--concrete), 0.4);
 		--notifictions-text: var(--basalt);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--notifictions-bk: linear-gradient(rgba(255,255,255,0.05),rgba(255,255,255,0.05)),rgb(var(--coal));
+			--notifictions-bk: linear-gradient(rgba(var(--snow),0.05),rgba(var(--snow),0.05)),rgb(var(--coal));
 			--notifiction-bk: rgba(var(--coal), 0.5);
-			--notifictions-text: 255,255,255;
+			--notifictions-text: var(--snow);
 		}
 	}
 	.theme--dark {
-		--notifictions-bk: linear-gradient(rgba(255,255,255,0.05),rgba(255,255,255,0.05)),rgb(var(--coal));
+		--notifictions-bk: linear-gradient(rgba(var(--snow),0.05),rgba(var(--snow),0.05)),rgb(var(--coal));
 		--notifiction-bk: rgba(var(--coal), 0.5);
-		--notifictions-text: 255,255,255;
+		--notifictions-text: var(--snow);
 	}
 
 	.notifications--popup.notifications {
@@ -2882,7 +2964,7 @@
 	}
 
 		.notifications .button.notification__button:first-child {
-			margin-left: calc((var(--gutter)/ 2) - 2px) !important;
+			margin-left: calc(var(--gutter-x0_5) - 2px) !important;
 			margin-right: 0 !important;
 		}
 		.notifications .button.notification__button[aria-expanded='true'] {
@@ -2902,7 +2984,7 @@
 		}
 			.button.notification__button .icon {
 				height: 2.4rem;
-				margin: -4px -12px;
+				margin: var(--gutter-x0_25-neg) var(--gutter-x0_5-neg);
 				width: 2.4rem;
 			}
 			.button.notification__button[aria-expanded='true'] .icon {
@@ -2952,26 +3034,26 @@
 						position: relative;
 					}
 						.notification .notification__title {
-							font-weight: bold;
-							padding-right: 0.8rem;
+							font-weight: var(--text-weight-bold);
+							padding-right: var(--padding-x0_5);
 						}
 						.icon.notification-pin {
 							fill: currentColor;
-							height: 1.6rem;
+							height: var(--padding);
 							position: absolute;
-							right: 0.4rem;
-							top: 0.4rem;
-							width: 1.6rem;
+							right: var(--padding-x0_25);
+							top: var(--padding-x0_25);
+							width: var(--padding);
 
 						}
 						.notification-delete {
 							position: absolute;
-							right: calc(var(--padding) / 2);
-							bottom: calc(var(--padding) / 2);
+							right: var(--padding-x0_5);
+							bottom: var(--padding-x0_5);
 						}
 
 	.notification__empty-text {
-		margin: 0.8rem 0 1.6rem 0;
+		margin: var(--gutter-x0_5) 0 var(--gutter) 0;
 	}
 
 			.notification--time {
@@ -2992,7 +3074,7 @@
 			.notifications--popup .notifications__panel {
 				left: 0;
 				/* This covers the extra height on the expanded notification button. */
-				margin-top: 3px;
+				margin-top: var(--gutter-x0_25);
 				right: auto;
 				top: auto;
 				width: 100%;
@@ -3010,8 +3092,8 @@
 	}
 	.page--sticky-header .notifications--popup .notification__list {
 		flex: 1 1 auto;
-		margin-bottom: var(--padding);
-		margin-top: var(--padding);
+		margin-bottom: var(--gutter);
+		margin-top: var(--gutter);
 		padding-top: 0;
 		padding-bottom: 0;
 	}
@@ -3023,11 +3105,11 @@
 
 	.shoutbox {
 		--shoutbox-bk: rgb(var(--concrete));
-		--shoutbox-bk-fm: rgb(255,255,255);
+		--shoutbox-bk-fm: rgb(var(--snow));
 	}
 	.theme--light .shoutbox {
 		--shoutbox-bk: rgb(var(--concrete));
-		--shoutbox-bk-fm: rgb(255,255,255);
+		--shoutbox-bk-fm: rgb(var(--snow));
 	}
 	@media (prefers-color-scheme: dark) {
 		.shoutbox {
@@ -3100,7 +3182,7 @@
 
 		/* Set the padding on the right side a little larger so we don't crash into the close button. */
 		.shoutbox .shoutbox__inner {
-			padding-right: calc(var(--padding) * 3);
+			padding-right: var(--padding-x3);
 		}
 
 		.shoutbox:not(.js__shoutbox):last-child, 
@@ -3117,7 +3199,7 @@
 
 			.button.shoutbox__undo {
 				display: none;
-				margin-top: -0.8rem;
+				margin-top: var(--gutter-x0_5-neg);
 				opacity: 0;
 				transition: opacity 1000ms 10ms ease-in-out;
 			}
@@ -3168,11 +3250,11 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--chart-border: rgba(255,255,255, 0.3);
+			--chart-border: rgba(var(--snow), 0.3);
 		}
 	}
 	.theme--dark {
-		--chart-border: rgba(255,255,255, 0.3);
+		--chart-border: rgba(var(--snow), 0.3);
 	}
 
 	.percentage-bar {
@@ -3194,13 +3276,13 @@
 
 	:root {
 		--link-color: var(--smurf);
-		--link-color-focus: 255,255,255;
-		--card-callout-grey-link: rgb(255,255,255);
+		--link-color-focus: var(--snow);
+		--card-callout-grey-link: rgb(var(--snow));
 	}
 	.theme--light {
 		--link-color: var(--smurf);
-		--link-color-focus: 255,255,255;
-		--card-callout-grey-link: rgb(255,255,255);
+		--link-color-focus: var(--snow);
+		--card-callout-grey-link: rgb(var(--snow));
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
@@ -3220,7 +3302,7 @@
 		color: rgb(var(--link-color));
 		text-decoration: underline;
 		outline: 0;
-		padding: 0.2rem 0.1rem;
+		padding: var(--padding-x0_0625);
 	}
 	a:hover:not([class]) {
 		opacity: 0.9;
@@ -3255,7 +3337,7 @@
 	.card--callout--tango a:focus:not([class]), 
 	.card--callout--tango a:focus-visible:not([class]) {
 		background: rgb(var(--basalt));
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	.card--callout--tango a:focus:not(:focus-visible):not([class]) {
 		background: none;
@@ -3263,16 +3345,16 @@
 	}
 
 	.card--callout--blue a:not([class]) {
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	.card--callout--blue a:focus:not([class]), 
 	.card--callout--blue a:focus-visible:not([class]) {
-		background: rgb(255,255,255);
+		background: rgb(var(--snow));
 		color: rgb(var(--smurf));
 	}
 	.card--callout--blue a:focus:not(:focus-visible):not([class]) {
 		background: none;
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 
 	.card--callout--grey a:not([class]) {
@@ -3298,7 +3380,7 @@
 		display: inline-block;
 		font-size: 0.7em;
 		line-height: 0.1em;
-		margin-left: 0.2em;
+		margin-left: var(--gutter-x0_125);
 		transform: rotate(-45deg);
 		vertical-align: super;
 	}
@@ -3308,39 +3390,36 @@
 /* Buttons */
 
 	:root {
-		/* 30% smurf over midnight. */
-		--button-bk: rgb(0,76,108);
-
-		/* 40% smurf over midnight. */
-		--button-bk-hover: rgb(0,86,123);
+		--button-bk: rgb(var(--midnight-smurf-30));
+		--button-bk-hover: rgb(var(--midnight-smurf-40));
 
 		--button-ghost-text: var(--button-bk);
 
 		--button-shadow: var(--basalt);
 		
 		--popup-button-bk: var(--button-bk);
-		--popup-button-text: rgb(255,255,255);
+		--popup-button-text: rgb(var(--snow));
 		--popup-button-bk-hover: var(--button-bk-hover);
 	}
 	.theme--light {
 		--button-ghost-text: var(--button-bk);
 		--popup-button-bk: var(--button-bk);
-		--popup-button-text: rgb(255,255,255);
+		--popup-button-text: rgb(var(--snow));
 		--popup-button-bk-hover: var(--button-bk-hover);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--button-ghost-text: rgb(255,255,255);
-			--popup-button-bk: rgb(255,255,255);
+			--button-ghost-text: rgb(var(--snow));
+			--popup-button-bk: rgb(var(--snow));
 			--popup-button-text: var(--button-bk);
-			--popup-button-bk-hover: rgba(255,255,255,0.9);
+			--popup-button-bk-hover: rgba(var(--snow)5,0.9);
 		}
 	}
 	.theme--dark {
-		--button-ghost-text: rgb(255,255,255);
-		--popup-button-bk: rgb(255,255,255);
+		--button-ghost-text: rgb(var(--snow));
+		--popup-button-bk: rgb(var(--snow));
 		--popup-button-text: var(--button-bk);
-		--popup-button-bk-hover: rgba(255,255,255,0.9);
+		--popup-button-bk-hover: rgba(var(--snow),0.9);
 	}
 
 	/* Styles that are used on all buttons. */
@@ -3350,8 +3429,9 @@
 		direction: ltr;
 		display: inline-block;
 		font-family: inherit;
+		font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
 		font-size: 100%;
-		font-weight: 400;
+		font-weight: var(--text-weight-normal);
 		line-height: inherit;
 		outline: 0;
 		text-align: center;
@@ -3375,26 +3455,26 @@
 
 	/* Normal sized buttons. */
 	.button:not(.button--small):not(.button--text) {
-		padding: 0.8rem 2rem;
+		padding: var(--padding-x0_5) var(--padding);
 	}
 	/* Links with button spacing. */
 	.button--text {
-		padding: 0.8rem 0.1rem;
+		padding: var(--padding-x0_5) var(--padding-x0_0625);
 	}
 	/* Buttons that open in new tabs or windows. */
 	.button:not(.button--small):not(.button--text)[target="_blank"][target="_blank"] {
 		/* Adjust the right padding by roughly the width of the arrow. */
-		padding-right: 1.2rem;
+		padding-right: var(--padding-x0_75);
 	}
 	/* Small buttons. */
 	.button--small {
 		/* Adds some hidden padding to these buttons so that the hit state is still 40px tall. */
-		padding: 0.6rem 0;
+		padding: calc(var(--padding-x0_75) / 2) 0;
 	}
 		.button--small .button__text {
 			display: inline-block;
 			/* The remainder of the padding that we've adjusted on the button--small. */
-			padding: 0.2rem 0.8rem;
+			padding: var(--padding-x0_125) var(--padding-x0_5);
 		}
 	
 
@@ -3409,11 +3489,11 @@
 	/* Horizontal margins. */
 	.button, 
 	.button__container .button {
-		margin: 0 calc((var(--gutter) /2) - 2px);
+		margin: 0 calc(var(--gutter-x0_5) - 2px);
 	}
 	.button--small, 
 	.button__container .button--small {
-		margin: 0 calc((var(--gutter) /4) - 2px);
+		margin: 0 calc(var(--gutter-x0_25) - 2px);
 	}
 
 	/* Remove margin on first and last buttons in a group. */
@@ -3435,7 +3515,7 @@
 	.button--small:not(.button--ghost) .button__text {
 		background: var(--button-bk);
 		box-shadow: 0 1px 0 0 rgba(var(--button-shadow), 0.3);
-		color: rgb(255,255,255);
+		color: rgb(var(--snow));
 	}
 	.button:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear):hover, 
 	.button--small:not(.button--ghost):hover .button__text {
@@ -3453,7 +3533,7 @@
 
 	.buttons--light .button:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear), 
 	.buttons--light .button--small:not(.button--ghost) .button__text {
-		background: rgb(255,255,255);
+		background: rgb(var(--snow));
 		color: var(--button-bk);
 	}
 	/* TODO: Status buttons - once buttons--light added to cloud we can remove these two lines. */
@@ -3465,7 +3545,7 @@
 
 	.buttons--light .button:not(.button--small):not(.button--ghost):not(.button--text):not(.button--clear):hover, 
 	.buttons--light .button--small:not(.button--ghost):hover .button__text {
-		background: rgba(255,255,255,0.9);
+		background: rgba(var(--snow),0.9);
 	}
 
 	/* Solid blue buttons on light theme popup. */
@@ -3498,8 +3578,8 @@
 	/* Table header buttons - once buttons--light added to cloud we can remove these two lines. */
 	.table th .button--ghost:not(.button--small), 
 	.table th .button--ghost.button--small .button__text {
-		box-shadow: 0 0 0 1px rgb(255,255,255) inset;
-		color: rgb(255,255,255);
+		box-shadow: 0 0 0 1px rgb(var(--snow)) inset;
+		color: rgb(var(--snow));
 	}
 	.buttons--light .button--ghost:not(.button--small):hover, 
 	.buttons--light .button--ghost.button--small:hover .button__text, 
@@ -3509,7 +3589,7 @@
 	/* Table header buttons - once buttons--light added to cloud we can remove these two lines. */
 	.table th .button--ghost:not(.button--small):hover, 
 	.table th .button--ghost.button--small:hover .button__text {
-		box-shadow: 0 0 0 2px rgb(255,255,255) inset;
+		box-shadow: 0 0 0 2px rgb(var(--snow)) inset;
 	}
 
 	/* Ghost buttons on light theme popup. */
@@ -3535,8 +3615,7 @@
 	/*  */
 	.button--plain {
 		display: inline;
-		/* padding: 0.2rem 0.1rem; */
-		padding: 0 0.1rem;
+		padding: 0 var(--padding-x0_0625);
 	}
 
 	/* Clear buttons. */
@@ -3551,7 +3630,7 @@
 	.button.button--large .icon {
 		display: block;
 		height: 4.8rem;
-		margin: auto auto 0.8rem auto;
+		margin: auto auto var(--gutter-x0_5) auto;
 		width: 4.8rem;
 	}
 	.button.button--large .icon + .button__text {
@@ -3591,7 +3670,7 @@
 		box-shadow: none !important;
 		color: rgb(var(--link-color)) !important;
 		display: inline;
-		padding: 0 0.1rem !important;
+		padding: 0 var(--padding-x0_0625) !important;
 		text-decoration: underline;
 	}
 	.button--plain:hover {
@@ -3607,11 +3686,11 @@
 		text-decoration: none;
 	}
 	.buttons--light .button--plain {
-		color: rgb(255,255,255) !important;
+		color: rgb(var(--snow)) !important;
 	}
 	.buttons--light .button--plain:focus, 
 	.buttons--light .button.button--plain:focus-visible {
-		background: rgb(255,255,255) !important;
+		background: rgb(var(--snow)) !important;
 		color: rgb(var(--coal)) !important;
 	}
 /* Toggle Button */
@@ -3643,7 +3722,7 @@
 	}
 		.js__button--toggle .toggle__text {
 			display: inline-block;
-			margin-left: 0.4rem;
+			margin-left: var(--gutter-x0_25);
 		}
 
 
@@ -3653,9 +3732,8 @@
 	:root {
 		--menu: var(--smurf);
 		--menu-shadow: var(--onyx);
-		--menu-text: 255,255,255;
-		/* Midnight with a 30% black tint to meet a11y contrast. */
-		--menu-current-text: 0,31,43;
+		--menu-text: var(--snow);
+		--menu-current-text: var(--coal);
 	}
 
 
@@ -3688,7 +3766,7 @@
 
 	.table .menu.menu--vertical.menu--dropdown {
 		display: inline-flex;
-		margin: 0 calc((var(--gutter)/ 2) - 2px);
+		margin: 0 calc(var(--gutter-x0_5) - 2px);
 	}
 	.table .menu.menu--vertical.menu--dropdown:first-child {
 		margin-left: 0;
@@ -3703,7 +3781,7 @@
 			padding: 0 var(--padding);
 		}
 			.menu__title small {
-				font-weight: normal;
+				font-weight: var(--text-weight-normal);
 			}
 
 
@@ -3800,8 +3878,7 @@
 						rgb(var(--midnight));
 					color: rgb(var(--menu-text));
 					display: flex;
-					/* padding: 0.8rem 2rem; */
-					padding: 0.8rem var(--padding);
+					padding: var(--padding-x0_5) var(--padding);
 					text-decoration: none;
 				}
 				/* Second level. */
@@ -3825,7 +3902,7 @@
 						rgb(var(--midnight));
 				}
 				.menu__content:not(a):not(button) {
-					font-weight: 700;
+					font-weight: var(--text-weight-bold);
 				}
 				/* Because the sidebar can have toggles that aren't links we need to specify them as buttons. */
 				.menu--button {
@@ -3895,22 +3972,8 @@
 
 
 
-				.menu .menu__group .menu__group .menu__content {
-					/* White with a 35% smurf overlay. */
-					/* color: rgba(166,218,241,1); */
-					/* opacity: 0.8; */
-
-					/* Because the text is smaller we increase the vertical padding a little to keep the menu items the same minimum height as the top levels. */
-					/* font-size: 1.4rem; */
-					/* padding: 0.9rem 2rem 1rem 2rem; */
-				}
 				.menu .menu__group .menu__group .menu__content > .icon:first-child {
 					flex: 0 0 auto;
-				}
-				/* Third level items. */
-				.menu .menu__group .menu__group .menu__group .menu__content {
-					/* color: rgba(166,218,241,0.75); */
-					/* opacity: 0.7; */
 				}
 
 				/* Indents. */
@@ -3919,14 +3982,10 @@
 				}
 				/* Level 2 */
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__content {
-					/* padding-left: 3.2rem; */
-					/* padding-left: calc(var(--padding) * 2); */
 					padding-left: calc(var(--padding) + var(--indent));
 				}
 				/* Level 3 */
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__content {
-					/* padding-left: 4.4rem; */
-					/* padding-left: calc(var(--padding) * 3); */
 					padding-left: calc(var(--padding) + (var(--indent) * 2));
 				}
 				/* Level 4 */
@@ -3941,12 +4000,12 @@
 				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__group .menu__group .menu__group .menu__content {
 					padding-left: calc(var(--padding) + (var(--indent) * 5));
 				}
-				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__content > .icon:first-child {
+				/* .menu:not(.menu--horizontal) .menu__group .menu__group .menu__content > .icon:first-child { */
 					/* margin-left: 0.4rem; */
-				}
-				.menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__content > .icon:first-child {
+				/* } */
+				/* .menu:not(.menu--horizontal) .menu__group .menu__group .menu__group .menu__content > .icon:first-child { */
 					/* margin-left: 1.6rem; */
-				}
+				/* } */
 
 
 
@@ -3973,7 +4032,8 @@
 					box-shadow: none;
 				}
 				.menu__form-button:focus-visible, 
-				.menu a.menu__content:focus-visible {
+				.menu a.menu__content:focus-visible,
+				.menu button.menu__content:focus-visible {
 					box-shadow: inset 0 0 0 4px rgb(var(--link-color));
 					outline: 0;
 				}
@@ -3986,8 +4046,8 @@
 				.menu .menu__content[aria-current]:hover {
 					background: 
 						linear-gradient(
-							rgba(255,255,255, 0.2), 
-							rgba(255,255,255, 0.2)),
+							rgba(var(--snow), 0.2), 
+							rgba(var(--snow), 0.2)),
 						rgb(var(--tango)) !important;
 					color: rgb(var(--menu-current-text)) !important;
 				}
@@ -4007,11 +4067,11 @@
 
 					.menu__content .icon {
 						/* margin: 0.2rem 0.8rem 0 -0.8rem; */
-						margin: 0.2rem 0.8rem 0 0;
+						margin: var(--gutter-x0_125) var(--gutter-x0_5) 0 0;
 					}
 					.menu__content .icon--nav {
 						flex: 0 0 1.6rem;
-						margin: 0.2rem -0.8rem 0 2rem;
+						margin: var(--gutter-x0_125) var(--gutter-x0_5-neg) 0 2rem;
 						transition: transform 0.2s;
 					}
 					.menu [aria-expanded="true"] .icon--nav {
@@ -4025,18 +4085,18 @@
 					.menu .icon.icon--av {
 						border-radius: var(--button-radius);
 						height: 3.2rem;
-						margin-bottom: -0.8rem;
-						margin-left: -1.6rem;
-						margin-top: -0.8rem;
+						margin-bottom: var(--gutter-x0_5-neg);
+						margin-left: var(--gutter-x0_75-neg);
+						margin-top: var(--gutter-x0_5-neg);
 
 						/* This fixes an issue where the default CSS for images is forcing a menu button to wrap on Safari. */
 						max-width: 3.2rem;
 
 						width: 3.2rem;
 					}
-					.menu.menu--vertical .icon.icon--av {
+					/* .menu.menu--vertical .icon.icon--av {
 						margin-top: -0.6rem;
-					}
+					} */
 					.menu__spacer {
 						width: 1.6rem;
 					}
@@ -4133,11 +4193,11 @@
 		}
 
 		.table .menu .menu__main-toggle {
-			padding: 0.2rem 1.4rem !important;
+			padding: var(--padding-x0_125) var(--padding) !important;
 		}
 		.table .menu .menu__main-toggle .button__text {
-			margin-left: 1.2rem;
-			margin-right: -0.4rem;
+			margin-left: var(--gutter-x0_75);
+			margin-right: var(--gutter-x0_25-neg);
 		}
 
 		/* Addition for adding form posts with buttons to the menu. */
@@ -4153,8 +4213,7 @@
 			font-family: inherit;
 			font-size: inherit;
 			line-height: inherit;
-			/* padding: 0.8rem 2rem; */
-			padding: 0.8rem var(--padding);
+			padding: var(--padding-x0_5) var(--padding);
 			text-align: left;
 			width: 100%;
 		}
@@ -4166,7 +4225,7 @@
 
 /* Adjustments for menu split buttons.  */
 .menu[data-menu-type=split] .menu__item > .menu__content {
-	padding-right: 4.8rem;
+	padding-right: var(--padding-x3);
 }
 	.menu[data-menu-type=split] .menu__item > .menu__split-button {
 		background: rgba(var(--smurf), 0.2);
@@ -4174,14 +4233,14 @@
 		position: absolute;
 		top: 0.4rem;
 		right: 0.4rem;
-		padding: 0.4rem 1.6rem;
+		padding: var(--padding-x0_25) var(--padding-x0_75);
 	}
 	.menu[data-menu-type=split] .menu__item > .menu__split-button:not(:hover) {
-			background: rgba(255,255,255,0.075) !important;
+			background: rgba(var(--snow),0.075) !important;
 			/* background: none !important; */
 	}
 	.menu[data-menu-type=split] .menu__item > .menu__split-button:hover {
-			background: rgba(255,255,255,0.125) !important;
+			background: rgba(var(--snow),0.125) !important;
 	}
 	.menu--jump-up[data-menu-type=split] .menu__item > .menu__split-button {
 		bottom: 0.4rem;
@@ -4195,10 +4254,10 @@
 		}
 
 	.menu[data-menu-type=split] .menu__item > [aria-current] + .menu__split-button {
-		background: rgba(255,255,255, 0.2);
+		background: rgba(var(--snow), 0.2);
 	}
 	.menu[data-menu-type=split] .menu__item > [aria-current] + .menu__split-button:hover {
-		background: rgba(255,255,255, 0.5);
+		background: rgba(var(--snow), 0.5);
 	}
 
 
@@ -4211,10 +4270,10 @@
 	}
 	.js__filter-menu nav {
 		display: flex;
-		gap: calc(var(--padding) / 4);
+		gap: var(--padding-x0_25);
 	}
 		.filter-menu__text {
-			padding-top: 0.8rem;
+			padding-top: var(--padding-x0_5);
 		}
 		.filter-menu__col {
 			align-self: baseline;
@@ -4262,7 +4321,7 @@
 				rgba(var(--menu), 0.3)),
 			rgb(var(--midnight));
 		color: rgb(var(--menu-text));
-		padding: calc(var(--padding) / 2) 0;
+		padding: var(--padding-x0_5) 0;
 	}
 		/* Only available on nonJS version. */
 		.filter-menu__skip {
@@ -4284,7 +4343,7 @@
 		}
 		/* Add some spacing if the list has at least one item visible. */
 		.js__filter-menu .nav__group:has(.nav__item:not(.filter-menu__hide)) {
-			margin-top: calc(var(--padding) / 2);
+			margin-top: var(--gutter-x0_5);
 		}
 		/* Message that's shown if the user filtered away all the items. */
 		.js__filter-menu .nav__group:has(.nav__item:not(.filter-menu__hide)) ~ .filter-menu__nothing {
@@ -4293,7 +4352,7 @@
 		.js__filter-menu .filter-menu__nothing {
 			display: block;
 			font-style: italic;
-			padding: .8rem var(--padding);
+			padding: var(--padding-x0_5) var(--padding);
 			text-align: center;
 			text-wrap: balance;
 		}
@@ -4322,9 +4381,9 @@
 			background: rgba(var(--smurf), 0.3);
 			border-radius: var(--button-radius);
 			display: flex;
-			margin: 0 calc(var(--padding) / 2);
+			margin: 0 var(--gutter-x0_5);
 			overflow: hidden;
-			padding: calc(var(--padding) / 2);
+			padding: var(--padding-x0_5);
 			position: relative;
 		}
 			.js__filter-menu .filter-menu__span {
@@ -4334,7 +4393,7 @@
 			.js__filter-menu .filter-menu__filter {
 				color: rgb(var(--page-text));
 				flex: 1 1 auto;
-				margin-left: calc(var(--padding) / 2);
+				margin-left: var(--gutter-x0_5);
 			}
 			.js__filter-menu .filter-menu__clear {
 				position: absolute;
@@ -4356,7 +4415,7 @@
 						rgb(var(--midnight));
 					color: rgb(var(--menu-text));
 					display: block;
-					padding: 0.8rem var(--padding);
+					padding: var(--padding-x0_5) var(--padding);
 					text-decoration: none;
 				}
 				.filter-menu:not(.js__filter-menu) a:hover,
@@ -4391,7 +4450,7 @@
 		border-left: 0.5rem solid rgba(var(--page-text), 0.85);
 		content: '';
 		display: inline-block;
-		margin: 0 0 0.1rem 0.2rem;
+		margin: 0 0 var(--gutter-x0_0625) var(--gutter-x0_125)
 	}
 		/* Keep this generic so we can use an aria-current value of page or location. */
 		.breadcrumb [aria-current] {
@@ -4405,24 +4464,24 @@
 
 	:root {
 		--form-background: rgb(var(--concrete));
-		--form-footer-border: rgba(var(--basalt),0.7);
+		--form-footer-border: rgba(var(--basalt),0.15);
 		--form-section-footer: var(--concrete);
 	}
 	.theme--light {
 		--form-background: rgb(var(--concrete));
-		--form-footer-border: rgba(var(--basalt),0.7);
+		--form-footer-border: rgba(var(--basalt),0.15);
 		--form-section-footer: var(--concrete);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--form-background: rgba(var(--jet), 1);
-			--form-footer-border: rgba(255,255,255,0.8);
+			--form-footer-border: rgba(var(--snow),0.15);
 			--form-section-footer: var(--jet);
 		}
 	}
 	.theme--dark {
 		--form-background: rgba(var(--jet), 1);
-		--form-footer-border: rgba(255,255,255,0.8);
+		--form-footer-border: rgba(var(--snow),0.15);
 		--form-section-footer: var(--jet);
 	}
 
@@ -4432,7 +4491,7 @@
 		border-radius: var(--block-radius);
 		padding: var(--padding);
 		/* Add 25% extra padding to the bottom to visually balance things out. */
-		padding-bottom: calc(var(--padding) + calc(var(--padding) / 2));
+		padding-bottom: var(--padding-x1_5);
 	}
 	.form--horizontal--old {
 		align-items: flex-end;
@@ -4463,7 +4522,6 @@
 			display: block;
 			height: 2px;
 			margin-bottom: calc(var(--gutter) + 2px);
-			opacity: 0.2;
 		}
 		/* Sets to content width. */
 		.form--horizontal--old .form__row--footer {
@@ -4489,7 +4547,7 @@
 		}
 			.form--sections .form__section-list {
 				flex: 0 1 18em;
-				padding: 0 calc(var(--gutter) * 1.5) var(--gutter) 0;
+				padding: 0 var(--padding-x1_5) var(--padding) 0;
 				position: sticky;
 				top: 0;
 				top: var(--scroll-margin-top);
@@ -4506,7 +4564,7 @@
 					height: 1px;
 					overflow: hidden;
 					/* Add some padding since we're using overflow hidden so we don't cut off the focus style. */
-					padding: 4px;
+					padding: var(--padding-x0_25);
 					position: absolute;
 					white-space: nowrap;
 					width: 1px;
@@ -4539,18 +4597,18 @@
 						rgba(var(--form-section-footer),0) 0, 
 						rgba(var(--form-section-footer),1) 1.2rem, 
 						rgba(var(--form-section-footer),1) 0%);
-					margin-left: calc((var(--gutter) / 2) - var(--gutter) - 2px);
-					margin-right: calc((var(--gutter) / 2) - var(--gutter) - 2px);
+					margin-left: calc(var(--gutter-x0_5) - var(--gutter) - 2px);
+					margin-right: calc(var(--gutter-x0_5) - var(--gutter) - 2px);
 					margin-top: 0rem;
-					padding-bottom: calc(var(--padding) + calc(var(--padding) / 2));
-					padding-top: 1.6rem;
+					padding-bottom: var(--padding-x1_5);
+					padding-top: var(--padding);
 					position: sticky;
 					z-index: 5;
 				}
 				/* Because we have to pull the footer out so it covers the form content when the footer is layered above we should reset the divider spacing. */
 				.form:not(.form--horizontal).form--sections .form__row--footer:before {
-					margin-left: calc((var(--gutter) / 2) + 2px);
-					margin-right: calc((var(--gutter) / 2) + 2px);
+					margin-left: calc(var(--gutter-x0_5) + 2px);
+					margin-right: calc(var(--gutter-x0_5) + 2px);
 				}
 
 	/* Horizontal form. */
@@ -4589,9 +4647,6 @@
 				margin-top: 0;
 				padding-top: var(--padding);
 			}
-			.form--horizontal .form__fields fieldset.form__row {
-				padding-top: 0;
-			}
 			.form--horizontal .form__fields.form__horizontal-fields .form__row {
 				flex: 1 1 15em;
 			}
@@ -4613,7 +4668,7 @@
 			display: none;
 		}
 		.form--horizontal .form__radbox-label:not(:last-child) {
-			padding-right: calc(var(--gutter) / 2);
+			padding-right: var(--padding-x0_5);
 		}
 
 		/* For nested field groups (fieldsets) we need to adjust their minimum width. */
@@ -4626,146 +4681,50 @@
 /* Fieldset */
 
 	:root {
-		--form-fieldset: 
-			linear-gradient(
-				rgba(255,255,255, 0.35), 
-				rgba(255,255,255, 0.35)), 
-			rgb(var(--concrete));
-		--form-fieldset2: 
-			linear-gradient(
-				rgba(255,255,255, 0.7), 
-				rgba(255,255,255, 0.7)), 
-			rgb(var(--concrete));
-		--form-fieldset3: 
-			linear-gradient(
-				rgba(255,255,255, 1), 
-				rgba(255,255,255, 1)), 
-			rgb(var(--concrete));
+		--fieldset-border: rgba(var(--basalt),0.25);
 	}
 	.theme--light {
-		--form-fieldset: 
-			linear-gradient(
-				rgba(255,255,255, 0.35), 
-				rgba(255,255,255, 0.35)), 
-			rgb(var(--concrete));
-		--form-fieldset2: 
-			linear-gradient(
-				rgba(255,255,255, 0.7), 
-				rgba(255,255,255, 0.7)), 
-			rgb(var(--concrete));
-		--form-fieldset3: 
-			linear-gradient(
-				rgba(255,255,255, 1), 
-				rgba(255,255,255, 1)), 
-			rgb(var(--concrete));
+		--fieldset-border: rgba(var(--basalt),0.25);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--form-fieldset: 
-				linear-gradient(
-					rgba(255,255,255, 0.035), 
-					rgba(255,255,255, 0.035)), 
-				rgb(var(--jet));
-			--form-fieldset2: 
-				linear-gradient(
-					rgba(255,255,255, 0.07), 
-					rgba(255,255,255, 0.07)), 
-				rgb(var(--jet));
-			--form-fieldset3: 
-				linear-gradient(
-					rgba(255,255,255, 0.15), 
-					rgba(255,255,255, 0.15)), 
-				rgb(var(--jet));
+			--fieldset-border: rgba(var(--snow),0.2);
 		}
 	}
 	.theme--dark {
-		--form-fieldset: 
-			linear-gradient(
-				rgba(255,255,255, 0.035), 
-				rgba(255,255,255, 0.035)), 
-			rgb(var(--jet));
-		--form-fieldset2: 
-			linear-gradient(
-				rgba(255,255,255, 0.07), 
-				rgba(255,255,255, 0.07)), 
-			rgb(var(--jet));
-		--form-fieldset3: 
-			linear-gradient(
-				rgba(255,255,255, 0.15), 
-				rgba(255,255,255, 0.15)), 
-			rgb(var(--jet));
+		--fieldset-border: rgba(var(--snow),0.2);
 	}
 
 
-
-	.form .fieldset.form__row {
-		background: var(--form-fieldset);
+	.fieldset {
 		border-radius: var(--button-radius);
-		padding: 0 calc(var(--gutter) / 2) 1.6rem calc(var(--gutter) / 2);
-		position: relative;
+		box-shadow: 0 0 0 1px var(--fieldset-border);
+		padding: var(--padding);
 	}
-	.form .fieldset .fieldset.form__row {
-		background: var(--form-fieldset2);
-	}
-	.form .fieldset .fieldset .fieldset.form__row {
-		background: var(--form-fieldset3);
-	}
-	.form.form--horizontal > .fieldset {
-		margin-top: -1rem;
-		margin-bottom: -1rem;
-	}
-	.form.form--horizontal .fieldset .fieldset {
-		margin-top: 1rem;
-	}
-	.form:not(.form--horizontal) .fieldset.form__row {
-		margin-left: calc((var(--gutter) / 2) - var(--gutter));
-		margin-right: calc((var(--gutter) / 2) - var(--gutter));
-	}
-	.form:not(.form--horizontal) .fieldset .fieldset.form__row {
-		margin-left: 0;
-		margin-right: 0;
+
+	.form.form--horizontal .fieldset {
+		margin-top: var(--padding);
 	}
 	.form.form--horizontal .fieldset .fieldset, 
 	.form.form--horizontal .fieldset.form__row .form__row {
 		display: inline-block;
 	}
-		.form .fieldset.form__row legend {
-			background: var(--form-fieldset);
-			border-radius: var(--button-radius);
-			padding: calc(var(--padding) / 4) var(--padding) 0 var(--padding);
-			margin-bottom: 1.6rem;
-			margin-top: 0;
-		}
 		.form.form--horizontal .fieldset.form__row legend {
-			font-size: 1.6rem;
-			padding: 0 calc(var(--padding) / 2);
+			font-size: var(--text-size-m);
+			padding: 0 var(--padding-x0_5);
 		}
 
 		/* Native legends are tricky to style consistently as they do not get rendered as an item inside a fieldset. We need them for accessibility but we can then hide them (in an accessible way using .visually-hidden and then replicating the content of the legend into an element that's then hidden from the accessibility tree by using aria-hidden="true". This aria-hidden="true" element is what will be displayed for sighted users whilst still having the correct element in place for screen readers. Ideally, it would be nice to switch the order in the HTML so we could make use of the sibling selector but the legend has to be the first element inside the fieldset. */
 		.form legend.visually-hidden + .legend {
-			margin-top: 1rem;
+			margin-top: 0;
 		}
 		
-
 	.fieldset--active {
 		box-shadow: 0 0 0 2px rgb(var(--link-color));
 	}
-		.fieldset--active legend {
-			box-shadow: 0 -2px 0 0 rgb(var(--link-color));
-		}
 
-	/* If using horizontal field layout make sure to take fieldsets out of the grid. */
-	@container form-horizontal-fields (min-width: 40em) {
-		@supports(display: contents) {
-			.form__horizontal-fields .fieldset.form__row {
-				display: unset;
-				grid-column: 1 / span 2;
-			}
-		}
-	}
-		
 
-		
+
 /* Step Through Form */
 
 	:root {
@@ -4783,10 +4742,10 @@
 	}
 
 	.form--step-through-css .form__step {
-		padding-bottom: 3.2rem;
-		padding-left: 2.8rem;
-		margin-left: 1.2rem;
-		margin-right: 4.4rem;
+		padding-bottom: var(--padding-x2);
+		padding-left: var(--padding-x1_5);
+		margin-left: var(--gutter-x0_75);
+		margin-right: calc(var(--padding-x1_5) + var(--gutter-x0_75) + 2px);
 
 		/* Because it's a pain to do lookbacks in JS we set the default step style to 'completed'. */
 		border-left: solid 2px var(--step-line);
@@ -4802,14 +4761,14 @@
 	/* Class is added with JS as there's no nice way to do this in pure CSS. */
 	.form--step-through-css .form__step--last {
 		border-left-color: transparent;
-		padding-bottom: var(--gutter);
+		padding-bottom: var(--padding);
 	}
 	.form__step:not(.form__step--active):not(.form__step--completed) {
-		padding-bottom: calc(var(--gutter) / 2);
+		padding-bottom: var(--padding-x0_5);
 	}
 	.form__step:not(.form__step--active):not(.form__step--completed) .h3 {
-		font-size: 1em;
-		padding-top: 0.4rem;
+		font-size: var(--text-size-m);
+		padding-top: var(--padding-x0_25);
 	}
 
 		.form--step-through-css .form__step legend.visually-hidden + .legend {
@@ -4826,7 +4785,7 @@
 				display: block;
 				position: absolute;
 				left: -1.3rem;
-				padding: 0.4rem;
+				padding: var(--padding-x0_25);
 				top: 0.4rem;
 				transform: rotate(45deg);
 			}
@@ -4842,7 +4801,7 @@
 					}
 
 			.form__step:not(.form__step--active):not(.form__step--completed) .form__step__icon {
-				background: rgb(255,255,255);
+				background: rgb(var(--snow));
 			}
 				.form__step:not(.form__step--active):not(.form__step--completed) .form__step__icon .icon {
 					fill: rgba(var(--basalt), 0.5);
@@ -4865,7 +4824,7 @@
 				background: rgb(var(--midnight));
 			}
 				.form__step--completed .form__step__icon .icon {
-					fill: rgb(255,255,255);
+					fill: rgb(var(--snow));
 				}
 					.form__step--completed .form__step__icon .icon--tick {
 						display: block;
@@ -4873,7 +4832,7 @@
 
 
 			.form--step-through-css .form__step .form__step_p {
-				margin-bottom: 1.6rem;
+				margin-bottom: var(--gutter);
 			}
 
 			/* It's easier to hide/show the icons like this rather than with JavaScript, the tradeoff is that we need to add all of the icons to the page. */
@@ -4918,7 +4877,7 @@
 
 		.form--step-through-css .form__row--step {
 			display: block;
-			margin: calc(var(--gutter) * 2) 0 0 0;
+			margin: var(--gutter-x2) 0 0 0;
 			text-align: center;
 		}
 
@@ -4927,7 +4886,7 @@
 		}
 		.form__step__noproceedmsg[role=alert] {
 			display: block;
-			margin-bottom: 1.6rem;
+			margin-bottom: var(--gutter);
 		}
 			.form__step__noproceedmsg .icon {
 				fill: rgb(var(--form-error));
@@ -4940,28 +4899,28 @@
 	:root {
 		--form-step-line: rgba(var(--basalt), 0.2);
 		--form-step-icon-complete-bk: rgb(var(--midnight));
-		--form-step-icon-incomplete-bk: rgb(255,255,255);
+		--form-step-icon-incomplete-bk: rgb(var(--snow));
 		--form-step-icon-incomplete-fill: rgba(var(--basalt), 0.5);
 	}
 	.theme--light {
 		--form-step-line: rgba(var(--basalt), 0.2);
 		--form-step-icon-complete-bk: rgb(var(--midnight));
-		--form-step-icon-incomplete-bk: rgb(255,255,255);
+		--form-step-icon-incomplete-bk: rgb(var(--snow));
 		--form-step-icon-incomplete-fill: rgba(var(--basalt), 0.5);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--form-step-line: rgba(255,255,255, 0.2);
+			--form-step-line: rgba(var(--snow), 0.2);
 			--form-step-icon-complete-bk: rgb(var(--smurf));
 			--form-step-icon-incomplete-bk: rgb(var(--basalt));
-			--form-step-icon-incomplete-fill: rgba(255,255,255, 0.5);
+			--form-step-icon-incomplete-fill: rgba(var(--snow), 0.5);
 		}
 	}
 	.theme--dark {
-		--form-step-line: rgba(255,255,255, 0.2);
+		--form-step-line: rgba(var(--snow), 0.2);
 		--form-step-icon-complete-bk: rgb(var(--smurf));
 		--form-step-icon-incomplete-bk: rgb(var(--basalt));
-		--form-step-icon-incomplete-fill: rgba(255,255,255, 0.5);
+		--form-step-icon-incomplete-fill: rgba(var(--snow), 0.5);
 	}
 
 	.form-steps {
@@ -4982,10 +4941,10 @@
 				}
 
 		.js__form-steps .form-steps__step {
-			padding-bottom: 3.2rem;
-			padding-left: 2.8rem;
-			margin-left: 1.2rem;
-			margin-right: 4.4rem;
+			padding-bottom: var(--padding-x2);
+			padding-left: var(--padding-x1_5);
+			margin-left: var(--gutter-x0_75);
+			margin-right: calc(var(--padding-x1_5) + var(--gutter-x0_75) + 2px);
 			border-left: solid 2px var(--form-step-line);
 			border-left-style: dashed;
 			position: relative;
@@ -4993,19 +4952,19 @@
 		}
 		/* Reduce the spacing between fieldsets when hide previous fields is active. */
 		.js__form-steps.form-steps--hide-previous-fields .form-steps__step {
-			padding-bottom: var(--gutter);
+			padding-bottom: var(--padding);
 		}
 		.js__form-steps .form-steps__step--complete {
 			border-left-style: solid;
 		}
 		.js__form-steps .form-steps__step--last {
 			border-left-color: transparent;
-			padding-bottom: var(--gutter);
+			padding-bottom: var(--padding);
 		}
 			.js__form-steps .form-steps__step--complete .legend, 
 			.js__form-steps .form-steps__step--incomplete .legend {
-				font-size: 1.6rem;
-				padding-top: 0.4rem;
+				font-size: var(--text-size-m);
+				padding-top: var(--padding-x0_25);
 			}
 			
 			.js__form-steps .form-steps__fields {
@@ -5029,8 +4988,8 @@
 				.js__form-steps .form-steps__inner {
 					overflow: hidden;
 					/* Overflow cuts off the 4px focus on fields so we give the field container a 4px padding and pull things back into line with a 4px negative margin. */
-					margin: -4px;
-					padding: 4px;
+					margin: var(--gutter-x0_25-neg);
+					padding: var(--padding-x0_25);
 				}
 
 			.js__form-steps legend.visually-hidden + .legend {
@@ -5053,7 +5012,7 @@
 				display: block;
 				position: absolute;
 				left: -1.3rem;
-				padding: 0.4rem;
+				padding: var(--padding-x0_25);
 				top: 0.4rem;
 				transform: rotate(45deg);
 			}
@@ -5069,7 +5028,7 @@
 					/* Completed */
 					.js__form-steps .form-steps__step--complete .form-steps__icon {
 						background: var(--form-step-icon-complete-bk);
-						fill: rgb(255,255,255);
+						fill: rgb(var(--snow));
 					}
 					/* Active */
 					.js__form-steps .form-steps__step--active .form-steps__icon {
@@ -5093,7 +5052,7 @@
 			}
 			.js__form-steps .form-steps__step--active .form-steps__controls {
 				display: block;
-				margin: calc(var(--gutter) * 2) 0 0 0;
+				margin: var(--gutter-x2) 0 0 0;
 				text-align: center;
 			}
 				/* Display buttons if they have href attributes or they are in the footer and not an a without an href. */
@@ -5109,7 +5068,7 @@
 		}
 		.js__form-steps .form-steps__error[role=alert] {
 			display: block;
-			margin-bottom: 1.6rem;
+			margin-bottom: var(--gutter);
 		}
 			.js__form-steps .form-steps__error .icon {
 				fill: rgb(var(--form-error));
@@ -5127,11 +5086,11 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--form-help: rgba(255,255,255, 0.25);
+			--form-help: rgba(var(--snow), 0.25);
 		}
 	}
 	.theme--dark {
-		--form-help: rgba(255,255,255, 0.25);
+		--form-help: rgba(var(--snow), 0.25);
 	}
 
 
@@ -5152,6 +5111,11 @@
 			}
 			.form__horizontal-fields .form__row {
 				display: contents;
+			}
+			/* If using horizontal field layout make sure to take fieldsets out of the grid. */
+			.form__horizontal-fields .fieldset.form__row {
+				display: unset;
+				grid-column: 1 / span 2;
 			}
 		}
 			.form--horizontal .form__horizontal-fields .form__row {
@@ -5174,20 +5138,20 @@
 	/* Label. */
 	.form__label {
 		display: block;
-		font-weight: 500;
-		margin-bottom: 0.4rem;
+		font-weight: var(--text-weight-medium);
+		margin-bottom: var(--gutter-x0_25);
 		position: relative;
 	}
 		.form__required {
-			font-size: 1.1rem;
-			font-weight: bold;
+			font-size: var(--text-size-xs);
+			font-weight: var(--text-weight-bold);
 			vertical-align: super;
 		}
 
 		@container form-horizontal-fields (min-width: 40em) {
 			@supports(display: contents) {
 				.form__horizontal-fields .form__label {
-					padding-top: 0.4rem;
+					padding-top: var(--padding-x0_25);
 				}
 			}
 		}
@@ -5198,8 +5162,8 @@
 		/* We hide this completely rather than use accessible hide to hide it 
 			from screen readers. */
 		display: none;
-		font-size: 1.4rem;
-		margin-top: 0.4rem;
+		font-size: var(--text-size-s);
+		margin-top: var(--gutter-x0_25);
 	}
 	[aria-invalid="true"] ~ .form__error,
 	.form__error--show {
@@ -5218,12 +5182,12 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--help-bk: rgba(255,255,255, 0.25);
+			--help-bk: rgba(var(--snow), 0.25);
 		}
 	}
 	.theme--dark,
 	.table th {
-		--help-bk: rgba(255,255,255, 0.25);
+		--help-bk: rgba(var(--snow), 0.25);
 	}
 
 	@keyframes show-help-text {
@@ -5257,8 +5221,8 @@
 		.button.help-text__toggle {
 			background: none !important;
 			box-shadow: none !important;
-			margin: -1.2rem -1.6rem 0 0;
-			padding: 0.8rem 1.6rem !important;
+			margin: var(--gutter-x0_75-neg) var(--gutter-neg) 0 0;
+			padding: var(--padding-x0_5) var(--padding) !important;
 		}
 
 		/* Clear the outer button focus styles. */
@@ -5273,7 +5237,7 @@
 				border-radius: var(--button-radius);
 				display: block;
 				height: 1.6rem;
-				margin: 0 0 0 -1.6rem;
+				margin: 0 0 0 var(--gutter-neg);
 				pointer-events: none;
 				position: relative;
 				top: 0.4rem;
@@ -5298,8 +5262,8 @@
 				box-shadow: none;
 			}
 				.help-text__toggle-icon .icon {
-					fill: rgb(255,255,255);
-					padding: 0.2rem;
+					fill: rgb(var(--snow));
+					padding: var(--padding-x0_125);
 					pointer-events: none;
 					top: 0;
 					transition: inherit;
@@ -5307,7 +5271,7 @@
 				}
 				/* Fix for icons in popups overruling the fill above. */
 				body .help-text__toggle-icon .icon {
-					fill: rgb(255,255,255) !important;
+					fill: rgb(var(--snow)) !important;
 				}
 
 		.help-text__content,
@@ -5315,30 +5279,56 @@
 		blinky-help-text:not(.js__help-text) {
 			background: var(--help-bk);
 			border-radius: var(--button-radius);
-			color: rgb(255,255,255);
-			font-weight: normal;
-			margin-bottom: 0.8rem;
-			margin-top: 0.4rem;
-			padding: 0.4rem 0.8rem;
+			color: rgb(var(--snow));
+			font-weight: var(--text-weight-normal);
+			padding: var(--padding-x0_5) var(--padding-x0_5);
 		}
 		.js__help-text .help-text__content {
 			display: none;
 		}
 		.js__help-text[expanded='1'] .help-text__content {
 			display: block;
+			padding-bottom: var(--padding-x0_25);
+			padding-top: var(--padding-x0_25);
+			visibility: visible;
 		}
 			.help-text__content a:not([class]) {
-				color: rgb(255,255,255);
+				color: rgb(var(--snow));
 			}
+			
+		@supports(interpolate-size: allow-keywords) {
+			.help-text__content,
+			blinky-help-text:not(.js__help-text) {
+				display: block;
+				height: 0px;
+				interpolate-size: allow-keywords;
+				padding: 0 var(--padding-x0_5);
+				transition: all 0.15s ease-in-out;
+			}
+			.js__help-text .help-text__content {
+				display: block;
+				height: 0px;
+				margin-bottom: 0;
+				margin-top: 0;
+				padding-bottom: 0;
+				padding-top: 0;
+				visibility: hidden;
+			}
+			.js__help-text[expanded='1'] .help-text__content {
+				height: max-content;
+				margin-bottom: var(--gutter-x0_5);
+				margin-top: var(--gutter-x0_25);
+			}
+		}
 
 	@container form-horizontal-fields (min-width: 40em) {
 		@supports(display: contents) {
 			.form__horizontal-fields .button.help-text__toggle {
 				/* Because it's no longer positioned it dickers with the margin, tweak it to match. */
-				margin: 0 calc(-1 * var(--gutter)) calc(-1 * var(--gutter)) calc((var(--gutter) / 2) - 0.6rem) !important;
+				margin: 0 var(--gutter-neg) var(--gutter-neg) var(--gutter-x0_125) !important;
 
 				/* Reduce the size of the button. */
-				padding: 0 1.4rem 2.4rem 2rem;
+				/* padding: 0 1.4rem 2.4rem 2rem; */
 			}
 		}
 	}
@@ -5348,7 +5338,7 @@
 /* Inline fields */
 
 	.form__inline {
-		margin-right: 0.8rem;
+		margin-right: var(--gutter-x0_5);
 		width: auto !important;
 	}
 
@@ -5358,21 +5348,21 @@
 
 	:root {
 		--form-error: var(--cherry);
-		--form-field-background: rgb(255,255,255);
+		--form-field-background: rgb(var(--snow));
 		--form-field-border: rgba(var(--basalt),0.7);
 		--form-field-border-hover: rgba(var(--basalt),0.5);
 
 		--form-field-background-dark: 
 			linear-gradient(
-				rgba(255,255,255, 0.15), 
-				rgba(255,255,255, 0.15)), 
+				rgba(var(--snow), 0.15), 
+				rgba(var(--snow), 0.15)), 
 			rgb(var(--coal));
-		--form-field-border-dark: rgba(255,255,255,0.4);
-		--form-field-border-hover-dark: rgba(255,255,255,0.2);
+		--form-field-border-dark: rgba(var(--snow),0.4);
+		--form-field-border-hover-dark: rgba(var(--snow),0.2);
 	}
 	.theme--light {
 		--form-error: var(--cherry);
-		--form-field-background: rgb(255,255,255);
+		--form-field-background: rgb(var(--snow));
 		--form-field-border: rgba(var(--basalt),0.7);
 		--form-field-border-hover: rgba(var(--basalt),0.5);
 	}
@@ -5408,7 +5398,7 @@
 		color: inherit;
 		display: inline-block;
 		/* We deduct 1px to account for the border width. */
-		padding: 0.7rem;
+		padding: calc(var(--padding-x0_5) - 1px);
 		width: 100%;
 	}
 	.form__text:hover, 
@@ -5431,7 +5421,7 @@
 	.form input[type=search]:focus, 
 	.form input[type=tel]:focus, 
 	.form input[type=url]:focus {
-		border-color: rgba(255,255,255, 0);
+		border-color: rgba(var(--snow), 0);
 		box-shadow: 0 0 0 4px rgb(var(--link-color));
 	}
 	.form__text[aria-invalid="true"], 
@@ -5443,7 +5433,7 @@
 	.form input[type=search][aria-invalid="true"], 
 	.form input[type=tel][aria-invalid="true"], 
 	.form input[type=url][aria-invalid="true"] {
-		border-color: rgb(255,255,255, 0);
+		border-color: rgb(var(--snow), 0);
 		box-shadow: 0 0 0 2px rgb(var(--form-error));
 	}
 	.form__text[aria-invalid="true"]:focus, 
@@ -5455,7 +5445,7 @@
 	.form input[type=search][aria-invalid="true"]:focus, 
 	.form input[type=tel][aria-invalid="true"]:focus, 
 	.form input[type=url][aria-invalid="true"]:focus {
-		border-color: rgb(255,255,255);
+		border-color: rgb(var(--snow));
 		box-shadow: 0 0 0 2px rgb(var(--form-error)), 0 0 0 4px rgb(var(--link-color));
 	}
 
@@ -5512,12 +5502,12 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--output-border: rgba(255,255,255,0.15);
+			--output-border: rgba(var(--snow),0.15);
 			--output-opacity: 0.5;
 		}
 	}
 	.theme--dark {
-		--output-border: rgba(255,255,255,0.15);
+		--output-border: rgba(var(--snow),0.15);
 		--output-opacity: 0.5;
 	}
 
@@ -5536,7 +5526,7 @@
 		color: inherit;
 		display: inline-block;
 		/* We deduct 1px to account for the border width. */
-		padding: 0.7rem;
+		padding: calc(var(--padding-x0_5) - 1px);
 		cursor: not-allowed;
 	}
 
@@ -5579,22 +5569,22 @@
 		color: inherit;
 		display: inline-block;
 		/* We deduct 1px to account for the border width. */
-		padding: 0.7rem;
+		padding: calc(var(--padding-x0_5) - 1px);
 		width: 100%;
 	}
 	.form__textarea:hover {
 		border-color: var(--form-field-border-hover);
 	}
 	.form__textarea:focus {
-		border-color: rgba(255,255,255, 0);
+		border-color: rgba(var(--snow), 0);
 		box-shadow: 0 0 0 4px rgb(var(--link-color));
 	}
 	.form__textarea[aria-invalid="true"] {
-		border-color: rgb(255,255,255, 0);
+		border-color: rgb(var(--snow), 0);
 		box-shadow: 0 0 0 2px rgb(var(--form-error));
 	}
 	.form__textarea[aria-invalid="true"]:focus {
-		border-color: rgb(255,255,255);
+		border-color: rgb(var(--snow));
 		box-shadow: 0 0 0 2px rgb(var(--form-error)), 0 0 0 4px rgb(var(--link-color));
 	}
 
@@ -5603,21 +5593,21 @@
 /* Prefixed small amount of text to form inputs. Assumes that the .form__prefix has only two children: the prefix and the field. */
 
 	:root {
-		--form-pfix-text: rgb(255,255,255);
+		--form-pfix-text: rgb(var(--snow));
 		--form-pfix-warning: var(--basalt);
 	}
 	.theme--light {
-		--form-pfix-text: rgb(255,255,255);
+		--form-pfix-text: rgb(var(--snow));
 		--form-pfix-warning: var(--basalt);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--form-pfix-text: rgb(var(--coal));
+			/* --form-pfix-text: rgb(var(--coal)); */
 			--form-pfix-warning: var(--basalt);
 		}
 	}
 	.theme--dark {
-		--form-pfix-text: rgb(var(--coal));
+		/* --form-pfix-text: rgb(var(--coal)); */
 		--form-pfix-warning: var(--basalt);
 	}
 
@@ -5632,7 +5622,7 @@
 			background: var(--form-field-border);
 			border-radius: var(--button-radius) 0 0 var(--button-radius);
 			color: var(--form-pfix-text);
-			padding: 0.8rem;
+			padding: var(--padding-x0_5);
 		}
 		.form__prefix__text + *:not(:focus):not([aria-invalid="true"]), 
 		.form__pfix__text + *:not(:focus):not([aria-invalid="true"]) {
@@ -5641,8 +5631,8 @@
 		.form__prefix--radbox .form__prefix__text, 
 		.form__pfix--radbox .form__pfix__text {
 			border-radius: var(--button-radius);
-			margin: 0.3rem 0.8rem 0.3rem 0;
-			padding: 0.1rem 0.4rem;
+			margin: var(--gutter-x0_25) var(--gutter-x0_5) var(--gutter-x0_125) 0;
+			padding: 0 var(--padding-x0_25);
 		}
 
 		/* pfix text positioning for postfix. */
@@ -5655,7 +5645,7 @@
 		}
 		.form__pfix--postfix.form__pfix--radbox .form__pfix__text {
 			border-radius: var(--button-radius);
-			margin-left: 0.8rem;
+			margin-left: var(--gutter-x0_5);
 			margin-right: 0;
 		}
 		/* Ordering the flex items causes the text to appear behind the input, this is apparent when the input is focussed or showing the error style. */
@@ -5702,7 +5692,8 @@
 		cursor: pointer;
 		display: inline-block;
 		min-height: 2.6rem;
-		padding: 0.4rem 0 0.4rem 3.4rem;
+		/* Left is radio element width plus half padding. */
+		padding: var(--padding-x0_25) 0 var(--padding-x0_25) calc(2.6rem + var(--padding-x0_5));
 		position: relative;
 	}
 	.form__radbox + .form__radbox-label:before, 
@@ -5738,7 +5729,7 @@
 
 	.form__radbox:focus + label:before, 
 	.form__radbox:focus-visible + label:before {
-		border-color: rgba(255,255,255, 0);
+		border-color: rgba(var(--snow), 0);
 		box-shadow: 0 0 0 4px rgb(var(--link-color));
 	}
 	.form__radbox:focus:not(:focus-visible) + label:before {
@@ -5747,17 +5738,17 @@
 	}
 
 	.form__radbox[aria-invalid="true"] + label:before {
-		border-color: rgb(255,255,255, 0);
+		border-color: rgb(var(--snow), 0);
 		box-shadow: 0 0 0 2px rgb(var(--form-error));
 	}
 
 	.form__radbox[aria-invalid="true"]:focus + label:before, 
 	.form__radbox[aria-invalid="true"]:focus-visible + label:before {
-		border-color: rgb(255,255,255);
+		border-color: rgb(var(--snow));
 		box-shadow: 0 0 0 2px rgb(var(--form-error)), 0 0 0 4px rgb(var(--link-color));
 	}
 	.form__radbox[aria-invalid="true"]:focus:not(:focus-visible) + label:before {
-		border-color: rgb(255,255,255, 0);
+		border-color: rgb(var(--snow), 0);
 		box-shadow: 0 0 0 2px rgb(var(--form-error));
 	}
 
@@ -5823,27 +5814,27 @@
 		--large-radios-min-width: 40rem;
 
 		--large-radios-bk: rgba(var(--basalt), 0.5);
-		--large-radios-text: 255,255,255;
+		--large-radios-text: var(--snow);
 
 		--large-radios-stripe: rgb(var(--tango));
 		--large-radios-stripe-disabled: rgba(var(--basalt),0.3);
 	}
 	.theme--light {
 		--large-radios-bk: rgba(var(--basalt), 1);
-		--large-radios-text: 255,255,255;
+		--large-radios-text: var(--snow);
 		--large-radios-stripe-disabled: rgba(var(--basalt),0.3);
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--large-radios-bk: rgba(var(--concrete), 0.4);
-			--large-radios-text: 255,255,255;
-			--large-radios-stripe-disabled: rgba(255,255,255,0.15);
+			--large-radios-text: var(--snow);
+			--large-radios-stripe-disabled: rgba(var(--snow),0.15);
 		}
 	}
 	.theme--dark {
 		--large-radios-bk: rgba(var(--concrete), 0.4);
-		--large-radios-text: 255,255,255;
-		--large-radios-stripe-disabled: rgba(255,255,255,0.15);
+		--large-radios-text: var(--snow);
+		--large-radios-stripe-disabled: rgba(var(--snow),0.15);
 	}
 
 	.form__large-radios {
@@ -5897,23 +5888,25 @@
 			}
 			/* Account for radio button spacing. */
 			.form__large-radios__item .form__radbox ~ .form__large-radios__content {
-				padding-left: 3.4rem;
+				/* Radbox width + padding. */
+				padding-left: calc(2.6rem + var(--padding-x0_5));
 			}
 			.form__large-radios__content + .form__large-radios__content {
 				padding-top: var(--padding);
 			}
 				.form__large-radios__content .form__radbox-label {
-					margin-bottom: 0.4em;
+					margin-bottom: var(--gutter-x0_25);
 				}
 				/* Account for radio button spacing. */
 				.form__radbox ~ .form__large-radios__content .form__radbox-label {
-					margin-left: -3.4rem;
+				/* Radbox width + padding, flipped to negative. */
+					margin-left: calc((2.6rem + var(--gutter-x0_5)) * -1);
 				}
 
 				/* Focus styles for the fake radios. */
 				.form__large-radios .form__radbox:focus ~ .form__large-radios__content .form__radbox-label:before, 
 				.form__large-radios .form__radbox:focus-visible ~ .form__large-radios__content .form__radbox-label:before {
-					border-color: rgba(255,255,255, 0);
+					border-color: rgba(var(--snow), 0);
 					box-shadow: 0 0 0 4px rgb(var(--link-color));
 				}
 				.form__large-radios .form__radbox:focus:not(:focus-visible) ~ .form__large-radios__content .form__radbox-label:before {
@@ -5931,9 +5924,9 @@
 
 				.form__large-radios .highlight-stripe {
 					background: var(--large-radios-stripe-disabled);
-					margin-left: calc(var(--padding) * -1);
-					margin-right: calc(var(--padding) * -1);
-					padding: calc(var(--padding) / 2);
+					margin-left: var(--gutter-neg);
+					margin-right: var(--gutter-neg);
+					padding: var(--padding-x0_5);
 				}
 				/* If there's a selectable radio button paint the highlight stripe orange. */
 				.form__large-radios .form__radbox:not([disabled="disabled"]) ~ .form__large-radios__content .highlight-stripe {
@@ -5941,14 +5934,14 @@
 				}
 				/* Account for radio button spacing. */
 				.form__large-radios .form__radbox ~ .form__large-radios__content .highlight-stripe {
-					margin-left: calc((3.4rem + var(--padding)) * -1);
+					margin-left: calc(((2.6rem + var(--gutter-x0_5)) + var(--padding)) * -1);
 				}
 				.form__large-radios .form__radbox:checked ~ .form__large-radios__content .highlight-stripe {
 					color: rgb(var(--page-text));
 				}
 
 				.form__large-radios .form__radbox:checked ~ .form__large-radios__content .form__large-radios__tag .icon {
-					fill: rgb(255,255,255) !important;
+					fill: rgb(var(--snow)) !important;
 				}
 
 
@@ -5966,8 +5959,8 @@
 			linear-gradient(45deg, transparent 50%, currentColor 50%),
 			linear-gradient(135deg, currentColor 50%, transparent 50%),
 			linear-gradient(
-				rgba(255,255,255, 0.15), 
-				rgba(255,255,255, 0.15)), 
+				rgba(var(--snow), 0.15), 
+				rgba(var(--snow), 0.15)), 
 			rgb(var(--coal));
 	}
 	.theme--light {
@@ -5993,7 +5986,8 @@
 		color: inherit;
 		display: inline-block;
 		/* We deduct 1px to account for the border width. */
-		padding: 0.7rem 3.2rem 0.7rem 0.7rem;
+		padding: calc(var(--padding-x0_5) - 1px);
+		padding-right: var(--padding-x2);
 		width: 100%;
 	}
 	.form__select--content-width {
@@ -6021,11 +6015,11 @@
 		border-color: var(--form-field-border-hover);
 	}
 	.form__select:focus {
-		border-color: rgba(255,255,255, 0);
+		border-color: rgba(var(--snow), 0);
 		box-shadow: 0 0 0 4px rgb(var(--link-color));
 	}
 	.form__select[aria-invalid="true"] {
-		border-color: rgb(255,255,255);
+		border-color: rgb(var(--snow));
 		box-shadow: 0 0 0 2px rgb(var(--form-error));
 	}
 	.form__select[aria-invalid="true"]:focus {
@@ -6070,8 +6064,8 @@
 		--switch-on-alt: 
 			linear-gradient(
 				0deg,
-				rgba(255,255,255,0.25) 0,
-				rgba(255,255,255,0.25) 100%
+				rgba(var(--snow),0.25) 0,
+				rgba(var(--snow),0.25) 100%
 			),
 			linear-gradient(
 				0deg,
@@ -6085,13 +6079,13 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--switch: rgba(255,255,255,0.3);
-			--switch-hover: rgba(255,255,255,0.2);
+			--switch: rgba(var(--snow),0.3);
+			--switch-hover: rgba(var(--snow),0.2);
 		}
 	}
 	.theme--dark {
-		--switch: rgba(255,255,255,0.3);
-		--switch-hover: rgba(255,255,255,0.2);
+		--switch: rgba(var(--snow),0.3);
+		--switch-hover: rgba(var(--snow),0.2);
 	}
 
 	.form__switch {
@@ -6100,7 +6094,7 @@
 		color: inherit;
 		font-size: inherit;
 		line-height: inherit;
-		padding: 0.4rem 0 0.4rem 5rem;
+		padding: var(--padding-x0_25) 0 var(--padding-x0_25) 4.8rem;
 		position: relative;
 	}
 	.form__switch:hover {
@@ -6119,7 +6113,7 @@
 		left: 0;
 		position: absolute;
 		top: 0.4rem;
-		width: 4.2rem;
+		width: 4rem;
 	}
 	/* If there's no BUTTON text it will need a minimum height. */
 	.form__switch[aria-labelledby] {
@@ -6150,7 +6144,10 @@
 	} */
 		.form__switch[aria-pressed="true"] .form__switch__dot {
 			color: rgb(var(--basalt));
-			transform: translateX(1.6rem);
+			transform: translateX(1.4rem);
+		}
+		.form__switch .form__switch__dot:after {
+			box-sizing: border-box;
 		}
 		.form__switch[aria-pressed="true"] .form__switch__dot:after {
 			border: 0.3rem solid rgb(var(--switch-on));
@@ -6207,13 +6204,13 @@
 			.js__form__child-fields .form__child-fields__inner {
 				overflow: hidden;
 				/* We need to shift some spacing focus styles on fields aren't cut off by the lack of overflow. */
-				padding: 0 4px 4px 4px;
-				margin-bottom: -4px;
+				padding: 0 var(--padding-x0_25) var(--padding-x0_25) var(--padding-x0_25);
+				margin-bottom: var(--gutter-x0_25-neg);
 			}
 
 		/* Indents the child fields to give visual meaning. */
 		.form__child-fields {
-			margin-left: calc(3.4rem - 4px);
+			margin-left: calc((2.6rem + var(--gutter-x0_5)) - var(--gutter-x0_25));
 		}
 
 		/* Because we're hiding the unexpanded fields showing the disabled styling is not helpful, so we clear the
@@ -6258,11 +6255,11 @@
 /* File upload */
 
 	:root {
-		--file-upload-background: rgb(255,255,255);
+		--file-upload-background: rgb(var(--snow));
 		--file-upload-border: rgb(var(--smurf));
 	}
 	.theme--light {
-		--file-upload-background: rgb(255,255,255);
+		--file-upload-background: rgb(var(--snow));
 		--file-upload-border: rgb(var(--smurf));
 	}
 	@media (prefers-color-scheme: dark) {
@@ -6282,12 +6279,12 @@
 		position: absolute;
 	}
 	.js .form__file__button {
-		margin-left: 0.4rem;
-		margin-right: 0.4rem;
+		margin-left: var(--gutter-x0_25);
+		margin-right: var(--gutter-x0_25);
 	}
 	.js .form__file__name {
 		display: block;
-		padding-top: calc(var(--padding) / 4);
+		padding-top: var(--padding-x0_25);
 	}
 		.js .form__file__name span {
 			display: block;
@@ -6328,11 +6325,11 @@
 	}
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--progress-box: rgba(255,255,255,0.2);
+			--progress-box: rgba(var(--snow),0.2);
 		}
 	}
 	.theme--dark {
-		--progress-box: rgba(255,255,255,0.2);
+		--progress-box: rgba(var(--snow),0.2);
 	}
 
 	.progress {
@@ -6352,7 +6349,7 @@
 	.progress__box--circle {
 		border-radius: 50%;
 		height: 4rem;
-		padding: 0.3rem;
+		padding: var(--padding-x0_125);
 		width: 4rem;
 	}
 		.progress__box--circle .progress__fish,
@@ -6420,12 +6417,12 @@
 		-45deg,
 		rgba(var(--tango),1),
 		rgba(var(--tango),1) 25%,
-		rgba(255,255,255,0.25) 25%,
-		rgba(255,255,255,0.25) 50%,
+		rgba(var(--snow),0.25) 25%,
+		rgba(var(--snow),0.25) 50%,
 		rgba(var(--tango),1) 50%,
 		rgba(var(--tango),1) 75%,
-		rgba(255,255,255,0.25) 75%,
-		rgba(255,255,255,0.25) 100%
+		rgba(var(--snow),0.25) 75%,
+		rgba(var(--snow),0.25) 100%
 	);
 	background-size: 6.7rem 0.4rem;
 }
@@ -6466,49 +6463,44 @@
 
 	.icon {
 		display: inline-block;
+		fill: currentColor;
 		height: 1.6rem;
 		position: relative;
 		top: 0.2rem;
 		width: 1.6rem;
 	}
 
-	/* This will be applies to icons in buttons on their own and with text. */
+	/* This will be applied to icons in buttons on their own and with text. */
 	.button .icon {
-		margin-left: -8px;
-		margin-right: -8px;
+		margin-left: var(--gutter-x0_25-neg);
+		margin-right: var(--gutter-x0_25-neg);
 
 		/* This is used to tell JS to ignore clicks on the icon and bubble up to the button. */
 		pointer-events: none;
-
-		/* top: 0.2rem; */
 	}
+	/* TODO: what is this? */
 	.button--small .icon {
-		margin-left: 0px;
+		margin-left: 0;
 		margin-right: 3px;
 	}
 	/* For small icon only buttons. */
 	.button--small .button__text .icon {
-		margin-left: -0.2rem;
-		margin-right: -0.2rem;
+		margin-left: var(--gutter-x0_125-neg);
+		margin-right: var(--gutter-x0_125-neg);
 	}
 	/* Covers historical usage where we have a label on small buttons with icons and text that are not wrapped in a span. */
 	.button--small .button__text .icon:last-child {
-		margin-right: 0.4rem;
+		margin-right: var(--gutter-x0_25);
 	}
 	.button--small .button__text .icon + .button__small-text {
-		margin-left: 0.4rem;
+		margin-left: var(--gutter-x0_25);
 	}
 
 	.button .icon + .button__text {
-		margin-left: 20px;
+		margin-left: var(--gutter);
 	}
 
 
-
-	.button .icon, 
-	.menu__content .icon {
-		fill: currentColor;
-	}
 
 	.icon--90deg {
 		transform: rotate(90deg);
@@ -6554,7 +6546,7 @@
 		width: 9em;
 	}
 			.form--search-logs.form--horizontal fieldset.form__row legend {
-				margin-bottom: 0.8rem;
+				margin-bottom: var(--gutter-x0_5);
 			}
 	/* 1360px / 16 */
 	@media only screen and (max-width: 85em) {

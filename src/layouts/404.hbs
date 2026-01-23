@@ -6,11 +6,13 @@
 	<body class="status-404 page page--sticky-header theme--light article
 		{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}
 		{{#if (eq page.attributes.site-edition "enterprise")}}
-			docs__enterprise
+			docs__enterprise 
+			voxel
 		{{else if (eq page.attributes.site-edition "community")}}
 			docs__community
 		{{else}}
-			docs__cloud
+			docs__cloud 
+			voxel
 		{{/if}}
 	">
 		{{> header}}

@@ -1,4 +1,4 @@
-/*! Payara Pattern Library version: 0.78.1 */
+/*! Payara Pattern Library version: 0.82.0 */
 /*! DO NOT MODIFY THIS FILE, CHANGES WILL BE OVERWRITTEN! */
 
 // Always set a top level class to indicate if we have JS available.
@@ -809,72 +809,68 @@ var tab_group = (function() {
 
 
 
-var accordion = (function() {
+class BlinkyAccordion extends HTMLElement {
 	
-	// The value that ensures we only ever add one event listener.
-	var event_listener = false;
+	static get observedAttributes() {
+		return ['group'];
+	}
 	
+	constructor() {
+		super();
+	}
 	
-	// Finds all accordions and kickstarts the setup process.
-	var __init = function(el) {
+	__grouped(details) {
+
+		// If there's a group attribute, set the name attribute on each details, this will change the toggle behaviour so that only one item can be open at a time.
+		if (!this.hasAttribute('group')) return false;
 		
-		el = (el) ? el : '.accordion';
-		var accordions = document.querySelectorAll(el);
+		// Sanitise name value.
+		const group = /^[a-zA-Z][a-zA-Z0-9-]*$/.test(this.getAttribute('group')) ? this.getAttribute('group') : 'acc-' + this.getAttribute('group');
 		
-		if (accordions.length === 0) return;
-		
-		for (var i=0; i<accordions.length; i++) {
-			var label = (accordions[i].getAttribute('data-details-btn')) ? accordions[i].getAttribute('data-details-btn') : '';
-			__setup({el: accordions[i], icon: ui_path({el: accordions[i]}), label: label});
+		this.setAttribute('role', 'group');
+		for (let detail of details) {
+			detail.setAttribute('name', group);
 		}
-	};
-
+	}
 	
-	var __setup = function(acc) {
+	__addFakeToggle(details) {
+		for (let detail of details) {
 
-		var items = acc.el.querySelectorAll('.accordion__content');
-
-		if (items.length === 0) return;
-		
-		var c = 1;
-		for (var i=0; i<items.length; i++) {
-			if (items[i].parentElement.querySelector('.accordion__toggle') == null) {
-				items[i].insertAdjacentHTML('beforebegin', '<button class="accordion__toggle button button--clear" aria-expanded="false" aria-controls="acc'+c+'" type="button"><svg class="icon icon--nav" width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true"><use href="'+acc.icon+'/ui/images/icons.svg#icon-menu-arrow"></use></svg><span class="visually-hidden">'+acc.label+'</span></button>');
-			} else {
-				items[i].parentElement.querySelector('.accordion__toggle').setAttribute('aria-controls', 'acc'+c);
-			}
-			items[i].setAttribute('id', 'acc'+c);
-			items[i].setAttribute('aria-hidden', 'true');
-			c++;
+			// Add icon.
+			const toggle = blinky_addIcon('menu-arrow', this);
+			toggle.classList.add('accordion__toggle');
+			
+			// Check for any opened on load details.
+			if (detail.hasAttribute('open')) toggle.classList.add('opened');
+			
+			// Add a container to keep the icon separate from any grid settings.
+			const toggleContainer = document.createElement('div');
+			toggleContainer.appendChild(toggle);
+			
+			// Add the button to the DOM.
+			detail.querySelector('summary').appendChild(toggleContainer);
 		}
+	}
+	
+	connectedCallback() {
+		this.classList.add('js__accordion');
 		
-		// Add the event listener only once.
-		if (!event_listener) {
-			document.addEventListener('click', __action);
-			// We only ever want to add one event listener.
-			event_listener = true;
-		}
-	};
-
-	
-	var __action = function(e) {
-		if (!e.target.closest('.accordion__toggle')) return false;
+		// Setup the component.
+		const details = this.querySelectorAll('details');
+		if (!details) return false;
 		
-		toggle = e.target.getAttribute('aria-expanded') === 'true';
-		e.target.setAttribute('aria-expanded', String(!toggle));
+		// Make grouped.
+		this.__grouped(details);
+		
+		// Given the entire summary is clickable, we need to add a visual toggle indicator.
+		this.__addFakeToggle(details);
+	}
+}
 
-		content = e.target.parentElement.querySelector('.accordion__content').getAttribute('aria-hidden') === 'true';
-		e.target.parentElement.querySelector('.accordion__content').setAttribute('aria-hidden', String(!content));
-	};
-	
-	
-	
-	return {
-		init: __init,
-		setup: __setup
-	};
-	
-})();
+customElements.define('blinky-accordion', BlinkyAccordion);
+
+
+
 class BlinkyCopybox extends HTMLElement {
 	
 	constructor() {
@@ -1987,7 +1983,7 @@ class BlinkyNewthing extends HTMLElement {
 		this.addEventListener('keyup', this.close_filter_menu_esc = (e) => {
 			if (e.keyCode == 27) {
 				this.setAttribute('expanded', '0');
-				this.querySelector('.filter-list__current').focus();
+				this.querySelector('.filter-menu__current').focus();
 			}
 		});
 		// Save event.
